@@ -9,6 +9,13 @@ import jakarta.servlet.annotation.*;
 import java.io.*;
 import java.util.*;
 
+//Database imports 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import com.erasmus.web.controller.DatabaseConnection;
+
 //@WebServlet("/api/forumPosts")
 public class ForumServlet extends HttpServlet {
     private ForumDAO forumDAO = new ForumDAO();

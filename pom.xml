@@ -27,6 +27,13 @@
     </parent>
 
     <dependencies>
+        <!-- mysql Database connection -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.33</version>
+        </dependency>
+
         <!-- SPRING WEB (REST controllers, mappings κ.λπ.) -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

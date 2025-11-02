@@ -5,6 +5,13 @@ import java.util.*;
 import com.erasmus.web.model.ForumPost;
 import com.erasmus.web.model.ForumReply;
 
+//Database imports 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import com.erasmus.web.controller.DatabaseConnection;
+
 @RestController
 @RequestMapping("/api/forumPosts")
 @CrossOrigin(origins = "*") // επιτρέπει requests από το JSP frontend

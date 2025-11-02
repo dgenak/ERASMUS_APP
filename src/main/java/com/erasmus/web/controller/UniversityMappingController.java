@@ -8,6 +8,13 @@ import java.io.PrintWriter;
 import java.util.*;
 import com.erasmus.web.model.DMSTG; // <-- εδώ βεβαιώσου ότι έχεις το DMSTG.java στο ίδιο project
 
+//Database imports 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import com.erasmus.web.controller.DatabaseConnection;
+
 //@WebServlet("/api/universities/*")
 public class UniversityMappingController extends HttpServlet {
 
