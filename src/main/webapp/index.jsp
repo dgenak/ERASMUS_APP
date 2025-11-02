@@ -221,7 +221,6 @@
       <a href="applications.jsp">Κάνε Αίτηση</a>
     </div>
   </section>
-
   <!-- FOOTER -->
   <footer>
     <div class="social-icons">

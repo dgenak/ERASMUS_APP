@@ -20,7 +20,7 @@
     main {
       max-width: 900px;
       margin: 2rem auto;
-      background: #fff;
+      background: #f0efef;
       border-radius: 12px;
       box-shadow: 0 5px 20px rgba(0,0,0,0.08);
       padding: 40px;
