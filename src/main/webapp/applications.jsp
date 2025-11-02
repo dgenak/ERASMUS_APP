@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
+<%@ include file="header.jsp" %>
 
 <!DOCTYPE html>
 <html lang="el">
@@ -15,7 +15,6 @@
   <style>
     body {
         font-family: 'Poppins', sans-serif;
-        background-color: #f5f7fa;
         color: #343a40;
         line-height: 1.6;
         min-height: 100vh;
@@ -152,7 +151,7 @@
 </head>
 
 <body>
-  <%@ include file="header.jsp" %>
+  
   <!-- ====== MAIN ====== -->
   <main>
     <div class="content-card">

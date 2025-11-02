@@ -1,50 +1,59 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-<!-- ΕΝΙΑΙΟ HEADER ΓΙΑ ΟΛΕΣ ΤΙΣ ΣΕΛΙΔΕΣ -->
 <header class="global-header">
-  <div class="header-top">
-    <div class="header-logo">
+  <div class="header-wrapper">
+    <!-- ΛΟΓΟΤΥΠΟ -->
+    <div class="logo-area">
       <div class="logo-circle">EU</div>
-      <h1 class="header-title">Erasmus+</h1>
+      <div class="logo-text">
+        <h1>Erasmus+</h1>
+        <span>Οικονομικό Πανεπιστήμιο Αθηνών</span>
+      </div>
     </div>
+
+```
+<!-- ΜΕΝΟΥ ΠΛΟΗΓΗΣΗΣ -->
+<nav class="main-nav">
+  <ul>
+    <li><a href="index.jsp"><i class="fas fa-home"></i> Αρχική</a></li>
+    <li><a href="universities.jsp"><i class="fas fa-university"></i> Αντιστοίχιση Μαθημάτων</a></li>
+    <li><a href="forum.jsp"><i class="fas fa-comments"></i> Forum</a></li>
+    <li><a href="applications.jsp"><i class="fas fa-file-alt"></i> Αιτήσεις</a></li>
+    <li><a href="info.jsp"><i class="fas fa-info-circle"></i> Πληροφορίες</a></li>
+  </ul>
+</nav>
+```
+
   </div>
 
-  <nav class="navbar">
-    <ul class="nav-links">
-      <li><a href="index.jsp">Αρχική</a></li>
-      <li><a href="universities.jsp">Αντιστοίχιση Μαθημάτων</a></li>
-      <li><a href="forum.jsp">Forum</a></li>
-      <li><a href="applications.jsp">Αιτήσεις</a></li>
-    </ul>
-    <button class="menu-btn" onclick="toggleMenu()"><i class="fas fa-bars"></i> Μενού</button>
-  </nav>
-
   <style>
-    /* === ΕΝΙΑΙΟ HEADER ΓΙΑ ΟΛΕΣ ΤΙΣ ΣΕΛΙΔΕΣ === */
+    /* === HEADER === */
     .global-header {
       width: 100%;
-      box-sizing: border-box;
+      background: linear-gradient(90deg, #003366, #0059b3, #0073e6);
+      color: white;
       font-family: 'Poppins', sans-serif;
-      margin: 0;
-      padding: 0;
+      box-shadow: 0 5px 25px rgba(0, 0, 0, 0.25);
       position: relative;
-      z-index: 999;
+      z-index: 1000;
+      padding: 1.5rem 0 1.8rem;
     }
 
-    /* ΠΑΝΩ ΜΠΑΡΑ */
-    .header-top {
-      background: linear-gradient(90deg, #003366, #0066cc);
+    .header-wrapper {
+      max-width: 1300px;
+      margin: 0 auto;
       display: flex;
+      flex-direction: column;
       align-items: center;
-      justify-content: flex-start;
-      padding: 0.8rem 2rem;
-      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+      padding: 0 2rem;
     }
 
-    .header-logo {
+    /* === ΛΟΓΟΤΥΠΟ === */
+    .logo-area {
       display: flex;
       align-items: center;
-      gap: 15px;
+      gap: 14px;
+      margin-bottom: 0.8rem;
     }
 
     .logo-circle {
@@ -58,121 +67,85 @@
       justify-content: center;
       font-weight: 700;
       font-size: 1.5rem;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      flex-shrink: 0;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease;
     }
 
-    .header-title {
-      color: white;
+    .logo-circle:hover { transform: scale(1.08); }
+
+    .logo-text h1 {
+      font-size: 1.8rem;
       font-weight: 700;
-      font-size: 1.9rem;
-      letter-spacing: 0.5px;
-      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
       margin: 0;
-      padding: 0;
+      color: #fff;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
     }
 
-    /* === NAVIGATION === */
-    .navbar {
-      background-color: #f8f9fb;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0.7rem 2rem;
-      border-bottom: 1px solid #dee2e6;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    .logo-text span {
+      display: block;
+      font-size: 0.9rem;
+      color: #cce0ff;
+      margin-top: 2px;
     }
 
-    .nav-links {
+    /* === ΜΕΝΟΥ === */
+    .main-nav {
+      margin-top: 0.8rem;
+    }
+
+    .main-nav ul {
       list-style: none;
       display: flex;
-      gap: 35px;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 40px;
       margin: 0;
       padding: 0;
+      background: transparent; /* αφαιρεί το λευκό */
     }
 
-    .nav-links a {
+    .main-nav a {
       text-decoration: none;
-      color: #003366;
       font-weight: 500;
-      font-size: 16px;
-      position: relative;
-      transition: color 0.3s;
-    }
-
-    .nav-links a:hover,
-    .nav-links a.active {
-      color: #0059b3;
-    }
-
-    .nav-links a.active::after {
-      content: '';
-      position: absolute;
-      left: 0;
-      bottom: -5px;
-      width: 100%;
-      height: 3px;
-      background: linear-gradient(90deg, #0059b3, #66b3ff);
-      border-radius: 2px;
-    }
-
-    /* === ΚΟΥΜΠΙ ΜΕΝΟΥ (ΚΙΝΗΤΑ) === */
-    .menu-btn {
-      background-color: #0059b3;
-      border: none;
+      font-size: 1rem;
+      padding: 10px 18px;
       border-radius: 25px;
-      padding: 8px 18px;
-      color: white;
-      font-weight: 500;
-      cursor: pointer;
-      display: none;
+      display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
+      color: white;
+      transition: all 0.3s ease;
+      background: transparent;
     }
 
-    .menu-btn:hover {
-      background-color: #004999;
+    .main-nav a:hover {
+      background: rgba(255, 255, 255, 0.15);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(255, 255, 255, 0.15);
+    }
+
+    .main-nav a.active {
+      background: white;
+      color: #003366;
+      font-weight: 600;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
     }
 
     @media (max-width: 900px) {
-      .nav-links {
-        display: none;
-        flex-direction: column;
-        background: #003366;
-        width: 100%;
-        padding: 10px 0;
-        text-align: center;
-      }
-
-      .nav-links.show {
-        display: flex;
-      }
-
-      .nav-links a {
-        color: white;
-        padding: 12px 0;
-      }
-
-      .menu-btn {
-        display: flex;
-      }
+      .main-nav ul { flex-direction: column; gap: 10px; }
+      .main-nav a { justify-content: center; width: 100%; }
     }
   </style>
 
   <script>
-    // === Toggle Menu για κινητά ===
-    function toggleMenu() {
-      document.querySelector(".nav-links").classList.toggle("show");
-    }
-
-    // === Αυτόματο highlight ενεργής σελίδας ===
     document.addEventListener("DOMContentLoaded", () => {
       const current = location.pathname.split("/").pop();
-      document.querySelectorAll(".nav-links a").forEach(a => {
-        if (a.getAttribute("href") === current) {
-          a.classList.add("active");
+      document.querySelectorAll(".main-nav a").forEach(link => {
+        if (link.getAttribute("href") === current) {
+          link.classList.add("active");
         }
       });
     });
   </script>
+
 </header>

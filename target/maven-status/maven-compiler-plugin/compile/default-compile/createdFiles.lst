@@ -1,6 +1,8 @@
 com\erasmus\web\controller\ApplicationServlet.class
 com\erasmus\web\model\ForumPost.class
 com\erasmus\web\dao\UniversityDAO.class
+com\erasmus\web\ErasmusAppApplication.class
+com\erasmus\web\controller\ForumController.class
 com\erasmus\web\controller\HomeServlet.class
 com\erasmus\web\controller\UniversityMappingController.class
 com\erasmus\web\controller\ForumServlet.class
@@ -8,3 +10,4 @@ com\erasmus\web\controller\UniversityServlet.class
 com\erasmus\web\model\University.class
 com\erasmus\web\dao\ForumDAO.class
 com\erasmus\web\model\DMSTG.class
+com\erasmus\web\model\ForumReply.class

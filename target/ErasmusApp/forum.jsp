@@ -5,41 +5,25 @@
 <html lang="el">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ERASMUS+ | Forum</title>
-  <link rel="stylesheet" href="css/style.css">
-
-  <!-- Google Fonts & Font Awesome -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
-    /* ===== ΒΑΣΙΚΑ ΣΤΥΛ ===== */
     body {
-        font-family: 'Poppins', sans-serif;
-        background-color: #f5f7fa; /* ίδιο με τις άλλες σελίδες */
-        color: #1f2a44;
-        margin: 0;
-        padding: 0;
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
+      font-family: 'Poppins', sans-serif;
+      color: #1f2a44;
+      margin: 0;
+      padding: 0;
     }
-
 
     main {
-        flex: 1;
-        max-width: 900px;
-        margin: 2rem auto;
-        background: #fff;
-        border-radius: 12px;
-        box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-        padding: 40px;
-    }
-
-
-    main:hover {
-      box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+      max-width: 900px;
+      margin: 2rem auto;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+      padding: 40px;
     }
 
     h1 {
@@ -57,12 +41,10 @@
       margin-bottom: 25px;
     }
 
-    /* ===== ΚΟΥΜΠΙΑ ===== */
     .buttons {
       display: flex;
       gap: 12px;
       margin-bottom: 25px;
-      flex-wrap: wrap;
     }
 
     .btn {
@@ -80,33 +62,17 @@
       color: #fff;
     }
 
-    .btn.primary:hover {
-      background-color: #004999;
-      transform: translateY(-2px);
-    }
-
     .btn.secondary {
       background-color: #e9eef7;
       color: #003366;
     }
 
-    .btn.secondary:hover {
-      background-color: #dbe5f5;
-      transform: translateY(-2px);
-    }
-
-    /* ===== ΔΗΜΟΣΙΕΥΣΕΙΣ ===== */
     .post {
       background-color: #fff;
       border-radius: 12px;
       box-shadow: 0 3px 12px rgba(0,0,0,0.07);
       padding: 22px;
       margin-bottom: 25px;
-      transition: transform 0.2s ease;
-    }
-
-    .post:hover {
-      transform: translateY(-3px);
     }
 
     .post-header {
@@ -127,90 +93,44 @@
       color: white;
       font-weight: bold;
       font-size: 18px;
-      box-shadow: 0 3px 8px rgba(0,0,0,0.15);
     }
 
-    .post-header strong {
-      color: #003366;
-      font-size: 16px;
-    }
-
-    .post-header small {
-      color: #888;
-      display: block;
-      font-size: 13px;
-    }
-
-    .post h3 {
-      margin: 10px 0;
-      color: #002855;
-      font-size: 18px;
-    }
-
-    .post p {
-      color: #444;
-      font-size: 15px;
-      margin-bottom: 15px;
-    }
-
-    .post-footer {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      color: #666;
-      font-size: 14px;
-    }
-
-    .post-footer i {
-      margin-right: 5px;
-      color: #555;
-      cursor: pointer;
-      transition: color 0.2s;
-    }
-
-    .post-footer i:hover {
-      color: #007bff;
-    }
-
-    /* ===== ΝΕΑ ΔΗΜΟΣΙΕΥΣΗ ===== */
-    #newPostForm {
-      display: none;
-      background: #f9fbff;
-      border-radius: 12px;
-      padding: 25px;
-      box-shadow: 0 3px 12px rgba(0,0,0,0.08);
-      margin-top: 25px;
-    }
-
-    input, textarea {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 12px;
+    .reply {
+      background: #f9f9ff;
+      padding: 10px 15px;
+      margin: 10px 0 0 50px;
+      border-left: 3px solid #007bff;
       border-radius: 8px;
-      border: 1px solid #ccd4e0;
+    }
+
+    .reply strong { color: #003366; }
+    .reply small { color: #888; }
+
+    .reply-form {
+      margin-top: 10px;
+    }
+
+    .reply-form textarea {
+      width: 100%;
+      padding: 8px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      resize: none;
       font-family: inherit;
     }
 
-    textarea {
-      resize: none;
-      height: 100px;
-    }
+    .reply-form button { margin-top: 8px; }
 
-    footer {
-      text-align: center;
-      margin-top: 40px;
+    .post-footer {
+      display: flex;
+      gap: 15px;
+      font-size: 14px;
       color: #666;
-      font-size: 13px;
     }
 
-    /* ===== RESPONSIVE ===== */
-    @media (max-width: 768px) {
-      main {
-        padding: 30px 25px;
-      }
-      h1 {
-        font-size: 24px;
-      }
+    .post-footer i {
+      cursor: pointer;
+      margin-right: 5px;
     }
   </style>
 </head>
@@ -223,114 +143,131 @@
 
     <div class="buttons">
       <button class="btn primary" onclick="openNewPostForm()">+ Νέα Ερώτηση</button>
-      <button class="btn secondary">💬 Μοιράσου Εμπειρία</button>
+      <button class="btn secondary" onclick="openNewPostForm()">💬 Μοιράσου Εμπειρία</button>
     </div>
 
-    <div id="forumContainer">
-      <p>Φόρτωση δημοσιεύσεων...</p>
-    </div>
+    <div id="forumContainer">Φόρτωση...</div>
 
-    <!-- Νέα Δημοσίευση -->
-    <div id="newPostForm">
-      <h3>Δημιούργησε νέα δημοσίευση</h3>
-      <input type="text" id="postTitle" placeholder="Τίτλος">
-      <textarea id="postBody" placeholder="Περιεχόμενο..."></textarea>
+    <div id="newPostForm" style="display:none; margin-top:20px;">
+      <h3>Νέα Δημοσίευση</h3>
+      <input id="postTitle" placeholder="Τίτλος" style="width:100%;padding:8px;">
+      <textarea id="postBody" placeholder="Περιεχόμενο..." style="width:100%;height:100px;margin-top:10px;"></textarea>
       <button class="btn primary" onclick="submitPost()">Δημοσίευση</button>
       <button class="btn secondary" onclick="closeNewPostForm()">Ακύρωση</button>
     </div>
-
-    <footer>
-      © 2025 Οικονομικό Πανεπιστήμιο Αθηνών - ERASMUS+
-    </footer>
   </main>
 
   <script>
-    document.addEventListener("DOMContentLoaded", loadForumPosts);
-
     async function loadForumPosts() {
       try {
-        const res = await fetch("/ErasmusApp/api/forumPosts");
-        if (!res.ok) throw new Error("Σφάλμα φόρτωσης δεδομένων");
+        const res = await fetch('/api/forumPosts');
         const posts = await res.json();
-
-        const container = document.getElementById("forumContainer");
-        container.innerHTML = "";
-
-        if (posts.length === 0) {
-          container.innerHTML = "<p>Δεν υπάρχουν ακόμα δημοσιεύσεις.</p>";
-          return;
-        }
+        const container = document.getElementById('forumContainer');
+        container.innerHTML = '';
 
         posts.forEach(p => {
-          const div = document.createElement("div");
-          div.className = "post";
-
-          const dateStr = new Date(p.timestamp).toLocaleDateString("el-GR");
-          div.innerHTML = `
-            <div class="post-header">
-              <div class="avatar">${p.username ? p.username[0].toUpperCase() : "A"}</div>
-              <div>
-                <strong>${p.username || "Anonymous"}</strong>
-                <small>${dateStr}</small>
-              </div>
+          const repliesHtml = (p.replies || []).map(r => `
+            <div class="reply">
+              <strong>\${r.username}</strong>
+              <small>\${new Date(r.timestamp).toLocaleDateString('el-GR')}</small>
+              <p>\${r.body}</p>
             </div>
-            <h3>${p.title || "Χωρίς τίτλο"}</h3>
-            <p>${p.body || "Χωρίς περιεχόμενο"}</p>
-            <div class="post-footer">
-              <i class="fa-regular fa-thumbs-up"></i>0
-              <span><i class="fa-solid fa-reply"></i> Απάντηση</span>
+          `).join('');
+
+          const postHtml = `
+            <div class="post">
+              <div class="post-header">
+                <div class="avatar">\${p.username ? p.username[0].toUpperCase() : 'A'}</div>
+                <div>
+                  <strong>\${p.username}</strong>
+                  <small>\${new Date(p.timestamp).toLocaleDateString('el-GR')}</small>
+                </div>
+              </div>
+              <h3>\${p.title}</h3>
+              <p>\${p.body}</p>
+              <div class="post-footer">
+                <span onclick="likePost(\${p.id})"><i class="fa-regular fa-thumbs-up"></i> \${p.likes}</span>
+                <span onclick="dislikePost(\${p.id})"><i class="fa-regular fa-thumbs-down"></i> \${p.dislikes}</span>
+                <span onclick="toggleReplyForm(\${p.id})"><i class="fa-solid fa-reply"></i> Απάντηση</span>
+              </div>
+              <div class="reply-form" id="replyForm-\${p.id}" style="display:none;">
+                <textarea id="replyText-\${p.id}" placeholder="Γράψε την απάντησή σου..."></textarea>
+                <button class="btn primary" onclick="submitReply(\${p.id})">Αποστολή</button>
+              </div>
+              \${repliesHtml}
             </div>
           `;
-          container.appendChild(div);
+
+          container.insertAdjacentHTML('beforeend', postHtml);
         });
-      } catch (e) {
-        document.getElementById("forumContainer").innerHTML = "<p>⚠️ Αποτυχία φόρτωσης δημοσιεύσεων.</p>";
-        console.error(e);
+      } catch (err) {
+        console.error('Σφάλμα φόρτωσης:', err);
       }
     }
 
     function openNewPostForm() {
-      document.getElementById("newPostForm").style.display = "block";
+      document.getElementById('newPostForm').style.display = 'block';
     }
 
     function closeNewPostForm() {
-      document.getElementById("newPostForm").style.display = "none";
+      document.getElementById('newPostForm').style.display = 'none';
     }
 
     async function submitPost() {
-      const title = document.getElementById("postTitle").value.trim();
-      const body = document.getElementById("postBody").value.trim();
-
+      const title = document.getElementById('postTitle').value.trim();
+      const body = document.getElementById('postBody').value.trim();
       if (!title || !body) {
-        alert("Παρακαλώ συμπληρώστε όλα τα πεδία.");
+        alert('Συμπληρώστε όλα τα πεδία');
         return;
       }
 
-      const post = {
-        username: "Anonymous",
-        title,
-        body,
+      const post = { username: 'Anonymous', title: title, body: body };
+      await fetch('/api/forumPosts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(post)
+      });
+      closeNewPostForm();
+      loadForumPosts();
+    }
+
+    async function likePost(id) {
+      await fetch(`/api/forumPosts/\${id}/like`, { method: 'POST' });
+      loadForumPosts();
+    }
+
+    async function dislikePost(id) {
+      await fetch(`/api/forumPosts/\${id}/dislike`, { method: 'POST' });
+      loadForumPosts();
+    }
+
+    function toggleReplyForm(id) {
+      const form = document.getElementById(`replyForm-\${id}`);
+      form.style.display = (form.style.display === 'none') ? 'block' : 'none';
+    }
+
+    async function submitReply(id) {
+      const text = document.getElementById(`replyText-\${id}`).value.trim();
+      if (!text) {
+        alert('Γράψε κάτι');
+        return;
+      }
+
+      const reply = {
+        username: 'Anonymous',
+        body: text,
         timestamp: new Date().toISOString()
       };
 
-      try {
-        const res = await fetch("/ErasmusApp/api/forumPosts", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(post)
-        });
-
-        if (res.ok) {
-          alert("Η δημοσίευση προστέθηκε επιτυχώς!");
-          closeNewPostForm();
-          loadForumPosts();
-        } else {
-          alert("Σφάλμα κατά την υποβολή.");
-        }
-      } catch (e) {
-        alert("⚠️ Αποτυχία αποστολής δεδομένων.");
-      }
+      await fetch(`/api/forumPosts/\${id}/reply`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(reply)
+      });
+      loadForumPosts();
     }
+
+    document.addEventListener('DOMContentLoaded', loadForumPosts);
   </script>
 </body>
 </html>
