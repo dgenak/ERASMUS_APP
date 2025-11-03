@@ -3,6 +3,13 @@ package com.erasmus.web.dao;
 import com.erasmus.web.model.University;
 import java.util.*;
 
+//Database imports 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import com.erasmus.web.controller.DatabaseConnection;
+
 public class UniversityDAO {
 
     private static final List<University> universities = new ArrayList<>();
