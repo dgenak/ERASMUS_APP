@@ -75,7 +75,7 @@
     }
 
     .card {
-      background: white;
+      background: rgb(245, 243, 243);
       width: 330px;
       padding: 40px 30px;
       border-radius: 25px;

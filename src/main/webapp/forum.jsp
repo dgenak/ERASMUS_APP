@@ -26,15 +26,6 @@
       padding: 40px;
     }
 
-    h1 {
-      font-size: 28px;
-      color: #003366;
-      border-bottom: 3px solid #007bff;
-      display: inline-block;
-      margin-bottom: 15px;
-      padding-bottom: 5px;
-    }
-
     p.subtitle {
       color: #555;
       font-size: 15px;
