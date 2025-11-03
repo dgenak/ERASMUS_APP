@@ -240,10 +240,6 @@
     </div>
   </main>
 
-  <footer>
-    &copy; 2025 Οικονομικό Πανεπιστήμιο Αθηνών — ERASMUS+
-  </footer>
-
   <script>
     // === Φόρτωση επιλογών ===
     $(document).ready(function() {
@@ -312,5 +308,6 @@
       );
     }
   </script>
+  <%@ include file="footer.jsp" %>
 </body>
 </html>

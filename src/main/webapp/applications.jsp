@@ -219,11 +219,6 @@
     </div>
   </div>
 
-  <!-- ====== FOOTER ====== -->
-  <footer>
-    &copy; 2025 Οικονομικό Πανεπιστήμιο Αθηνών - ERASMUS+
-  </footer>
-
   <script>
     function toggleSidebar() {
       document.getElementById("sidebar").classList.toggle("active");
@@ -250,5 +245,6 @@
       document.getElementById("applicationForm").reset();
     }
   </script>
+  <%@ include file="footer.jsp" %>
 </body>
 </html>

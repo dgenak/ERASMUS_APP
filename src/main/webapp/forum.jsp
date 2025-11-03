@@ -260,5 +260,6 @@
 
     document.addEventListener('DOMContentLoaded', loadForumPosts);
   </script>
+  <%@ include file="footer.jsp" %>
 </body>
 </html>

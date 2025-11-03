@@ -1,3 +1,6 @@
+/* ==========================================================
+   🎨 ΒΑΣΙΚΕΣ ΜΕΤΑΒΛΗΤΕΣ ΧΡΩΜΑΤΩΝ & ΣΤΥΛ
+========================================================== */
 :root {
   --primary: #00509e;
   --primary-dark: #003366;
@@ -13,11 +16,20 @@
   --transition: all 0.3s ease;
 }
 
-/* --- Βασικές ρυθμίσεις --- */
+/* ==========================================================
+   🧩 RESET & ΒΑΣΙΚΗ ΔΟΜΗ
+========================================================== */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
 }
 
 body {
@@ -26,11 +38,11 @@ body {
   color: var(--dark);
   line-height: 1.6;
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
 }
 
-/* --- Header --- */
+/* ==========================================================
+   🧭 HEADER
+========================================================== */
 header {
   background: linear-gradient(135deg, var(--primary-dark), var(--primary));
   color: white;
@@ -97,7 +109,9 @@ header {
   transform: translateY(-2px);
 }
 
-/* --- Navigation --- */
+/* ==========================================================
+   📑 NAVIGATION
+========================================================== */
 nav {
   background: white;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
@@ -118,6 +132,7 @@ nav {
 .nav-links {
   display: flex;
   list-style: none;
+  gap: 0.5rem;
 }
 
 .nav-link {
@@ -148,7 +163,9 @@ nav {
   border-radius: 3px 3px 0 0;
 }
 
-/* --- Dropdown --- */
+/* ==========================================================
+   🔽 DROPDOWN
+========================================================== */
 .dropdown {
   position: relative;
 }
@@ -188,8 +205,10 @@ nav {
   color: var(--primary);
 }
 
-/* --- Main --- */
-.main-container {
+/* ==========================================================
+   📘 MAIN CONTENT
+========================================================== */
+main, .main-container {
   flex: 1;
   max-width: 1200px;
   margin: 2rem auto;
@@ -211,7 +230,9 @@ nav {
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* --- Titles --- */
+/* ==========================================================
+   🏷️ TITLES
+========================================================== */
 .section-title {
   font-size: 2rem;
   color: var(--primary-dark);
@@ -231,7 +252,9 @@ nav {
   border-radius: 2px;
 }
 
-/* --- Tables --- */
+/* ==========================================================
+   📊 TABLES
+========================================================== */
 .university-table {
   width: 100%;
   border-collapse: collapse;
@@ -254,7 +277,9 @@ nav {
   background: var(--light);
 }
 
-/* --- Buttons --- */
+/* ==========================================================
+   🔘 BUTTONS
+========================================================== */
 .btn {
   padding: 0.8rem 1.5rem;
   border: none;
@@ -285,7 +310,9 @@ nav {
   background: #d1d5db;
 }
 
-/* --- Forum --- */
+/* ==========================================================
+   💬 FORUM
+========================================================== */
 .forum-post {
   background: white;
   border-radius: var(--border-radius);
@@ -325,12 +352,15 @@ nav {
   font-weight: bold;
 }
 
-/* --- Footer --- */
+/* ==========================================================
+   ⚓ FOOTER
+========================================================== */
 footer {
   background: var(--primary-dark);
   color: white;
   padding: 2rem 0;
   margin-top: auto;
+  box-shadow: 0 -4px 10px rgba(0,0,0,0.15);
 }
 
 .footer-container {
@@ -338,8 +368,9 @@ footer {
   margin: 0 auto;
   padding: 0 2rem;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
+  gap: 0.8rem;
 }
 
 .footer-logo {
@@ -349,26 +380,77 @@ footer {
 
 .footer-text {
   color: rgba(255, 255, 255, 0.7);
+  font-size: 0.9rem;
 }
 
-/* --- Responsive --- */
+.footer-icons {
+  display: flex;
+  gap: 15px;
+}
+
+.footer-icons a {
+  color: white;
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+}
+
+.footer-icons a:hover {
+  color: #66b3ff;
+  transform: scale(1.2);
+}
+
+/* ==========================================================
+   📱 RESPONSIVE DESIGN
+========================================================== */
 @media (max-width: 768px) {
   .header-container {
     flex-direction: column;
     gap: 1rem;
   }
+
   .nav-container {
     flex-direction: column;
     padding: 1rem;
   }
+
   .nav-links {
     flex-wrap: wrap;
     justify-content: center;
   }
+
   .content-card {
     padding: 1.5rem;
   }
+
   .section-title {
     font-size: 1.5rem;
   }
+
+  .footer-container {
+    text-align: center;
+  }
 }
+/* === FOOTER FIX === */
+html, body {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+body {
+  min-height: 100vh;
+}
+
+main, .main-container {
+  flex: 1; /* Το περιεχόμενο μεγαλώνει ώστε να σπρώχνει το footer κάτω */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+/* Αν θέλεις το footer να κολλάει απολύτως κάτω ακόμα και σε άδεια σελίδα */
+footer {
+  margin-top: auto;
+  width: 100%;
+}
+

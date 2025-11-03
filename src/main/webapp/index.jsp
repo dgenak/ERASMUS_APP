@@ -222,13 +222,6 @@
     </div>
   </section>
   <!-- FOOTER -->
-  <footer>
-    <div class="social-icons">
-      <a href="#"><i class="fab fa-facebook-f"></i></a>
-      <a href="#"><i class="fab fa-twitter"></i></a>
-      <a href="#"><i class="fab fa-instagram"></i></a>
-    </div>
-    <p>© 2025 Οικονομικό Πανεπιστήμιο Αθηνών - Πρόγραμμα ERASMUS+</p>
-  </footer>
+  <%@ include file="footer.jsp" %>
 </body>
 </html>
