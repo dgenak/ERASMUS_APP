@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="el">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ΟΠΑ - ERASMUS+</title>
+  <title>AUEB - ERASMUS+</title>
   <link rel="stylesheet" href="css/style.css">
 
   <!-- Google Fonts & Font Awesome -->
@@ -186,42 +186,89 @@
         width: 100%;
       }
     }
+    html, body {
+        height: 100%;
+        margin: 0;
+    }
+
+    body {
+        display: flex;
+        flex-direction: column;
+    }
+
+    main {
+        flex: 1;
+    }
+    .card {
+      background: rgb(245, 243, 243);
+      width: 330px;
+      padding: 40px 30px;
+      border-radius: 25px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+      text-align: center;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+
+      display: flex;              /* 🔥 επιτρέπει κεντράρισμα */
+      flex-direction: column;     /* τα στοιχεία κάθετα */
+      justify-content: space-between; /* κρατάει το κουμπί στο κάτω μέρος */
+    }
+
+    .card a {
+      background-color: #003366;
+      color: white;
+      padding: 10px 25px;
+      border-radius: 30px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      width: 160px;            /* μικρότερο κουμπί */
+      margin: 0 auto;          /* 🔥 ΤΟ ΚΕΝΤΡΟΝΕΙ */
+      margin-top: 20px;
+      text-align: center;
+    }
+
+
+
+
   </style>
 </head>
 
 <body>
   <%@ include file="header.jsp" %>
-  <!-- HERO -->
-  <section class="hero">
-    <h1>Καλώς Ήρθες στο ΟΠΑ - ERASMUS+</h1>
-    <p>Η πύλη σου για σπουδές, συνεργασίες και εμπειρίες στο εξωτερικό.</p>
-    <a href="applications.jsp" class="btn">Ξεκίνα την Αίτησή σου</a>
-  </section>
 
-  <!-- INFO CARDS -->
-  <section class="info">
-    <div class="card">
-      <i class="fa-solid fa-book-open"></i>
-      <h3>Αντιστοίχιση Μαθήματος</h3>
-      <p>Δες ποια μαθήματα του ΟΠΑ αντιστοιχούν στα πανεπιστήμια του εξωτερικού και κάνε την επιλογή σου εύκολα.</p>
-      <a href="universities.jsp">Μετάβαση</a>
-    </div>
+  <main>
+    <section class="hero">
+      <h1>Welcome to UNIERA+</h1>
+      <p>Your smart guide for Erasmus+ opportunities</p>
+      <a href="applications.jsp" class="btn">Start Your Application</a>
+    </section>
 
-    <div class="card">
-      <i class="fa-solid fa-comments"></i>
-      <h3>Φόρουμ Συζητήσεων</h3>
-      <p>Αντάλλαξε εμπειρίες και συμβουλές με άλλους φοιτητές που συμμετέχουν ή έχουν συμμετάσχει στο πρόγραμμα Erasmus+.</p>
-      <a href="forum.jsp">Άνοιγμα Forum</a>
-    </div>
+    <section class="info">
+      <div class="card">
+        <i class="fa-solid fa-book-open"></i>
+        <h3>Course Matching</h3>
+        <p>See which AUEB courses correspond to partner universities abroad and make your choices easily.</p>
+        <a href="/ismgroup29/universities">Go to Page</a>
+      </div>
 
-    <div class="card">
-      <i class="fa-solid fa-file-signature"></i>
-      <h3>Αιτήσεις</h3>
-      <p>Κάνε την αίτησή σου για συμμετοχή στο πρόγραμμα Erasmus+, απευθείας μέσα από την πλατφόρμα.</p>
-      <a href="applications.jsp">Κάνε Αίτηση</a>
-    </div>
-  </section>
-  <!-- FOOTER -->
+      <div class="card">
+        <i class="fa-solid fa-comments"></i>
+        <h3>Discussion Forum</h3>
+        <p>Exchange experiences and advice with other students...</p>
+        <a href="forum.jsp">Open Forum</a>
+      </div>
+
+      <div class="card">
+        <i class="fa-solid fa-file-signature"></i>
+        <h3>Applications</h3>
+        <p>Submit your Erasmus+ application directly...</p>
+        <a href="applications.jsp">Apply Now</a>
+      </div>
+    </section>
+
+  </main>
   <%@ include file="footer.jsp" %>
 </body>
 </html>

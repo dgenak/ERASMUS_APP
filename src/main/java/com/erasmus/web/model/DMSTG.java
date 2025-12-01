@@ -3,10 +3,6 @@ package com.erasmus.web.model;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * Η κλάση DMSTG περιέχει όλες τις συνεργαζόμενες χώρες και τα αντίστοιχα πανεπιστήμια
- * του Τμήματος Διοικητικής Επιστήμης και Τεχνολογίας (ΔΕΤ) στο πλαίσιο του προγράμματος Erasmus+.
- */
 public class DMSTG {
 
     public static final List<String> BELGIUM = Arrays.asList(
@@ -33,11 +29,11 @@ public class DMSTG {
 
     public static final List<String> FRANCE = Arrays.asList(
         "Audencia Group - Audencia Nantes School of Management",
-        "ESC DIJON BOURGOGNE BSB / Burgundy School of Business",
+        "ESC DIJON BOURGOGNE BSB/ Burgundy School of Business",
         "University of Clermont Auvergne",
-        "Université Paris Nanterre",
-        "Université de Strasbourg - EM Strasbourg Business School",
-        "Institut d'Études Politiques 'Sciences Po Toulouse'",
+        "Universite Paris Nanterre",
+        "Universite de Strasbourg Ecole de Management Strasbourg - EM Strasbourg Business School",
+        "Institut d' Etudes Politique 'Sciences Po Toulouse'",
         "University of Tours",
         "SKEMA Business School"
     );
@@ -47,23 +43,23 @@ public class DMSTG {
         "University of Mannheim",
         "Philipps-University Marburg",
         "University of Siegen",
-        "Technische Universität Hamburg - TUHH",
-        "Technische Universität München",
-        "Universität Ulm",
-        "Technische Universität Dortmund",
+        "Technische Univeristat Hamburg - Hamburg TUHH",
+        "Technische Univeristat Munchen",
+        "Univeristat ULM",
+        "Technische Univeristat Dortmund",
         "Universität Hamburg",
-        "SRH Hochschule Berlin - The International Management University",
-        "Universität Koblenz",
-        "Universität Münster - School of Business and Economics",
+        "SRH Hochshule Berlin - The International Management University",
+        "Univeristat Koblenz",
+        "Univeristat of Munster, School of Business and Economics",
         "Hochschule München University of Applied Sciences"
     );
 
     public static final List<String> ITALY = Arrays.asList(
-        "Università degli Studi di Catania",
-        "Università degli Studi di Pavia",
-        "Università Cattolica del Sacro Cuore",
-        "Università degli Studi di Torino (ECOMAS)",
-        "Università degli Studi di Torino - Dip. 'Valter Cantino' (SAA campus)"
+        "Universita degli Studi di Catania",
+        "Universita degli Studi di Pavia - University of Pavia",
+        "Universita Cattolica del Sacro Cuore",
+        "Universita degli Studi di Torino (ECOMAS)",
+        "Universita degli Studi di Torino Dept. 'Valter Cantino' (SAA campus)"
     );
 
     public static final List<String> NETHERLANDS = Arrays.asList(
@@ -89,14 +85,5 @@ public class DMSTG {
     public static final List<String> TURKEY = Arrays.asList(
         "University of Istanbul"
     );
-
-    /**
-     * Επιστρέφει λίστα όλων των διαθέσιμων χωρών.
-     */
-    public static List<String> getAllCountries() {
-        return Arrays.asList(
-            "Belgium", "Cyprus", "Denmark", "Finland", "France",
-            "Germany", "Italy", "Netherlands", "Norway", "Slovakia", "Sweden", "Turkey"
-        );
-    }
+    
 }

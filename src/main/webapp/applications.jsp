@@ -2,11 +2,11 @@
 <%@ include file="header.jsp" %>
 
 <!DOCTYPE html>
-<html lang="el">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ERASMUS+ | Αιτήσεις</title>
+  <title>ERASMUS+ | Applications</title>
 
   <link rel="stylesheet" href="css/style.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -14,12 +14,13 @@
 
   <style>
     body {
-        font-family: 'Poppins', sans-serif;
-        color: #343a40;
-        line-height: 1.6;
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
+      font-family: 'Poppins', sans-serif;
+      color: #343a40;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background: #f4f7fb;
     }
 
     main {
@@ -47,6 +48,7 @@
       font-size: 2rem;
       color: #003366;
       margin-bottom: 1.5rem;
+      text-align: center;
     }
 
     .form-group {
@@ -151,55 +153,54 @@
 </head>
 
 <body>
-  
-  <!-- ====== MAIN ====== -->
+
   <main>
     <div class="content-card">
-      <h2 class="section-title">Υποβολή Αίτησης Erasmus+</h2>
+      <h2 class="section-title">Erasmus+ Application Form</h2>
       <form id="applicationForm">
         <div class="form-group">
-          <label class="form-label">Ονοματεπώνυμο:</label>
+          <label class="form-label">Full Name:</label>
           <input type="text" class="form-control" id="studentName" required>
         </div>
 
         <div class="form-group">
-          <label class="form-label">Αριθμός Μητρώου:</label>
+          <label class="form-label">Student ID:</label>
           <input type="text" class="form-control" id="studentId" required>
         </div>
 
         <div class="form-group">
-          <label class="form-label">Τμήμα:</label>
+          <label class="form-label">Department:</label>
           <select class="form-control" id="department" required>
-            <option value="">-- Επιλέξτε Τμήμα --</option>
-            <option value="Οικονομικής Επιστήμης">Οικονομικής Επιστήμης</option>
-            <option value="Διοικητικής Επιστήμης και Τεχνολογίας">Διοικητικής Επιστήμης και Τεχνολογίας</option>
-            <option value="Πληροφορικής">Πληροφορικής</option>
-            <option value="Στατιστικής">Στατιστικής</option>
+            <option value="">-- Select Department --</option>
+            <option value="Economics">Economics</option>
+            <option value="Management Science and Technology">Management Science and Technology</option>
+            <option value="Informatics">Informatics</option>
+            <option value="Statistics">Statistics</option>
           </select>
         </div>
 
         <div class="form-group">
-          <label class="form-label">Πανεπιστήμιο Επιλογής:</label>
+          <label class="form-label">Chosen University:</label>
           <input type="text" class="form-control" id="university" required>
         </div>
 
         <div class="form-group">
-          <label class="form-label">Χώρα:</label>
+          <label class="form-label">Country:</label>
           <input type="text" class="form-control" id="country" required>
         </div>
 
         <div class="form-group">
-          <label class="form-label">Μήνες Διαμονής:</label>
+          <label class="form-label">Months of Stay:</label>
           <input type="number" class="form-control" id="months" min="1" max="12" required>
         </div>
 
         <div class="form-group">
-          <label class="form-label">Μήνυμα / Επιπλέον Πληροφορίες:</label>
-          <textarea class="form-control" id="notes" rows="4"></textarea>
+          <label class="form-label">Message / Additional Information:</label>
+          <textarea class="form-control" id="notes" rows="4" placeholder="Write any special requests or notes..."></textarea>
         </div>
 
         <button type="button" class="btn" onclick="submitApplication()">
-          <i class="fas fa-paper-plane"></i> Υποβολή Αίτησης
+          <i class="fas fa-paper-plane"></i> Submit Application
         </button>
       </form>
     </div>
@@ -208,14 +209,14 @@
   <!-- ====== SIDEBAR ====== -->
   <div class="sidebar" id="sidebar">
     <div class="sidebar-header">
-      <h3>Μενού Χρήστη</h3>
+      <h3>User Menu</h3>
       <button class="btn" onclick="toggleSidebar()">✕</button>
     </div>
     <div class="sidebar-content">
-      <a href="/ErasmusApp/profile.jsp" class="sidebar-action"><i class="fas fa-user"></i> Το προφίλ μου</a>
-      <a href="#" class="sidebar-action"><i class="fas fa-file-alt"></i> Οι αιτήσεις μου</a>
-      <a href="#" class="sidebar-action"><i class="fas fa-cog"></i> Ρυθμίσεις</a>
-      <a href="#" class="sidebar-action" onclick="alert('Αποσυνδεθήκατε!')"><i class="fas fa-sign-out-alt"></i> Αποσύνδεση</a>
+      <a href="/ErasmusApp/profile.jsp" class="sidebar-action"><i class="fas fa-user"></i> My Profile</a>
+      <a href="#" class="sidebar-action"><i class="fas fa-file-alt"></i> My Applications</a>
+      <a href="#" class="sidebar-action"><i class="fas fa-cog"></i> Settings</a>
+      <a href="#" class="sidebar-action" onclick="alert('You have been logged out!')"><i class="fas fa-sign-out-alt"></i> Logout</a>
     </div>
   </div>
 
@@ -236,12 +237,12 @@
       };
 
       if (!form.name || !form.id || !form.department || !form.university || !form.country || !form.months) {
-        alert("Παρακαλώ συμπληρώστε όλα τα απαιτούμενα πεδία!");
+        alert("Please fill in all required fields!");
         return;
       }
 
-      console.log("Υποβλήθηκε αίτηση:", form);
-      alert("Η αίτησή σας υποβλήθηκε επιτυχώς!");
+      console.log("Application submitted:", form);
+      alert("Your application has been successfully submitted!");
       document.getElementById("applicationForm").reset();
     }
   </script>

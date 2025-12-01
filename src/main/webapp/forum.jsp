@@ -1,69 +1,106 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
-
 <!DOCTYPE html>
 <html lang="el">
 <head>
   <meta charset="UTF-8">
-  <title>ERASMUS+ | Forum</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <title>UniEra+ | Erasmus Forum</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
-    body {
-      font-family: 'Poppins', sans-serif;
-      color: #1f2a44;
+    /* === GENERAL === */
+    html, body {
+      height: 100%;
       margin: 0;
-      padding: 0;
+      display: flex;
+      flex-direction: column;
+      font-family: 'Poppins', sans-serif;
+      background: #f4f7fb;
+      color: #1f2a44;
     }
 
     main {
-      max-width: 900px;
-      margin: 2rem auto;
-      background: #f0efef;
-      border-radius: 12px;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-      padding: 40px;
+      flex: 1;
+      max-width: 1000px;
+      margin: 2.5rem auto;
+      background: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+      padding: 3rem;
+      animation: fadeIn 0.6s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
+      text-align: center;
+      color: #003366;
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
     }
 
     p.subtitle {
-      color: #555;
-      font-size: 15px;
-      margin-bottom: 25px;
+      text-align: center;
+      color: #666;
+      margin-bottom: 2rem;
+      font-size: 1rem;
     }
 
+    /* === BUTTONS === */
     .buttons {
       display: flex;
-      gap: 12px;
-      margin-bottom: 25px;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 2rem;
     }
 
     .btn {
       border: none;
-      border-radius: 8px;
+      border-radius: 10px;
       cursor: pointer;
-      font-weight: 500;
-      padding: 10px 20px;
+      font-weight: 600;
+      padding: 12px 22px;
       font-size: 15px;
       transition: all 0.3s ease;
     }
 
     .btn.primary {
-      background-color: #0059b3;
-      color: #fff;
+      background: linear-gradient(135deg, #0073e6, #00aaff);
+      color: white;
+      box-shadow: 0 4px 12px rgba(0, 115, 230, 0.3);
+    }
+
+    .btn.primary:hover {
+      background: linear-gradient(135deg, #005bb5, #0099e6);
+      transform: scale(1.05);
     }
 
     .btn.secondary {
-      background-color: #e9eef7;
+      background-color: #e6f0ff;
       color: #003366;
+      border: 1px solid #99ccff;
     }
 
+    .btn.secondary:hover {
+      background-color: #cce0ff;
+    }
+
+    /* === POSTS === */
     .post {
-      background-color: #fff;
+      background-color: #ffffff;
       border-radius: 12px;
-      box-shadow: 0 3px 12px rgba(0,0,0,0.07);
-      padding: 22px;
+      box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
+      padding: 25px;
       margin-bottom: 25px;
+      transition: transform 0.2s ease, box-shadow 0.3s ease;
+    }
+
+    .post:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
     }
 
     .post-header {
@@ -75,8 +112,8 @@
 
     .avatar {
       background: linear-gradient(135deg, #0059b3, #66b3ff);
-      width: 48px;
-      height: 48px;
+      width: 55px;
+      height: 55px;
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -84,69 +121,158 @@
       color: white;
       font-weight: bold;
       font-size: 18px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
     }
 
+    .post h3 {
+      margin: 5px 0;
+      color: #003366;
+    }
+
+    .post p {
+      color: #333;
+      line-height: 1.6;
+      margin-top: 8px;
+    }
+
+    .post-footer {
+      display: flex;
+      justify-content: flex-start;
+      gap: 20px;
+      margin-top: 15px;
+      color: #555;
+      font-size: 14px;
+    }
+
+    .post-footer span {
+      cursor: pointer;
+      transition: color 0.2s ease;
+    }
+
+    .post-footer span:hover {
+      color: #0073e6;
+    }
+
+    /* === REPLIES === */
     .reply {
-      background: #f9f9ff;
-      padding: 10px 15px;
-      margin: 10px 0 0 50px;
-      border-left: 3px solid #007bff;
+      background: #f5f9ff;
+      padding: 12px 15px;
+      margin: 12px 0 0 55px;
+      border-left: 4px solid #007bff;
       border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
     }
 
     .reply strong { color: #003366; }
-    .reply small { color: #888; }
+    .reply small { color: #888; font-size: 12px; }
 
     .reply-form {
       margin-top: 10px;
+      margin-left: 55px;
     }
 
     .reply-form textarea {
       width: 100%;
-      padding: 8px;
-      border-radius: 8px;
+      padding: 10px;
+      border-radius: 10px;
       border: 1px solid #ccc;
       resize: none;
       font-family: inherit;
-    }
-
-    .reply-form button { margin-top: 8px; }
-
-    .post-footer {
-      display: flex;
-      gap: 15px;
       font-size: 14px;
-      color: #666;
     }
 
-    .post-footer i {
-      cursor: pointer;
-      margin-right: 5px;
+    .reply-form button {
+      margin-top: 8px;
     }
+
+    /* === NEW POST === */
+    #newPostForm {
+      background: #f0f7ff;
+      border: 1px solid #bcdcff;
+      border-radius: 12px;
+      padding: 25px;
+      margin-top: 30px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+    }
+
+    #newPostForm input, #newPostForm textarea {
+      width: 100%;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      padding: 10px;
+      font-family: inherit;
+      font-size: 15px;
+    }
+
+    #newPostForm textarea {
+      margin-top: 10px;
+      height: 120px;
+      resize: none;
+    }
+
+    #newPostForm button {
+      margin-top: 10px;
+    }
+    /* === RESPONSIVE FIX FOR MOBILE === */
+  @media (max-width: 768px) {
+    main {
+      max-width: 100%;
+      margin: 0;
+      border-radius: 0;
+      box-shadow: none;
+      padding: 1.5rem 1rem;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+    }
+
+    .buttons {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .btn {
+      width: 90%;
+    }
+
+    .post {
+      padding: 15px;
+    }
+
+    #newPostForm {
+      padding: 15px;
+    }
+  }
+
+
   </style>
 </head>
 
 <body>
   <%@ include file="header.jsp" %>
+
   <main>
-    <h1>Erasmus Forum</h1>
-    <p class="subtitle">Μοιράσου την εμπειρία σου και μάθε από άλλους φοιτητές.</p>
+    <h1><i class="fa-solid fa-comments"></i> Erasmus Forum</h1>
+    <p class="subtitle">Exchange experiences and advice with other students who are participating or have participated in the Erasmus+ program!</p>
 
     <div class="buttons">
-      <button class="btn primary" onclick="openNewPostForm()">+ Νέα Ερώτηση</button>
-      <button class="btn secondary" onclick="openNewPostForm()">💬 Μοιράσου Εμπειρία</button>
+      <button class="btn primary" onclick="openNewPostForm()"><i class="fa-solid fa-plus"></i> Ask a question</button>
+      <button class="btn secondary" onclick="openNewPostForm()"><i class="fa-solid fa-share-nodes"></i> Share Experience</button>
     </div>
 
-    <div id="forumContainer">Φόρτωση...</div>
+    <div id="forumContainer">🔄 Loading posts...</div>
 
-    <div id="newPostForm" style="display:none; margin-top:20px;">
-      <h3>Νέα Δημοσίευση</h3>
-      <input id="postTitle" placeholder="Τίτλος" style="width:100%;padding:8px;">
-      <textarea id="postBody" placeholder="Περιεχόμενο..." style="width:100%;height:100px;margin-top:10px;"></textarea>
-      <button class="btn primary" onclick="submitPost()">Δημοσίευση</button>
+    <div id="newPostForm" style="display:none;">
+      <h3><i class="fa-solid fa-pen-to-square"></i> Create New Post</h3>
+      <input id="postTitle" placeholder="Post Title">
+      <textarea id="postBody" placeholder="Tell us about your experience or ask a question..."></textarea>
+      <button class="btn primary" onclick="submitPost()"><i class="fa-solid fa-paper-plane"></i> Δημοσίευση</button>
       <button class="btn secondary" onclick="closeNewPostForm()">Ακύρωση</button>
     </div>
   </main>
+
+  <%@ include file="footer.jsp" %>
 
   <script>
     async function loadForumPosts() {
@@ -160,7 +286,7 @@
           const repliesHtml = (p.replies || []).map(r => `
             <div class="reply">
               <strong>\${r.username}</strong>
-              <small>\${new Date(r.timestamp).toLocaleDateString('el-GR')}</small>
+              <small> | \${new Date(r.timestamp).toLocaleDateString('el-GR')}</small>
               <p>\${r.body}</p>
             </div>
           `).join('');
@@ -170,8 +296,8 @@
               <div class="post-header">
                 <div class="avatar">\${p.username ? p.username[0].toUpperCase() : 'A'}</div>
                 <div>
-                  <strong>\${p.username}</strong>
-                  <small>\${new Date(p.timestamp).toLocaleDateString('el-GR')}</small>
+                  <strong>\${p.username}</strong><br>
+                  <small>\${new Date(p.timestamp).toLocaleString('el-GR')}</small>
                 </div>
               </div>
               <h3>\${p.title}</h3>
@@ -198,6 +324,7 @@
 
     function openNewPostForm() {
       document.getElementById('newPostForm').style.display = 'block';
+      window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
     }
 
     function closeNewPostForm() {
@@ -212,7 +339,7 @@
         return;
       }
 
-      const post = { username: 'Anonymous', title: title, body: body };
+      const post = { username: 'Anonymous', title, body };
       await fetch('/api/forumPosts', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -234,7 +361,7 @@
 
     function toggleReplyForm(id) {
       const form = document.getElementById(`replyForm-\${id}`);
-      form.style.display = (form.style.display === 'none') ? 'block' : 'none';
+      form.style.display = form.style.display === 'none' ? 'block' : 'none';
     }
 
     async function submitReply(id) {
@@ -244,12 +371,7 @@
         return;
       }
 
-      const reply = {
-        username: 'Anonymous',
-        body: text,
-        timestamp: new Date().toISOString()
-      };
-
+      const reply = { username: 'Anonymous', body: text, timestamp: new Date().toISOString() };
       await fetch(`/api/forumPosts/\${id}/reply`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -260,6 +382,5 @@
 
     document.addEventListener('DOMContentLoaded', loadForumPosts);
   </script>
-  <%@ include file="footer.jsp" %>
 </body>
 </html>

@@ -1,55 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee
-                             https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd"
-         version="5.0">
+         xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee 
+                             http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
+         version="2.4">
 
-  <!-- =======================  SERVLETS  ======================= -->
+    <!-- HOME -->
+    <servlet>
+        <servlet-name>HomeServlet</servlet-name>
+        <servlet-class>com.erasmus.web.controller.HomeServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>HomeServlet</servlet-name>
+        <url-pattern>/home</url-pattern>
+    </servlet-mapping>
 
-  <!-- Αρχική σελίδα -->
-  <servlet>
-    <servlet-name>HomeServlet</servlet-name>
-    <servlet-class>com.erasmus.web.controller.HomeServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>HomeServlet</servlet-name>
-    <url-pattern>/home</url-pattern>
-  </servlet-mapping>
+    <!-- FORUM -->
+    <servlet>
+        <servlet-name>ForumServlet</servlet-name>
+        <servlet-class>com.erasmus.web.controller.ForumServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ForumServlet</servlet-name>
+        <url-pattern>/api/forumPosts/*</url-pattern>
+    </servlet-mapping>
 
-  <!-- Πανεπιστήμια & Αντιστοιχίσεις -->
-  <servlet>
-    <servlet-name>UniversityMappingController</servlet-name>
-    <servlet-class>com.erasmus.web.controller.UniversityMappingController</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>UniversityMappingController</servlet-name>
-    <url-pattern>/api/universities/*</url-pattern>
-  </servlet-mapping>
+    <!-- APPLICATIONS -->
+    <servlet>
+        <servlet-name>ApplicationServlet</servlet-name>
+        <servlet-class>com.erasmus.web.controller.ApplicationServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ApplicationServlet</servlet-name>
+        <url-pattern>/api/applications/*</url-pattern>
+    </servlet-mapping>
 
-  <!-- Forum -->
-  <servlet>
-    <servlet-name>ForumServlet</servlet-name>
-    <servlet-class>com.erasmus.web.controller.ForumServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>ForumServlet</servlet-name>
-    <url-pattern>/api/forumPosts/*</url-pattern>
-  </servlet-mapping>
+    <!-- UNIVERSITIES PAGE -->
+    <servlet>
+        <servlet-name>UniversityServlet</servlet-name>
+        <servlet-class>com.erasmus.web.controller.UniversityServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UniversityServlet</servlet-name>
+        <url-pattern>/universities</url-pattern>
+    </servlet-mapping>
 
-  <!-- Αιτήσεις Erasmus -->
-  <servlet>
-    <servlet-name>ApplicationServlet</servlet-name>
-    <servlet-class>com.erasmus.web.controller.ApplicationServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>ApplicationServlet</servlet-name>
-    <url-pattern>/api/applications/*</url-pattern>
-  </servlet-mapping>
+    <!-- UNIVERSITY DETAILS PAGE -->
+    <servlet>
+        <servlet-name>UniversityDetailsServlet</servlet-name>
+        <servlet-class>com.erasmus.web.controller.UniversityDetailsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UniversityDetailsServlet</servlet-name>
+        <url-pattern>/UniversityDetailsServlet</url-pattern>
+    </servlet-mapping>
 
-  <!-- =======================  WELCOME PAGE  ======================= -->
-  <welcome-file-list>
-    <welcome-file>index.jsp</welcome-file>
-  </welcome-file-list>
+    <!-- DEFAULT PAGE -->
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
 
 </web-app>

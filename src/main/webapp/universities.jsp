@@ -1,313 +1,315 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.util.List" %>
+<%@ page import="com.erasmus.web.model.Country" %>
+<%@ page import="com.erasmus.web.model.University" %>
 
 <!DOCTYPE html>
 <html lang="el">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ERASMUS+ | Αντιστοίχιση Μαθημάτων</title>
+    <meta charset="UTF-8">
+    <title>Erasmus+ Universities</title>
 
-  <!-- Εμφάνιση και γραμματοσειρές -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-  <style>
-    body {
-      margin: 0;
-      background: #f5f8ff;
-      font-family: 'Poppins', sans-serif;
-      color: #1a1a1a;
-    }
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
 
-    main {
-      max-width: 1100px;
-      margin: 50px auto;
-      padding: 2rem;
-    }
+        body {
+            background: #eef3ff;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            flex-direction: column;
+        }
 
-    /* === Κεντρική κάρτα === */
-    .content-card {
-      background: #fff;
-      border-radius: 15px;
-      padding: 2.5rem;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-      transition: transform 0.3s ease;
-    }
-    .content-card:hover {
-      transform: translateY(-3px);
-    }
+        main {
+            flex: 1;
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 2rem;
+        }
 
-    /* === Επικεφαλίδα === */
-    .section-title {
-      font-size: 1.8rem;
-      font-weight: 600;
-      color: #003366;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 2rem;
-    }
+        .card {
+            background: #ffffff;
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 6px 26px rgba(0,0,0,0.10);
+        }
 
-    .section-title i {
-      font-size: 1.5rem;
-      color: #0073e6;
-    }
+        h2 {
+            font-size: 2rem;
+            color: #002147;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 0;
+            margin-bottom: 25px;
+            font-weight: 700;
+        }
 
-    /* === Φόρμες επιλογών === */
-    .form-group {
-      margin-bottom: 1.5rem;
-    }
+        label {
+            font-weight: 600;
+            color: #003366;
+            font-size: 1rem;
+        }
 
-    .form-group label {
-      font-weight: 600;
-      color: #002855;
-    }
+        select {
+            width: 100%;
+            padding: 14px;
+            margin-top: 8px;
+            border-radius: 10px;
+            border: 1px solid #cbd6ee;
+            font-size: 1rem;
+            background: #f9fbff;
+            transition: 0.2s;
+        }
 
-    .form-control {
-      width: 100%;
-      padding: 12px;
-      border: 1px solid #ccd6eb;
-      border-radius: 8px;
-      font-size: 1rem;
-      background: #f9fbff;
-      transition: all 0.3s ease;
-    }
+        select:hover {
+            border-color: #7aa7e8;
+        }
 
-    .form-control:hover, .form-control:focus {
-      border-color: #0073e6;
-      outline: none;
-      background: #fff;
-    }
+        select:focus {
+            outline: none;
+            border-color: #003366;
+            box-shadow: 0 0 6px rgba(0,70,140,0.3);
+        }
 
-    /* === Εμφάνιση μαθημάτων === */
-    .semesters-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 20px;
-      margin-top: 1.5rem;
-    }
+        button {
+            margin-top: 20px;
+            padding: 14px;
+            width: 100%;
+            background: #003366;
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            transition: 0.2s;
+        }
 
-    .semester-card {
-      background: #eaf4ff;
-      border-radius: 12px;
-      padding: 1.5rem;
-      transition: all 0.3s ease;
-      border: 1px solid #cde2ff;
-    }
+        button:hover {
+            background: #001f4d;
+        }
 
-    .semester-card:hover {
-      background: #d9ecff;
-      transform: translateY(-3px);
-    }
+        hr {
+            margin: 35px 0;
+            border: none;
+            border-top: 1px solid #d4dbee;
+        }
 
-    .semester-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 0.8rem;
-    }
+        .universities-list {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
 
-    .semester-title {
-      color: #003366;
-      font-size: 1.2rem;
-      font-weight: 600;
-    }
+        .university-item {
+            background: #f3f7ff;
+            padding: 15px 18px;
+            border-radius: 12px;
+            font-weight: 600;
+            color: #003366;
+            border: 1px solid #d7e2f7;
+            transition: 0.2s;
+        }
 
-    .semester-badge {
-      background: #0073e6;
-      color: #fff;
-      font-size: 0.8rem;
-      padding: 4px 10px;
-      border-radius: 8px;
-    }
+        .university-item:hover {
+            background: #e7edff;
+            transform: translateX(5px);
+        }
 
-    .course-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
+        .university-item a {
+            text-decoration: none;
+            color: #003366;
+            display: block;
+        }
+        /* ===== Modern Select (NO JS) ===== */
+        .select-wrapper {
+            position: relative;
+            width: 100%;
+        }
 
-    .course-item {
-      background: #fff;
-      border-radius: 8px;
-      margin-bottom: 8px;
-      padding: 10px 12px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      border: 1px solid #e0e8ff;
-    }
+        .custom-select {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
 
-    .course-item:hover {
-      background: #0073e6;
-      color: #fff;
-      transform: translateX(5px);
-    }
+            width: 100%;
+            padding: 14px 18px;
+            font-size: 1rem;
+            font-weight: 500;
 
-    /* === Αποτέλεσμα Αντιστοίχισης === */
-    #mappingResult {
-      margin-top: 30px;
-      background: #f0f8ff;
-      border-left: 5px solid #0073e6;
-      border-radius: 10px;
-      padding: 1.5rem;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-      display: none;
-    }
+            border-radius: 12px;
+            border: 1px solid #c8d7f0;
+            background: #f9fbff;
 
-    #mappingResult h3 {
-      color: #003366;
-      margin-bottom: 10px;
-    }
+            color: #003366;
+            cursor: pointer;
+            transition: 0.25s ease;
+        }
 
-    /* === Banner Section === */
-    .banner {
-      background: linear-gradient(120deg, #003366, #0073e6);
-      color: white;
-      border-radius: 14px;
-      padding: 2rem 2.5rem;
-      margin-bottom: 2rem;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.2);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-    }
+        /* Hover */
+        .custom-select:hover {
+            border-color: #7aa7e8;
+        }
 
-    .banner h1 {
-      font-size: 1.8rem;
-      font-weight: 600;
-    }
+        /* Focus */
+        .custom-select:focus {
+            outline: none;
+            border-color: #003366;
+            box-shadow: 0 0 6px rgba(0, 70, 140, 0.3);
+        }
 
-    .banner p {
-      max-width: 600px;
-      color: #e0eaff;
-      line-height: 1.5;
-    }
+        /* Dropdown arrow */
+        .select-wrapper:after {
+            content: "▼";
+            font-size: 12px;
+            color: #003366;
 
-    .banner i {
-      font-size: 3rem;
-      color: #aeefff;
-    }
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+        }
 
-    footer {
-      background: #003366;
-      color: #cce0ff;
-      text-align: center;
-      padding: 1.2rem;
-      margin-top: 50px;
-      font-size: 0.9rem;
-    }
-  </style>
+        /* ===== Modern Button ===== */
+        .modern-btn {
+            margin-top: 18px;
+            padding: 14px;
+            width: 100%;
+            background: linear-gradient(135deg, #003b80, #002147);
+            border: none;
+            color: white;
+
+            border-radius: 12px;
+            font-size: 1.12rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.25s ease;
+        }
+
+        .modern-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+            background: linear-gradient(135deg, #004a9f, #002147);
+        }
+
+    </style>
 </head>
 
 <body>
-  <%@ include file="header.jsp" %>
 
-  <main>
-    <div class="banner">
-      <div>
-        <h1><i class="fa-solid fa-globe-europe"></i> Erasmus+ Αντιστοίχιση Μαθημάτων ΔΕΤ</h1>
-        <p>Εξερευνήστε πανεπιστήμια σε όλη την Ευρώπη και δείτε πώς τα μαθήματα του Τμήματος Διοικητικής Επιστήμης & Τεχνολογίας αντιστοιχούν με αυτά του εξωτερικού.</p>
-      </div>
-      <i class="fa-solid fa-book-open-reader"></i>
-    </div>
+<%@ include file="header.jsp" %>
 
-    <div class="content-card">
-      <h2 class="section-title"><i class="fa-solid fa-university"></i> Επιλογή Πανεπιστημίου</h2>
+<main>
 
-      <!-- Επιλογή Χώρας -->
-      <div class="form-group">
-        <label><strong>Επιλέξτε Χώρα:</strong></label>
-        <select id="countrySelect" class="form-control">
-          <option value="">-- Επιλογή Χώρας --</option>
-        </select>
-      </div>
+    <%
+        List<Country> countries = (List<Country>) request.getAttribute("countries");
+        List<University> universities = (List<University>) request.getAttribute("universities");
+        String selectedCountryId = request.getAttribute("selectedCountryId") != null
+                                   ? request.getAttribute("selectedCountryId").toString()
+                                   : "";
+    %>
 
-      <!-- Επιλογή Πανεπιστημίου -->
-      <div class="form-group">
-        <label><strong>Επιλέξτε Πανεπιστήμιο:</strong></label>
-        <select id="universitySelect" class="form-control">
-          <option value="">-- Επιλογή Πανεπιστημίου --</option>
-        </select>
-      </div>
+    <div class="card">
 
-      <!-- Λίστα Μαθημάτων -->
-      <div id="coursesContainer" class="semesters-grid"></div>
+        <h2><i class="fa-solid fa-globe"></i> Erasmus+ Universities</h2>
 
-      <!-- Αποτέλεσμα Αντιστοίχισης -->
-      <div id="mappingResult"></div>
-    </div>
-  </main>
+        <form method="get" action="universities">
 
-  <script>
-    // === Φόρτωση επιλογών ===
-    $(document).ready(function() {
+            <label>Choose a country</label>
 
-      // Χώρες
-      $.getJSON('/ErasmusApp/api/universities/countries', function(countries) {
-        countries.forEach(function(c) {
-          $('#countrySelect').append('<option value="' + c + '">' + c + '</option>');
-        });
-      });
+            <div class="select-wrapper">
+                <select name="countryId" class="custom-select">
+                    <option value="">-- Choose a country --</option>
 
-      // Πανεπιστήμια ανά χώρα
-      $('#countrySelect').on('change', function() {
-        var country = $(this).val();
-        $('#universitySelect').html('<option value="">-- Επιλογή Πανεπιστημίου --</option>');
-        $('#coursesContainer').empty();
-        $('#mappingResult').hide();
+                    <%
+                        if (countries != null) {
+                            for (Country c : countries) {
+                    %>
+                        <option value="<%= c.getCountryId() %>"
+                            <%= selectedCountryId.equals(String.valueOf(c.getCountryId())) ? "selected" : "" %>>
+                            <%= c.getCountryName() %>
+                        </option>
+                    <%
+                            }
+                        }
+                    %>
+                </select>
+            </div>
 
-        if (country) {
-          $.getJSON('/ErasmusApp/api/universities/byCountry?country=' + encodeURIComponent(country), function(unis) {
-            unis.forEach(function(u) {
-              $('#universitySelect').append('<option value="' + u + '">' + u + '</option>');
-            });
-          });
-        }
-      });
+            <button type="submit" class="modern-btn">Load Universities</button>
+        </form>
 
-      // Μαθήματα ανά πανεπιστήμιο
-      $('#universitySelect').on('change', function() {
-        var university = $(this).val();
-        $('#coursesContainer').empty();
-        $('#mappingResult').hide();
+        <%
+            if (universities != null) {
+        %>
 
-        if (university) {
-          $.getJSON('/ErasmusApp/api/universities/dmstCourses', function(data) {
-            for (var semester in data) {
-              if (data.hasOwnProperty(semester)) {
-                var courses = data[semester];
-                var html = "<div class='semester-card'>" +
-                             "<div class='semester-header'>" +
-                               "<h3 class='semester-title'>" + semester + "</h3>" +
-                               "<span class='semester-badge'>Μαθήματα</span>" +
-                             "</div><ul class='course-list'>";
-                courses.forEach(function(c) {
-                  html += "<li class='course-item' onclick=\"showMapping('" + university + "', '" + c + "')\">" + c + "</li>";
-                });
-                html += "</ul></div>";
-                $('#coursesContainer').append(html);
-              }
+        <hr>
+
+
+        <h3 style="color:#003366; font-size:1.4rem; margin-bottom:20px;">Available Universities</h3>
+
+        <div class="universities-list">
+
+        <%
+            if (universities.isEmpty()) {
+        %>
+                <div style="background:#ffecec; color:#900; padding:12px; border-radius:10px;">
+                    No universities found for this country.
+                </div>
+        <%
+            } else {
+                for (University u : universities) {
+        %>
+
+            <div class="university-item">
+                <a href="UniversityDetailsServlet?id=<%= u.getUniversityId() %>">
+                    <%= u.getUniversityName() %>
+                </a>
+            </div>
+
+        <%
+                }
             }
-          });
-        }
-      });
-    });
+        %>
 
-    // === Εμφάνιση αντιστοίχισης ===
-    function showMapping(university, dmstCourse) {
-      $.get("/ErasmusApp/api/universities/mapping?university=" + 
-            encodeURIComponent(university) + 
-            "&dmstCourse=" + encodeURIComponent(dmstCourse),
-        function(result) {
-          $('#mappingResult')
-            .html("<h3><i class='fa-solid fa-arrows-left-right'></i> " + dmstCourse + "</h3><p><strong>Αντιστοίχιση:</strong> " + result + "</p>")
-            .fadeIn(300);
-        }
-      );
-    }
-  </script>
-  <%@ include file="footer.jsp" %>
+        </div>
+
+        <%
+            }
+        %>
+        <%
+        List<University> allUnis = (List<University>) request.getAttribute("allUnis");
+        %>
+
+        <h3 style="color:#003366; font-size:1.4rem; margin:30px 0 15px;">
+            All Partner Universities
+        </h3>
+
+        <div style="
+            width:100%;
+            height:450px;
+            border-radius: 18px;
+            overflow:hidden;
+            box-shadow: 0 8px 26px rgba(0,0,0,0.20);
+            margin-bottom:35px;">
+            
+            <iframe src="https://www.google.com/maps/d/embed?mid=1BrL8o3VWxsxsmxFSqdzUfcDYc7DVpb4&ehbc=2E312F&noprof=1" width="640" height="480"></iframe>
+
+        </div>
+
+
+    </div>
+
+</main>
+
+<%@ include file="footer.jsp" %>
+
 </body>
 </html>
