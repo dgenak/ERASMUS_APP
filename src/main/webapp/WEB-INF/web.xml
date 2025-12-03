@@ -55,6 +55,26 @@
         <url-pattern>/UniversityDetailsServlet</url-pattern>
     </servlet-mapping>
 
+    <!-- COURSE MATCH SELECT PAGE -->
+    <servlet>
+        <servlet-name>CourseMatchSelectServlet</servlet-name>
+        <servlet-class>com.erasmus.web.controller.CourseMatchSelectServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CourseMatchSelectServlet</servlet-name>
+        <url-pattern>/CourseMatchSelect</url-pattern>
+    </servlet-mapping>
+
+    <!-- BEST UNIVERSITY FINDER -->
+    <servlet>
+        <servlet-name>FindBestUniversitiesServlet</servlet-name>
+        <servlet-class>com.erasmus.web.controller.FindBestUniversitiesServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>FindBestUniversitiesServlet</servlet-name>
+        <url-pattern>/FindBestUniversities</url-pattern>
+    </servlet-mapping>
+
     <!-- DEFAULT PAGE -->
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>

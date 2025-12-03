@@ -68,8 +68,12 @@
             margin-bottom: 22px;
         }
 
-        /* COURSE ITEM */
+        /* COURSE ITEM - ΔΙΟΡΘΩΣΗ: Προστέθηκε display: block και αφαίρεση υπογράμμισης */
         .course-item {
+            display: block; /* ΣΗΜΑΝΤΙΚΗ ΔΙΟΡΘΩΣΗ: Κάνει το <a> να συμπεριφέρεται σαν block/div */
+            text-decoration: none; /* Αφαιρεί την υπογράμμιση του συνδέσμου */
+            color: inherit; /* Κληρονομεί το χρώμα κειμένου για να μη φαίνεται μπλε */
+
             background: #f3f6ff;
             padding: 18px 20px;
             border-radius: 14px;
@@ -80,7 +84,6 @@
         .course-item:hover {
             background: #e7edff;
         }
-
         .course-name {
             font-weight: 600;
             color: #222;
@@ -256,6 +259,157 @@
             pointer-events: none;
         }
 
+        /* BACKDROP */
+        .modal-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.55);
+            backdrop-filter: blur(6px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            visibility: hidden;
+            opacity: 0;
+            transition: 0.35s ease;
+            z-index: 1500;
+        }
+
+        .modal-backdrop:target {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* GLASS CONTAINER */
+        .modal-glass {
+            background: rgba(255,255,255,0.87);
+            backdrop-filter: blur(12px);
+            border-radius: 22px;
+            padding: 40px 45px;
+            width: 95%;
+            max-width: 480px;
+            box-shadow: 0 25px 55px rgba(0,0,0,0.25);
+            animation: slideUp 0.35s ease;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(40px); opacity: 0; }
+            to   { transform: translateY(0); opacity: 1; }
+        }
+
+        /* HEADER */
+        .modal-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .modal-icon {
+            font-size: 45px;
+            margin-bottom: 10px;
+        }
+
+        .modal-title {
+            font-size: 26px;
+            font-weight: 700;
+            color: #002147;
+        }
+
+        .modal-subtitle {
+            font-size: 16px;
+            color: #445;
+            margin-top: 8px;
+        }
+
+        /* COURSE CARD */
+        .modal-course-card {
+            background: linear-gradient(135deg, #eef3ff, #ffffff);
+            border-radius: 16px;
+            padding: 22px 28px;
+            border: 1px solid #d8e2ff;
+            box-shadow: 0 4px 20px rgba(0,40,120,0.07);
+            margin-bottom: 30px;
+        }
+
+        .course-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #003366;
+            margin-bottom: 8px;
+        }
+
+        .course-line {
+            width: 60px;
+            height: 3px;
+            background: #005bbb;
+            border-radius: 10px;
+            margin-bottom: 18px;
+        }
+
+        /* INFO ROWS */
+        .course-info-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .label {
+            color: #555;
+            font-weight: 600;
+        }
+
+        .value {
+            color: #002147;
+            font-weight: 700;
+        }
+
+        /* NO DATA */
+        .no-data {
+            color: #666;
+            font-size: 15px;
+            text-align: center;
+        }
+
+        /* BUTTON */
+        .modal-btn {
+            display: block;
+            background: #003366;
+            color: white;
+            text-align: center;
+            padding: 14px;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: 0.25s;
+        }
+
+        .modal-btn:hover {
+            background: #001f4d;
+            transform: translateY(-3px);
+        }
+
+        /* Click backdrop to close */
+        .modal-backdrop-close {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+
+        .course-item.equiv-yes {
+            background: #e7ffe7 !important;
+            border-left: 6px solid #2ecc71;
+        }
+
+        .course-item.equiv-no {
+            background: #ffe7e7 !important;
+            border-left: 6px solid #e74c3c;
+        }
 
 
     </style>
@@ -273,12 +427,17 @@
             Map<Integer, List<CourseDet>> detCourses =
                     (Map<Integer, List<CourseDet>>) request.getAttribute("detCourses");
 
+            // ➤ ΠΡΟΣΘΗΚΗ ΑΥΤΗΣ ΤΗΣ ΓΡΑΜΜΗΣ
+            Map<Integer, Boolean> hasEquiv =
+                    (Map<Integer, Boolean>) request.getAttribute("hasEquiv");
+
             double lat = uni.getLatitude();
             double lng = uni.getLongitude();
 
             String googleEmbed = "https://www.google.com/maps?q=" + lat + "," + lng + "&hl=en&z=15&output=embed";
             String googleLink = "https://www.google.com/maps?q=" + lat + "," + lng + "&hl=en";
         %>
+
 
         <div class="title-box">
             <h1>DMST Course Program</h1>
@@ -291,7 +450,7 @@
             <a href="<%= googleLink %>" target="_blank" class="map-click-layer"></a>
         </div>
 
-        <!-- SEMESTERS 1–6 -->
+        <!-- SEMESTERS 1–5 -->
         <div class="semester-grid">
 
             <% for (int sem = 1; sem <= 5; sem++) { %>
@@ -299,7 +458,8 @@
                     <div class="semester-title">Semester <%= sem %></div>
 
                     <% for (CourseDet c : detCourses.get(sem)) { %>
-                        <div class="course-item">
+                        <a href="UniversityDetailsServlet?id=<%= uni.getUniversityId() %>&detId=<%= c.getId() %>#course-modal" class="course-item <%= hasEquiv.get(c.getId()) ? "equiv-yes" : "equiv-no" %>">
+
                             <div class="course-name">
                                 <%= c.getCourseName() %>
                                 <span class="ects-badge"><%= c.getEcts() %> ECTS</span>
@@ -307,7 +467,7 @@
                             <div class="course-info">
                                 Code: <%= c.getCourseCode() %> | Period: <%= c.getPeriod() %>
                             </div>
-                        </div>
+                        </a>
                     <% } %>
                 </div>
             <% } %>
@@ -327,8 +487,10 @@
                 %>
                 <h3 class="orient-title">Mandatory Courses (for all orientations)</h3>
 
-                <% for (CourseDet c : coreMandatory6) { %>
-                    <div class="course-item">
+                    <% for (CourseDet c : coreMandatory6) { %>
+                        <a href="UniversityDetailsServlet?id=<%= uni.getUniversityId() %>&detId=<%= c.getId() %>#course-modal" class="course-item <%= hasEquiv.get(c.getId()) ? "equiv-yes" : "equiv-no" %>">
+
+                            
                         <div class="course-name">
                             <%= c.getCourseName() %>
                             <span class="ects-badge"><%= c.getEcts() %> ECTS</span>
@@ -336,7 +498,7 @@
                         <div class="course-info">
                             Code: <%= c.getCourseCode() %> | Period: <%= c.getPeriod() %>
                         </div>
-                    </div>
+                    </a>
                 <% } %>
 
                 <% if (selected == null) { %>
@@ -367,7 +529,7 @@
                     </h3>
 
                     <% for (CourseDet c : mand6) { %>
-                        <div class="course-item">
+                        <a href="UniversityDetailsServlet?id=<%= uni.getUniversityId() %>&detId=<%= c.getId() %>#course-modal" class="course-item <%= hasEquiv.get(c.getId()) ? "equiv-yes" : "equiv-no" %>">
                             <div class="course-name">
                                 <%= c.getCourseName() %>
                                 <span class="ects-badge"><%= c.getEcts() %> ECTS</span>
@@ -375,7 +537,7 @@
                             <div class="course-info">
                                 Code: <%= c.getCourseCode() %> | Period: <%= c.getPeriod() %>
                             </div>
-                        </div>
+                        </a>
                     <% } %>
 
                     <h3 class="electives-title">Elective Courses</h3>
@@ -409,7 +571,8 @@
                 <h3 class="orient-title">Mandatory Courses (for all orientations)</h3>
 
                 <% for (CourseDet c : coreMandatory7) { %>
-                    <div class="course-item">
+                    <a href="UniversityDetailsServlet?id=<%= uni.getUniversityId() %>&detId=<%= c.getId() %>#course-modal" class="course-item <%= hasEquiv.get(c.getId()) ? "equiv-yes" : "equiv-no" %>">
+
                         <div class="course-name">
                             <%= c.getCourseName() %>
                             <span class="ects-badge"><%= c.getEcts() %> ECTS</span>
@@ -417,7 +580,8 @@
                         <div class="course-info">
                             Code: <%= c.getCourseCode() %> | Period: <%= c.getPeriod() %>
                         </div>
-                    </div>
+                    </a>
+
                 <% } %>
 
                 <% if (selected7 == null) { %>
@@ -437,14 +601,19 @@
 
                 <% } else { %>
 
+                    <!-- BACK BUTTON -->
                     <a href="?id=<%= uni.getUniversityId() %>" class="back-btn">
                         ← Back to Orientations
                     </a>
 
-                    <h3 class="orient-title">Mandatory Courses – <%= selected7 %></h3>
+                    <!-- Mandatory Courses Title -->
+                    <h3 class="orient-title">
+                        Mandatory Courses – <%= selected7 %>
+                    </h3>
 
+                    <!-- Mandatory Courses List -->
                     <% for (CourseDet c : mand7) { %>
-                        <div class="course-item">
+                        <a href="UniversityDetailsServlet?id=<%= uni.getUniversityId() %>&detId=<%= c.getId() %>#course-modal" class="course-item <%= hasEquiv.get(c.getId()) ? "equiv-yes" : "equiv-no" %>">
                             <div class="course-name">
                                 <%= c.getCourseName() %>
                                 <span class="ects-badge"><%= c.getEcts() %> ECTS</span>
@@ -452,11 +621,13 @@
                             <div class="course-info">
                                 Code: <%= c.getCourseCode() %> | Period: <%= c.getPeriod() %>
                             </div>
-                        </div>
+                        </a>
                     <% } %>
 
+                    <!-- Electives Title -->
                     <h3 class="electives-title">Elective Courses</h3>
 
+                    <!-- Elective Dropdown -->
                     <div class="select-wrapper">
                         <select class="styled-select">
                             <option value="">-- Select Elective Course --</option>
@@ -478,7 +649,55 @@
     </div>
 </main>
 
-<%@ include file="footer.jsp" %>
+    <div id="course-modal" class="modal-backdrop">
+        <div class="modal-glass">
 
-</body>
+            <% List<com.erasmus.web.model.CourseExternal> eq =
+                (List<com.erasmus.web.model.CourseExternal>) request.getAttribute("equivalents"); %>
+
+            <!-- HEADER -->
+            <div class="modal-header">
+                <div class="modal-icon">🎓</div>
+                <div class="modal-title">Equivalent Course Found</div>
+                <div class="modal-subtitle">
+                    This match is based on a previously approved equivalence.
+                </div>
+            </div>
+
+            <% if (eq != null && !eq.isEmpty()) { %>
+
+                <div class="modal-course-card">
+                    <div class="course-title"><%= eq.get(0).getCourseName() %></div>
+                    <div class="course-line"></div>
+
+                    <div class="course-info-row">
+                        <span class="label">Code:</span>
+                        <span class="value"><%= eq.get(0).getCourseCode() %></span>
+                    </div>
+
+                    <div class="course-info-row">
+                        <span class="label">ECTS:</span>
+                        <span class="value"><%= eq.get(0).getEcts() %></span>
+                    </div>
+                </div>
+
+            <% } else { %>
+                <div class="modal-course-card">
+                    <div class="course-title">No Equivalent Courses Found</div>
+                    <div class="course-line"></div>
+                    <p class="no-data">There is no historical equivalence recorded.</p>
+                </div>
+            <% } %>
+
+            <a href="#" class="modal-btn">Close</a>
+            <a href="#" class="modal-backdrop-close"></a>
+
+        </div>
+    </div>
+
+
+
+    <%@ include file="footer.jsp" %>
+
+    </body>
 </html>

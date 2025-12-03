@@ -266,7 +266,18 @@
         <p>Submit your Erasmus+ application directly...</p>
         <a href="applications.jsp">Apply Now</a>
       </div>
+
+      <div class="card">
+        <i class="fa-solid fa-magnifying-glass-chart"></i>
+        <h3>Best University Finder</h3>
+        <p>Select AUEB courses you want to match and find the best partner universities.</p>
+        <a href="CourseMatchSelect">Find Course Matches</a>
+      </div>
+
     </section>
+
+    
+
 
   </main>
   <%@ include file="footer.jsp" %>

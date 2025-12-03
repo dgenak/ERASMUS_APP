@@ -1,3 +1,4 @@
+C:\ERASMUS_APP\ErasmusApp\src\main\java\com\erasmus\web\controller\CourseMatchSelectServlet.java
 C:\ERASMUS_APP\ErasmusApp\src\main\java\com\erasmus\web\model\ForumPost.java
 C:\ERASMUS_APP\ErasmusApp\src\main\java\com\erasmus\web\controller\ApplicationServlet.java
 C:\ERASMUS_APP\ErasmusApp\src\main\java\com\erasmus\web\controller\UniversityServlet.java
@@ -14,4 +15,5 @@ C:\ERASMUS_APP\ErasmusApp\src\main\java\com\erasmus\web\controller\HomeServlet.j
 C:\ERASMUS_APP\ErasmusApp\src\main\java\com\erasmus\web\dao\UniversityDAO.java
 C:\ERASMUS_APP\ErasmusApp\src\main\java\com\erasmus\web\model\Course.java
 C:\ERASMUS_APP\ErasmusApp\src\main\java\com\erasmus\web\dao\CountryDAO.java
+C:\ERASMUS_APP\ErasmusApp\src\main\java\com\erasmus\web\model\CourseExternal.java
 C:\ERASMUS_APP\ErasmusApp\src\main\java\com\erasmus\web\model\University.java
