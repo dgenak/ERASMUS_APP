@@ -21,8 +21,14 @@ public class ForumServlet extends HttpServlet {
             throws IOException, ServletException {
 
         List<ForumPost> posts = forumDAO.getAllPosts();
+        String action = request.getParameter("action");
 
-        request.setAttribute("posts", posts);
+        // Only load posts if action=load
+        if ("load".equals(action)) {
+            posts = forumDAO.getAllPosts();
+            request.setAttribute("posts", posts);
+        }
+
         request.getRequestDispatcher("forum.jsp").forward(request, response);
     }
 
@@ -43,6 +49,6 @@ public class ForumServlet extends HttpServlet {
                 newPost.setReplies(null);
                 
                 forumDAO.addPost(newPost);
-                response.sendRedirect("forum.jsp?status=success");
+                response.sendRedirect("ForumServlet?action=load&status=success");
     }
 }

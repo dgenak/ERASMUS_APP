@@ -33,7 +33,7 @@ public class ForumDAO {
 
             while (rs.next()) {
                 ForumPost post = new ForumPost();
-                post.setId(rs.getInt("id"));
+                post.setId(rs.getInt("postId"));
                 post.setUsername(rs.getString("username"));
                 post.setTitle(rs.getString("title"));
                 post.setBody(rs.getString("body"));

@@ -8,6 +8,7 @@ com\erasmus\web\model\CourseDet.class
 com\erasmus\web\model\Country.class
 com\erasmus\web\controller\HomeServlet.class
 com\erasmus\web\model\CourseExternal.class
+com\erasmus\web\test\TestForumDAO.class
 com\erasmus\web\controller\ForumServlet.class
 com\erasmus\web\controller\UniversityServlet.class
 com\erasmus\web\util\DatabaseConnection.class
