@@ -2,7 +2,6 @@ package com.erasmus.web.controller;
 
 import com.erasmus.web.dao.ForumDAO;
 import com.erasmus.web.model.ForumPost;
-import com.google.gson.Gson;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -19,17 +18,17 @@ public class ForumServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws IOException {
+            throws IOException, ServletException {
 
         List<ForumPost> posts = forumDAO.getAllPosts();
 
-        response.setContentType("application/json; charset=UTF-8");
-        response.getWriter().write(new Gson().toJson(posts));
+        request.setAttribute("posts", posts);
+        request.getRequestDispatcher("forum.jsp").forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws IOException {
+            throws IOException, ServletException {
 
                 String title = request.getParameter("postTitle");
                 String body = request.getParameter("postBody");

@@ -22,7 +22,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>ForumServlet</servlet-name>
-        <url-pattern>/api/forumPosts/*</url-pattern>
+        <url-pattern>/ForumServlet</url-pattern>
     </servlet-mapping>
 
     <!-- APPLICATIONS -->

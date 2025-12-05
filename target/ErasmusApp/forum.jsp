@@ -1,4 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.util.List" %>
+<%@ page import="com.erasmus.web.model.ForumPost" %>
+
 <!DOCTYPE html>
 <html lang="el">
 <head>
@@ -153,6 +156,17 @@
       color: #0073e6;
     }
 
+    .no-posts {
+      text-align: center;
+      color: #555;
+      font-size: 1.2rem;
+      margin: 3rem 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
     /* === REPLIES === */
     .reply {
       background: #f5f9ff;
@@ -213,39 +227,69 @@
     #newPostForm button {
       margin-top: 10px;
     }
-    /* === RESPONSIVE FIX FOR MOBILE === */
-  @media (max-width: 768px) {
-    main {
-      max-width: 100%;
-      margin: 0;
-      border-radius: 0;
-      box-shadow: none;
-      padding: 1.5rem 1rem;
-    }
 
-    h1 {
-      font-size: 1.5rem;
-    }
-
-    .buttons {
-      flex-direction: column;
+    /* === ALERTS === */
+    .alert {
+      max-width: 1000px;
+      margin: 1rem auto;
+      padding: 1rem 1.5rem;
+      border-radius: 10px;
+      display: flex;
       align-items: center;
+      gap: 10px;
+      font-size: 1rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      animation: slideDown 0.5s ease-in-out;
     }
 
-    .btn {
-      width: 90%;
+    .alert.success {
+      background-color: #e6ffed;
+      border: 1px solid #66d17f;
+      color: #2d7a3e;
     }
 
-    .post {
-      padding: 15px;
+    .alert.error {
+      background-color: #ffe6e6;
+      border: 1px solid #ff4d4d;
+      color: #a80000;
     }
 
-    #newPostForm {
-      padding: 15px;
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
-  }
 
+    /* === RESPONSIVE FIX FOR MOBILE === */
+    @media (max-width: 768px) {
+      main {
+        max-width: 100%;
+        margin: 0;
+        border-radius: 0;
+        box-shadow: none;
+        padding: 1.5rem 1rem;
+      }
 
+      h1 {
+        font-size: 1.5rem;
+      }
+
+      .buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .btn {
+        width: 90%;
+      }
+
+      .post {
+        padding: 15px;
+      }
+
+      #newPostForm {
+        padding: 15px;
+      }
+    }
   </style>
 </head>
 
@@ -257,130 +301,79 @@
     <p class="subtitle">Exchange experiences and advice with other students who are participating or have participated in the Erasmus+ program!</p>
 
     <div class="buttons">
-      <button class="btn primary" onclick="openNewPostForm()"><i class="fa-solid fa-plus"></i> Ask a question</button>
-      <button class="btn secondary" onclick="openNewPostForm()"><i class="fa-solid fa-share-nodes"></i> Share Experience</button>
+      <a href="forum.jsp?action=newPost" class="btn primary">
+        <i class="fa-solid fa-plus"></i> Ask a question
+      </a>
+      <a href="forum.jsp?action=newExperience" class="btn secondary">
+        <i class="fa-solid fa-share-nodes"></i> Share experience
+      </a>
     </div>
 
-    <div id="forumContainer">🔄 Loading posts...</div>
+    <div class="posts">
+      <%
+        List<ForumPost> posts = (List<ForumPost>) request.getAttribute("posts");
+        if (posts != null) {
+          for (ForumPost post : posts) {
+      %>
 
-    <div id="newPostForm" style="display:none;">
+      <div class="post">
+        <div class="post-header">
+          <div class="avatar"><%= post.getUsername().substring(0, 1).toUpperCase() %></div>
+          <div>
+            <h3><%= post.getTitle() %></h3>
+            <small>by <strong><%= post.getUsername() %></strong> on <%= post.getTimestamp() %></small>
+          </div>
+        </div>
+        <p><%= post.getBody() %></p>
+      </div>
+
+      <% 
+          }
+        } else {
+      %>
+        <div class="no-posts">
+          <i class="fa-solid fa-circle-info" style="font-size: 2rem; color: #0073e6;"></i>
+          <span>No posts available. Be the first to share your experience!</a></span>
+        </div>
+      <%
+        }
+      %>
+    </div>
+
+    <% 
+      String action = request.getParameter("action");
+      boolean showFrom = "newPost".equals(action) || "newExperience".equals(action);
+    %>
+
+    <div id="newPostForm" style="display:<%= showFrom ? "block" : "none" %>;">
       <h3><i class="fa-solid fa-pen-to-square"></i> Create New Post</h3>
-      <input id="postTitle" placeholder="Post Title">
-      <textarea id="postBody" placeholder="Tell us about your experience or ask a question..."></textarea>
-      <button class="btn primary" onclick="submitPost()"><i class="fa-solid fa-paper-plane"></i> Δημοσίευση</button>
-      <button class="btn secondary" onclick="closeNewPostForm()">Ακύρωση</button>
+
+      <form id="postForm" action="ForumServlet" method="post">
+        <input id="postTitle" name="postTitle" placeholder="Post Title">
+        <textarea id="postBody" name="postBody" placeholder="Tell us about your experience or ask a question..."></textarea>
+        <button type="submit" class="btn primary"><i class="fa-solid fa-paper-plane"></i> Submit</button>
+        <a href="forum.jsp" class="btn secondary"><i class="fa-solid fa-xmark"></i> Cancel</a>
+      </form>
     </div>
+
+    <%
+      String status = request.getParameter("status");
+      if ("success".equals(status)) {
+    %>
+      <div class="alert success">
+        <i class="fa-solid fa-check-circle"></i>
+        <span>Your post has been successfully submitted!</span>
+      </div>
+    <% } else if ("error".equals(status)) { %>
+      <div class="alert error">
+        <i class="fa-solid fa-exclamation-circle"></i>
+        <span>There was an error submitting your post. Please try again.</span>
+      </div>
+    <% } %>
+
   </main>
 
   <%@ include file="footer.jsp" %>
 
-  <script>
-    async function loadForumPosts() {
-      try {
-        const res = await fetch('/api/forumPosts');
-        const posts = await res.json();
-        const container = document.getElementById('forumContainer');
-        container.innerHTML = '';
-
-        posts.forEach(p => {
-          const repliesHtml = (p.replies || []).map(r => `
-            <div class="reply">
-              <strong>\${r.username}</strong>
-              <small> | \${new Date(r.timestamp).toLocaleDateString('el-GR')}</small>
-              <p>\${r.body}</p>
-            </div>
-          `).join('');
-
-          const postHtml = `
-            <div class="post">
-              <div class="post-header">
-                <div class="avatar">\${p.username ? p.username[0].toUpperCase() : 'A'}</div>
-                <div>
-                  <strong>\${p.username}</strong><br>
-                  <small>\${new Date(p.timestamp).toLocaleString('el-GR')}</small>
-                </div>
-              </div>
-              <h3>\${p.title}</h3>
-              <p>\${p.body}</p>
-              <div class="post-footer">
-                <span onclick="likePost(\${p.id})"><i class="fa-regular fa-thumbs-up"></i> \${p.likes}</span>
-                <span onclick="dislikePost(\${p.id})"><i class="fa-regular fa-thumbs-down"></i> \${p.dislikes}</span>
-                <span onclick="toggleReplyForm(\${p.id})"><i class="fa-solid fa-reply"></i> Απάντηση</span>
-              </div>
-              <div class="reply-form" id="replyForm-\${p.id}" style="display:none;">
-                <textarea id="replyText-\${p.id}" placeholder="Γράψε την απάντησή σου..."></textarea>
-                <button class="btn primary" onclick="submitReply(\${p.id})">Αποστολή</button>
-              </div>
-              \${repliesHtml}
-            </div>
-          `;
-
-          container.insertAdjacentHTML('beforeend', postHtml);
-        });
-      } catch (err) {
-        console.error('Σφάλμα φόρτωσης:', err);
-      }
-    }
-
-    function openNewPostForm() {
-      document.getElementById('newPostForm').style.display = 'block';
-      window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-    }
-
-    function closeNewPostForm() {
-      document.getElementById('newPostForm').style.display = 'none';
-    }
-
-    async function submitPost() {
-      const title = document.getElementById('postTitle').value.trim();
-      const body = document.getElementById('postBody').value.trim();
-      if (!title || !body) {
-        alert('Συμπληρώστε όλα τα πεδία');
-        return;
-      }
-
-      const post = { username: 'Anonymous', title, body };
-      await fetch('/api/forumPosts', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(post)
-      });
-      closeNewPostForm();
-      loadForumPosts();
-    }
-
-    async function likePost(id) {
-      await fetch(`/api/forumPosts/\${id}/like`, { method: 'POST' });
-      loadForumPosts();
-    }
-
-    async function dislikePost(id) {
-      await fetch(`/api/forumPosts/\${id}/dislike`, { method: 'POST' });
-      loadForumPosts();
-    }
-
-    function toggleReplyForm(id) {
-      const form = document.getElementById(`replyForm-\${id}`);
-      form.style.display = form.style.display === 'none' ? 'block' : 'none';
-    }
-
-    async function submitReply(id) {
-      const text = document.getElementById(`replyText-\${id}`).value.trim();
-      if (!text) {
-        alert('Γράψε κάτι');
-        return;
-      }
-
-      const reply = { username: 'Anonymous', body: text, timestamp: new Date().toISOString() };
-      await fetch(`/api/forumPosts/\${id}/reply`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(reply)
-      });
-      loadForumPosts();
-    }
-
-    document.addEventListener('DOMContentLoaded', loadForumPosts);
-  </script>
 </body>
 </html>

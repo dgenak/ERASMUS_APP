@@ -49,14 +49,7 @@ public class ForumDAO {
 
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            try {
-                conn.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
-
         return posts;
     }
 
@@ -80,12 +73,8 @@ public class ForumDAO {
 
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            try {
-                conn.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
+        posts.add(post);
+        return;
     }
 }
