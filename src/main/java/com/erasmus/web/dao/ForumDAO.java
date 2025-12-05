@@ -1,38 +1,91 @@
 package com.erasmus.web.dao;
 
 import com.erasmus.web.model.ForumPost;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.*;
 
 public class ForumDAO {
 
+    private static final String JDBC_URL =
+            "jdbc:mysql://195.251.249.131:3306/ismgroup29?useSSL=false&serverTimezone=UTC";
+
+    private static final String JDBC_USER = "ismgroup29";
+    private static final String JDBC_PASSWORD = "r2m$e9";
+
     private static final List<ForumPost> posts = new ArrayList<>();
-    private static int idCounter = 1;
 
-    static {
-        ForumPost p1 = new ForumPost();
-        p1.setId(idCounter++);
-        p1.setUsername("Maria");
-        p1.setTitle("Εμπειρία στη Βαρκελώνη");
-        p1.setBody("Πέρασα υπέροχα στο Universitat de Barcelona! Πολύ ζωντανή πόλη και καλό πρόγραμμα Erasmus.");
-        p1.setTimestamp(new Date());
-        posts.add(p1);
-
-        ForumPost p2 = new ForumPost();
-        p2.setId(idCounter++);
-        p2.setUsername("Nikos");
-        p2.setTitle("Πανεπιστήμιο της Βιέννης");
-        p2.setBody("Πολύ καλή εμπειρία, αλλά κάνει κρύο τον χειμώνα!");
-        p2.setTimestamp(new Date());
-        posts.add(p2);
+    private Connection getConnection() throws SQLException {
+        return DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD);
     }
 
     public List<ForumPost> getAllPosts() {
-        return new ArrayList<>(posts);
+        String sql = "SELECT * FROM forum_posts ORDER BY timestamp DESC";
+        List<ForumPost> posts = new ArrayList<>();
+
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                ForumPost post = new ForumPost();
+                post.setId(rs.getInt("id"));
+                post.setUsername(rs.getString("username"));
+                post.setTitle(rs.getString("title"));
+                post.setBody(rs.getString("body"));
+                post.setTimestamp(rs.getDate("timestamp"));
+                post.setLikes(rs.getInt("likes"));
+                post.setDislikes(rs.getInt("dislikes"));
+                posts.add(post);
+            }
+
+            rs.close();
+            stmt.close();
+            conn.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return posts;
     }
 
     public void addPost(ForumPost post) {
-        post.setId(idCounter++);
-        post.setTimestamp(new Date());
-        posts.add(post);
+        String sql = "INSERT INTO forum_posts (username, title, body, timestamp, likes, dislikes) VALUES (?, ?, ?, ?, ?, ?)";
+
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, post.getUsername());
+            stmt.setString(2, post.getTitle());
+            stmt.setString(3, post.getBody());
+            stmt.setDate(4, new java.sql.Date(post.getTimestamp().getTime()));
+            stmt.setInt(5, post.getLikes());
+            stmt.setInt(6, post.getDislikes());
+
+            stmt.executeUpdate();
+
+            stmt.close();
+            conn.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

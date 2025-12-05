@@ -8,10 +8,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
+
 
 public class ForumServlet extends HttpServlet {
 
@@ -31,12 +31,19 @@ public class ForumServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
 
-        BufferedReader reader = request.getReader();
-        Gson gson = new Gson();
+                String title = request.getParameter("postTitle");
+                String body = request.getParameter("postBody");
 
-        ForumPost post = gson.fromJson(reader, ForumPost.class);
-
-        forumDAO.addPost(post);
-        response.setStatus(HttpServletResponse.SC_OK);
+                ForumPost newPost = new ForumPost();
+                newPost.setUsername("DemoUser"); // In real app, get from session/auth
+                newPost.setTitle(title);
+                newPost.setBody(body);
+                newPost.setTimestamp(new Date());
+                newPost.setLikes(0);
+                newPost.setDislikes(0);
+                newPost.setReplies(null);
+                
+                forumDAO.addPost(newPost);
+                response.sendRedirect("forum.jsp?status=success");
     }
 }

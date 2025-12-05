@@ -257,130 +257,43 @@
     <p class="subtitle">Exchange experiences and advice with other students who are participating or have participated in the Erasmus+ program!</p>
 
     <div class="buttons">
-      <button class="btn primary" onclick="openNewPostForm()"><i class="fa-solid fa-plus"></i> Ask a question</button>
-      <button class="btn secondary" onclick="openNewPostForm()"><i class="fa-solid fa-share-nodes"></i> Share Experience</button>
+      <a href ="forum.jsp?action=newPost" class="btn primary"><i class="fa-solid fa-plus"></i> Ask a question</a>
+      <a href = "forum.jsp?action=newExperience" class="btn secondary"><i class="fa-solid fa-share-nodes"></i> Share experience</a>
     </div>
 
     <div id="forumContainer">🔄 Loading posts...</div>
 
-    <div id="newPostForm" style="display:none;">
-      <h3><i class="fa-solid fa-pen-to-square"></i> Create New Post</h3>
+<% String action = request.getParameter("action");
+    boolean showFrom = "newPost".equals(action) || "newExperience".equals(action);
+%>
+
+  <div id="newPostForm" style="display:<%= showFrom ? "block" : "none" %>;">
+    <h3><i class="fa-solid fa-pen-to-square"></i> Create New Post</h3>
+
+    <form id="postForm" action="ForumController" method="post" >
       <input id="postTitle" placeholder="Post Title">
       <textarea id="postBody" placeholder="Tell us about your experience or ask a question..."></textarea>
-      <button class="btn primary" onclick="submitPost()"><i class="fa-solid fa-paper-plane"></i> Δημοσίευση</button>
-      <button class="btn secondary" onclick="closeNewPostForm()">Ακύρωση</button>
+      <button type="submit" class="btn primary"><i class="fa-solid fa-paper-plane"></i> Submit</button>
+      <a href="forum.jsp" class="btn secondary"><i class="fa-solid fa-xmark"></i> Cancel</a>
+
+    </form>
+  </div>
+
+<% 
+  String status = (String) request.getAttribute("status");
+  if ("success".equals(status)) {
+%>
+    <div class="alert success"> 
+      <i class="fa-solid fa-check-circle"></i> Your post has been successfully submitted!
     </div>
-  </main>
+<% } else if ("error".equals(status)) { %>
+    <div class="alert error"> 
+      <i class="fa-solid fa-exclamation-circle"></i> There was an error submitting your post. Please try again.
+    </div>
+<% } %>
+</main>
 
   <%@ include file="footer.jsp" %>
 
-  <script>
-    async function loadForumPosts() {
-      try {
-        const res = await fetch('/api/forumPosts');
-        const posts = await res.json();
-        const container = document.getElementById('forumContainer');
-        container.innerHTML = '';
-
-        posts.forEach(p => {
-          const repliesHtml = (p.replies || []).map(r => `
-            <div class="reply">
-              <strong>\${r.username}</strong>
-              <small> | \${new Date(r.timestamp).toLocaleDateString('el-GR')}</small>
-              <p>\${r.body}</p>
-            </div>
-          `).join('');
-
-          const postHtml = `
-            <div class="post">
-              <div class="post-header">
-                <div class="avatar">\${p.username ? p.username[0].toUpperCase() : 'A'}</div>
-                <div>
-                  <strong>\${p.username}</strong><br>
-                  <small>\${new Date(p.timestamp).toLocaleString('el-GR')}</small>
-                </div>
-              </div>
-              <h3>\${p.title}</h3>
-              <p>\${p.body}</p>
-              <div class="post-footer">
-                <span onclick="likePost(\${p.id})"><i class="fa-regular fa-thumbs-up"></i> \${p.likes}</span>
-                <span onclick="dislikePost(\${p.id})"><i class="fa-regular fa-thumbs-down"></i> \${p.dislikes}</span>
-                <span onclick="toggleReplyForm(\${p.id})"><i class="fa-solid fa-reply"></i> Απάντηση</span>
-              </div>
-              <div class="reply-form" id="replyForm-\${p.id}" style="display:none;">
-                <textarea id="replyText-\${p.id}" placeholder="Γράψε την απάντησή σου..."></textarea>
-                <button class="btn primary" onclick="submitReply(\${p.id})">Αποστολή</button>
-              </div>
-              \${repliesHtml}
-            </div>
-          `;
-
-          container.insertAdjacentHTML('beforeend', postHtml);
-        });
-      } catch (err) {
-        console.error('Σφάλμα φόρτωσης:', err);
-      }
-    }
-
-    function openNewPostForm() {
-      document.getElementById('newPostForm').style.display = 'block';
-      window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-    }
-
-    function closeNewPostForm() {
-      document.getElementById('newPostForm').style.display = 'none';
-    }
-
-    async function submitPost() {
-      const title = document.getElementById('postTitle').value.trim();
-      const body = document.getElementById('postBody').value.trim();
-      if (!title || !body) {
-        alert('Συμπληρώστε όλα τα πεδία');
-        return;
-      }
-
-      const post = { username: 'Anonymous', title, body };
-      await fetch('/api/forumPosts', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(post)
-      });
-      closeNewPostForm();
-      loadForumPosts();
-    }
-
-    async function likePost(id) {
-      await fetch(`/api/forumPosts/\${id}/like`, { method: 'POST' });
-      loadForumPosts();
-    }
-
-    async function dislikePost(id) {
-      await fetch(`/api/forumPosts/\${id}/dislike`, { method: 'POST' });
-      loadForumPosts();
-    }
-
-    function toggleReplyForm(id) {
-      const form = document.getElementById(`replyForm-\${id}`);
-      form.style.display = form.style.display === 'none' ? 'block' : 'none';
-    }
-
-    async function submitReply(id) {
-      const text = document.getElementById(`replyText-\${id}`).value.trim();
-      if (!text) {
-        alert('Γράψε κάτι');
-        return;
-      }
-
-      const reply = { username: 'Anonymous', body: text, timestamp: new Date().toISOString() };
-      await fetch(`/api/forumPosts/\${id}/reply`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(reply)
-      });
-      loadForumPosts();
-    }
-
-    document.addEventListener('DOMContentLoaded', loadForumPosts);
-  </script>
 </body>
 </html>
