@@ -11,141 +11,298 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
-    /* === GENERAL === */
-    html, body {
-      height: 100%;
-      margin: 0;
-      display: flex;
-      flex-direction: column;
-      font-family: 'Poppins', sans-serif;
-      background: #f4f7fb;
-      color: #1f2a44;
-    }
 
+/* === GENERAL === */
+html, body {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Poppins', sans-serif;
+  background: #f4f7fb;
+  color: #1f2a44;
+}
+
+  main {
+    flex: 1;
+    width: 1000px;
+    max-width: 1000px;
+    min-width: 1000px;
+    margin: 2.5rem auto;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    padding: 3rem;
+    animation: fadeIn 0.6s ease-in-out;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  h1 {
+    text-align: center;
+    color: #003366;
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  p.subtitle {
+    text-align: center;
+    color: #666;
+    margin-bottom: 2rem;
+    font-size: 1rem;
+  }
+
+  /* === BUTTONS === */
+  .buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 2rem;
+  }
+
+  .btn {
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    padding: 12px 22px;
+    font-size: 15px;
+    transition: all 0.3s ease;
+  }
+
+  .btn.primary {
+    background: linear-gradient(135deg, #0073e6, #00aaff);
+    color: white;
+    box-shadow: 0 4px 12px rgba(0, 115, 230, 0.3);
+  }
+
+  .btn.primary:hover {
+    background: linear-gradient(135deg, #005bb5, #0099e6);
+    transform: scale(1.05);
+  }
+
+  .btn.secondary {
+    background-color: #e6f0ff;
+    color: #003366;
+    border: 1px solid #99ccff;
+  }
+
+  .btn.secondary:hover {
+    background-color: #cce0ff;
+  }
+
+  /* === POSTS === */
+  .post {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
+    padding: 25px;
+    margin-bottom: 25px;
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+  }
+
+  .post:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+  }
+
+  .post-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 10px;
+  }
+
+  .avatar {
+    background: linear-gradient(135deg, #0059b3, #66b3ff);
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
+
+  .post h3 {
+    margin: 5px 0;
+    color: #003366;
+  }
+
+  .post p {
+    color: #333;
+    line-height: 1.6;
+    margin-top: 8px;
+  }
+
+  .post-footer {
+    display: flex;
+    justify-content: flex-start;
+    gap: 20px;
+    margin-top: 15px;
+    color: #555;
+    font-size: 14px;
+  }
+
+  .post-footer span {
+    cursor: pointer;
+    transition: color 0.2s ease;
+  }
+
+  .post-footer span:hover {
+    color: #0073e6;
+  }
+
+  .no-posts {
+    text-align: center;
+    color: #555;
+    font-size: 1.2rem;
+    margin: 3rem 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  /* === REPLIES === */
+  .reply {
+    background: #f5f9ff;
+    padding: 12px 15px;
+    margin: 12px 0 0 55px;
+    border-left: 4px solid #007bff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  }
+
+  .reply strong {
+    color: #003366;
+  }
+
+  .reply small {
+    color: #888;
+    font-size: 12px;
+  }
+
+  .reply-form {
+    margin-top: 10px;
+    margin-left: 55px;
+  }
+
+  .reply-form textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    resize: none;
+    font-family: inherit;
+    font-size: 14px;
+  }
+
+  .reply-form button {
+    margin-top: 8px;
+  }
+
+  /* === NEW POST === */
+  #newPostForm {
+    background: #f0f7ff;
+    border: 1px solid #bcdcff;
+    border-radius: 12px;
+    padding: 25px;
+    margin-top: 30px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+  }
+
+  #newPostForm input,
+  #newPostForm textarea {
+    width: 100%;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    font-family: inherit;
+    font-size: 15px;
+  }
+
+  #newPostForm textarea {
+    margin-top: 10px;
+    height: 120px;
+    resize: none;
+  }
+
+  #newPostForm button {
+    margin-top: 10px;
+  }
+
+  /* === ALERTS === */
+  .alert {
+    max-width: 1000px;
+    margin: 1rem auto;
+    padding: 1rem 1.5rem;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    animation: slideDown 0.5s ease-in-out;
+  }
+
+  .alert.success {
+    background-color: #e6ffed;
+    border: 1px solid #66d17f;
+    color: #2d7a3e;
+  }
+
+  .alert.error {
+    background-color: #ffe6e6;
+    border: 1px solid #ff4d4d;
+    color: #a80000;
+  }
+
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* === RESPONSIVE === */
+  @media (max-width: 768px) {
     main {
-      flex: 1;
-      max-width: 1000px;
-      margin: 2.5rem auto;
-      background: #ffffff;
-      border-radius: 16px;
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-      padding: 3rem;
-      animation: fadeIn 0.6s ease-in-out;
+      max-width: 100%;
+      margin: 0;
+      border-radius: 0;
+      box-shadow: none;
+      padding: 1.5rem 1rem;
     }
 
     h1 {
-      text-align: center;
-      color: #003366;
-      font-size: 2rem;
-      margin-bottom: 0.5rem;
+      font-size: 1.5rem;
     }
 
-    p.subtitle {
-      text-align: center;
-      color: #666;
-      margin-bottom: 2rem;
-      font-size: 1rem;
-    }
-
-    /* === BUTTONS === */
     .buttons {
-      display: flex;
-      justify-content: center;
-      gap: 15px;
-      margin-bottom: 2rem;
+      flex-direction: column;
+      align-items: center;
     }
 
     .btn {
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      font-weight: 600;
-      padding: 12px 22px;
-      font-size: 15px;
-      transition: all 0.3s ease;
-      text-decoration: none;
-      color: inherit;
+      width: 90%;
     }
 
-    .btn.primary {
-      background: linear-gradient(135deg, #0073e6, #00aaff);
-      color: white;
-      box-shadow: 0 4px 12px rgba(0, 115, 230, 0.3);
-    }
-
-    .btn.secondary {
-      background-color: #e6f0ff;
-      color: #003366;
-      border: 1px solid #99ccff;
-    }
-
-    /* === POSTS === */
     .post {
-      background-color: #ffffff;
-      border-radius: 12px;
-      box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
-      padding: 25px;
-      margin-bottom: 25px;
+      padding: 15px;
     }
 
-    .post-header {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      margin-bottom: 10px;
+    #newPostForm {
+      padding: 15px;
     }
+  }
 
-    .avatar {
-      background: linear-gradient(135deg, #0059b3, #66b3ff);
-      width: 55px;
-      height: 55px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-weight: bold;
-      font-size: 18px;
-    }
+</style>
 
-    .no-posts {
-      text-align: center;
-      color: #555;
-      font-size: 1.2rem;
-      margin: 3rem 0;
-    }
-
-    /* === ALERTS FIXED === */
-    .alert {
-      max-width: 1000px;
-      margin: 1rem auto;
-      padding: 1rem 1.5rem;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 1rem;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      animation: slideDown 0.5s ease-in-out;
-    }
-
-    .alert.success {
-      background-color: #e6ffed;
-      border: 1px solid #66d17f;
-      color: #2d7a3e;
-    }
-
-    .alert.error {
-      background-color: #ffe6e6;
-      border: 1px solid #ff4d4d;
-      color: #a80000;
-    }
-
-    @keyframes slideDown {
-      from { opacity: 0; transform: translateY(-20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-  </style>
 </head>
 
 <body>
