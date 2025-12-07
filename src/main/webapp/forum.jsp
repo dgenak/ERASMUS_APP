@@ -13,15 +13,15 @@
   <style>
 
 /* === GENERAL === */
-html, body {
-  height: 100%;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  font-family: 'Poppins', sans-serif;
-  background: #f4f7fb;
-  color: #1f2a44;
-}
+  html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Poppins', sans-serif;
+    background: #f4f7fb;
+    color: #1f2a44;
+  }
 
   main {
     flex: 1;
@@ -93,6 +93,15 @@ html, body {
   .btn.secondary:hover {
     background-color: #cce0ff;
   }
+
+  .section-divider {
+  width: 80px;
+  height: 4px;
+  background-color: #00c4b4;
+  border-radius: 4px;
+  margin: 0 auto 2rem auto;
+}
+
 
   /* === POSTS === */
   .post {
@@ -310,6 +319,7 @@ html, body {
 
   <main>
     <h1><i class="fa-solid fa-comments"></i> Erasmus Forum</h1>
+    <div class="section-divider"></div>
     <p class="subtitle">Exchange experiences and advice with other students!</p>
 
     <!-- Main Buttons -->
