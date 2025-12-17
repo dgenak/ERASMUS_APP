@@ -35,7 +35,7 @@
         <url-pattern>/api/applications/*</url-pattern>
     </servlet-mapping>
 
-    <!-- UNIVERSITIES PAGE -->
+    <!-- UNIVERSITIES LIST PAGE -->
     <servlet>
         <servlet-name>UniversityServlet</servlet-name>
         <servlet-class>com.erasmus.web.controller.UniversityServlet</servlet-class>
@@ -55,7 +55,7 @@
         <url-pattern>/UniversityDetailsServlet</url-pattern>
     </servlet-mapping>
 
-    <!-- COURSE MATCH SELECT PAGE -->
+    <!-- COURSE MATCH -->
     <servlet>
         <servlet-name>CourseMatchSelectServlet</servlet-name>
         <servlet-class>com.erasmus.web.controller.CourseMatchSelectServlet</servlet-class>
@@ -75,7 +75,50 @@
         <url-pattern>/FindBestUniversities</url-pattern>
     </servlet-mapping>
 
-    <!-- DEFAULT PAGE -->
+    <!-- REGISTER SERVLET (NEW) -->
+    <servlet>
+        <servlet-name>RegisterServlet</servlet-name>
+        <servlet-class>com.erasmus.web.controller.RegisterServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>RegisterServlet</servlet-name>
+        <url-pattern>/RegisterServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
+    
+    <servlet-name>LoginServlet</servlet-name>
+        <servlet-class>com.erasmus.web.controller.LoginServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LoginServlet</servlet-name>
+        <url-pattern>/LoginServlet</url-pattern>
+    </servlet-mapping>
+
+    
+    <!-- LOGOUT -->
+    <servlet>
+        <servlet-name>LogoutServlet</servlet-name>
+        <servlet-class>com.erasmus.web.controller.LogoutServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>LogoutServlet</servlet-name>
+        <url-pattern>/LogoutServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>UpdateProfileServlet</servlet-name>
+        <servlet-class>com.erasmus.web.controller.UpdateProfileServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>UpdateProfileServlet</servlet-name>
+        <url-pattern>/UpdateProfileServlet</url-pattern>
+    </servlet-mapping>
+
+
+    <!-- INDEX -->
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>

@@ -1,8 +1,25 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      crossorigin="anonymous" referrerpolicy="no-referrer"/>
+
+<%
+    com.erasmus.web.model.User loggedUser =
+        (com.erasmus.web.model.User) session.getAttribute("authUser");
+
+    if (loggedUser == null) {
+        response.sendRedirect("login.jsp");
+        return;
+    }
+
+    String currentPath = request.getServletPath();
+%>
+
 <header class="global-header">
   <div class="header-wrapper">
-    <!-- ΛΟΓΟΤΥΠΟ -->
+
+    <!-- LOGO -->
     <div class="logo-area">
       <div class="logo-circle">EU</div>
       <div class="logo-text">
@@ -11,37 +28,158 @@
       </div>
     </div>
 
-
+    <!-- AUTH SECTION WITHOUT JS -->
     <div class="auth-section">
-      <!-- User info (hidden by default) -->
-      <div class="user-info-header" id="userInfoHeader" style="display: none;">
-        <span>Καλώς ήρθες, <span id="userNameHeader"></span>!</span>
-        <button class="logout-btn" onclick="logout()">Αποσύνδεση</button>
-      </div>
-      
-      <!-- Login/Signup buttons -->
-      <div class="auth-buttons-header" id="authButtonsHeader">
-        <button type='button' class="auth-btn-header login-btn" onclick="window.location.href='login.html'">Login</button>
-        <button type='button' class="auth-btn-header signup-btn" onclick="window.location.href='register.html'">Register</button>
-      </div>
+      <% if (loggedUser != null) { %>
+        <div class="user-info-header">
+          <span class="user-name" id="userProfileToggle">
+            Hello,
+            <strong>
+              <%= loggedUser.getFirstName() != null ? loggedUser.getFirstName() : "" %>
+              <%= loggedUser.getLastName()  != null ? loggedUser.getLastName()  : "" %>
+            </strong>
+          </span>
+          <a class="logout-btn" href="LogoutServlet">Logout</a>
+        </div>
+      <% } else { %>
+          <div class="auth-buttons-header">
+            <a class="auth-btn-header login-btn" href="login.jsp">Login</a>
+            <a class="auth-btn-header signup-btn" href="register.jsp">Register</a>
+          </div>
+      <% } %>
     </div>
 
-    <!-- ΜΕΝΟΥ ΠΛΟΗΓΗΣΗΣ -->
+    <!-- MENU -->
     <nav class="main-nav">
       <ul>
-        <li><a href="index.jsp"><i class="fas fa-home"></i> HOME</a></li>
-        <li><a href="/ismgroup29/universities"><i class="fas fa-university"></i> UNIVERSITIES</a></li>
-        <li><a href="forum.jsp"><i class="fas fa-comments"></i> FORUM</a></li>
-        <li><a href="applications.jsp"><i class="fas fa-file-alt"></i> APPLICATIONS</a></li>
+        <li><a href="index.jsp"
+               class="<%= currentPath.contains("index.jsp") ? "active" : "" %>">
+               <i class="fas fa-home"></i> HOME</a></li>
+
+        <li><a href="/ismgroup29/universities"
+               class="<%= currentPath.contains("universities") ? "active" : "" %>">
+               <i class="fas fa-university"></i> UNIVERSITIES</a></li>
+
+        <li><a href="forum.jsp"
+               class="<%= currentPath.contains("forum.jsp") ? "active" : "" %>">
+               <i class="fas fa-comments"></i> FORUM</a></li>
+
+        <li><a href="applications.jsp"
+               class="<%= currentPath.contains("applications.jsp") ? "active" : "" %>">
+               <i class="fas fa-file-alt"></i> APPLICATIONS</a></li>
       </ul>
 
-      <!-- ΚΟΥΜΠΙ ΜΕΝΟΥ μέσα στο flex -->
-      <button class="menu-button" id="menuButton">
+      <!-- Menu button (no JS functionality) -->
+      <label for="sidebarToggle" class="menu-button">
         <i class="fas fa-bars"></i> MENU
-      </button>
+      </label>
     </nav>
 
   </div>
+</header>
+
+<!-- OVERLAY -->
+<div class="modal-overlay" id="profileModalOverlay"></div>
+
+<!-- PROFILE MODAL -->
+<div class="profile-modal" id="profileModal">
+  <div class="modal-header">
+    <h3>User Profile</h3>
+    <span class="modal-close" id="closeProfileModal">&times;</span>
+  </div>
+
+  <form class="modal-body profile-form" action="UpdateProfileServlet" method="post">
+
+    <div class="form-group">
+      <label>First Name</label>
+      <input type="text" name="firstName"
+        value="<%= loggedUser.getFirstName() != null ? loggedUser.getFirstName() : "" %>">
+    </div>
+
+    <div class="form-group">
+      <label>Last Name</label>
+      <input type="text" name="lastName"
+        value="<%= loggedUser.getLastName() != null ? loggedUser.getLastName() : "" %>">
+    </div>
+
+    <div class="form-group">
+      <label>Date of Birth</label>
+      <input type="date" name="birthDate"
+        value="<%= loggedUser.getBirthDate() != null ? loggedUser.getBirthDate().toString() : "" %>">
+    </div>
+
+    <div class="form-group">
+      <label>Nationality</label>
+      <input type="text" name="nationality"
+        value="<%= loggedUser.getNationality() != null ? loggedUser.getNationality() : "" %>">
+    </div>
+
+    <div class="form-group">
+      <label>Gender</label>
+      <select name="gender">
+        <option value="">Select gender</option>
+        <option value="Male" <%= "Male".equals(loggedUser.getGender()) ? "selected" : "" %>>Male</option>
+        <option value="Female" <%= "Female".equals(loggedUser.getGender()) ? "selected" : "" %>>Female</option>
+        <option value="Other" <%= "Other".equals(loggedUser.getGender()) ? "selected" : "" %>>Other</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>University</label>
+      <select disabled>
+        <option><%= loggedUser.getUniversityName() != null ? loggedUser.getUniversityName() : "—" %></option>
+      </select>
+      <input type="hidden" name="universityName"
+        value="<%= loggedUser.getUniversityName() != null ? loggedUser.getUniversityName() : "" %>">
+    </div>
+
+    <div class="form-group">
+      <label>Study Cycle</label>
+      <select name="studyCycle">
+        <option value="">Select cycle</option>
+        <option value="Bachelor" <%= "Bachelor".equals(loggedUser.getStudyCycle()) ? "selected" : "" %>>Bachelor</option>
+        <option value="Master" <%= "Master".equals(loggedUser.getStudyCycle()) ? "selected" : "" %>>Master</option>
+        <option value="PhD" <%= "PhD".equals(loggedUser.getStudyCycle()) ? "selected" : "" %>>PhD</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Department</label>
+      <select disabled>
+        <option><%= loggedUser.getDepartment() != null ? loggedUser.getDepartment() : "—" %></option>
+      </select>
+      <input type="hidden" name="department"
+        value="<%= loggedUser.getDepartment() != null ? loggedUser.getDepartment() : "" %>">
+    </div>
+
+    <div class="modal-actions">
+      <button type="button" class="btn-cancel" id="cancelProfile">Cancel</button>
+      <button type="submit" class="btn-save">Save Changes</button>
+    </div>
+
+  </form>
+
+
+</div>
+
+
+<!-- SIDEBAR WITHOUT JAVASCRIPT (CSS ONLY) -->
+<input type="checkbox" id="sidebarToggle" hidden>
+
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <h3>User Menu</h3>
+    <label class="sidebar-close" for="sidebarToggle">&times;</label>
+  </div>
+
+  <div class="sidebar-content">
+    <a href="#"><i class="fas fa-user"></i> My profile</a>
+    <a href="#"><i class="fas fa-file-alt"></i> My applications</a>
+    <a href="#"><i class="fas fa-cog"></i> Settings</a>
+    <a href="LogoutServlet"><i class="fas fa-sign-out-alt"></i> Logout</a>
+  </div>
+</div>
+
 
 <style>
   /* === HEADER === */
@@ -422,71 +560,228 @@
       right: 1rem;
     }
   }
+
+/* OVERLAY */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(4px);
+  display: none;
+  z-index: 4000;
+}
+
+/* MODAL */
+.profile-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.95);
+  width: 560px;
+  background: white;
+  border-radius: 14px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  display: none;
+  z-index: 5000;
+  animation: modalFade 0.25s ease forwards;
+  max-width: 92vw;
+}
+
+@keyframes modalFade {
+  to {
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.modal-close {
+  font-size: 1.4rem;
+  cursor: pointer;
+}
+
+
+.modal-body label {
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.modal-body input {
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.btn-cancel {
+  background: #e0e0e0;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn-save {
+  background: #0059b3;
+  color: white;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+/* === PROFILE FORM === */
+.profile-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px 28px; 
+}
+.profile-form *,
+.profile-form *::before,
+.profile-form *::after {
+  box-sizing: border-box;
+}
+
+/* Full width rows */
+.profile-form .form-group:nth-child(5),
+.profile-form .form-group:nth-child(6),
+.profile-form .form-group:nth-child(7),
+.profile-form .form-group:nth-child(8),
+.profile-form .modal-actions {
+  grid-column: span 2;
+}
+
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #555;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 14px 14px; 
+  border-radius: 10px;
+  border: 1px solid #d0d7e2;
+  font-size: 0.9rem;
+  transition: all 0.25s ease;
+  background: #f9fbff;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: #0059b3;
+  background: white;
+  box-shadow: 0 0 0 3px rgba(0, 89, 179, 0.15);
+}
+
+select:disabled {
+  background: #f0f2f5;
+  color: #777;
+  cursor: not-allowed;
+}
+
+/* Modal header upgrade */
+.profile-modal {
+  width: 520px;
+  max-width: 92vw;
+}
+
+.modal-body {
+  padding: 28px 30px;
+}
+
+.modal-header h3 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #003366;
+}
+
+/* Buttons */
+.modal-actions {
+  grid-column: span 2;
+  margin-top: 10px;
+}
+
+.btn-save {
+  background: linear-gradient(135deg, #0059b3, #0073e6);
+  padding: 8px 18px;
+  border-radius: 10px;
+  font-weight: 600;
+}
+
+.btn-save:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(0, 89, 179, 0.35);
+}
+
+.btn-cancel {
+  border-radius: 10px;
+}
+.profile-modal {
+  animation: modalFade 0.25s ease forwards;
+}
+.profile-modal {
+  animation: modalFade 0.35s cubic-bezier(.25,.8,.25,1) forwards;
+}
+.field {
+  position: relative;
+}
+
+.field input {
+  width: 100%;
+  padding: 14px 12px;
+  box-sizing: border-box;
+  border-radius: 10px;
+  border: 1.5px solid #d0d7e2;
+  background: #f9fbff;
+}
+
+.field label {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.75rem;
+  color: #6b7280;
+  background: white;
+  padding: 0 6px;
+  pointer-events: none;
+  transition: 0.2s ease;
+}
+
+.field input:focus + label,
+.field input:not(:placeholder-shown) + label {
+  top: -6px;
+  font-size: 0.65rem;
+  color: #0059b3;
+}
+
+
 </style>
 
 
-
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-        const currentPath = window.location.pathname;
-
-        document.querySelectorAll(".main-nav a").forEach(link => {
-            const linkPath = link.getAttribute("href");
-
-            if (currentPath.includes(linkPath)) {
-                link.classList.add("active");
-            }
-        });
-    });
-
-  </script>
-  <script>
-    // Check login status for header
-      function checkLoginStatus() {
-        const user = localStorage.getItem('currentUser');
-        const authButtons = document.getElementById('authButtonsHeader');
-        const userInfo = document.getElementById('userInfoHeader');
-        const userName = document.getElementById('userNameHeader');
-        
-        if (user) {
-          // User is logged in
-          const userData = JSON.parse(user);
-          userName.textContent = userData.name;
-          userInfo.style.display = 'flex';
-          authButtons.style.display = 'none';
-        } else {
-          // User is not logged in
-          userInfo.style.display = 'none';
-          authButtons.style.display = 'flex';
-        }
-      }
-
-// Logout function
-function logout() {
-  localStorage.removeItem('currentUser');
-  checkLoginStatus();
-  // Redirect to home page
-  window.location.href = 'index.jsp';
-}
-
-// Run when page loads
-document.addEventListener('DOMContentLoaded', checkLoginStatus);
-    document.addEventListener("DOMContentLoaded", function() {
-      var sidebar = document.getElementById("sidebar");
-      var menuButton = document.getElementById("menuButton");
-      var closeSidebar = document.getElementById("closeSidebar");
-
-      menuButton.addEventListener("click", function() {
-        sidebar.classList.add("active");
-      });
-      closeSidebar.addEventListener("click", function() {
-        sidebar.classList.remove("active");
-      });
-    });
-  </script>
-
-
-</header>
 <!-- SIDEBAR -->
 <div class="sidebar" id="sidebar">
   <div class="sidebar-header">
@@ -498,6 +793,31 @@ document.addEventListener('DOMContentLoaded', checkLoginStatus);
     <a href="#"><i class="fas fa-user"></i> My profile</a>
     <a href="#"><i class="fas fa-file-alt"></i> My applications</a>
     <a href="#"><i class="fas fa-cog"></i> Settings</a>
-    <a href="#"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    <a href="LogoutServlet"><i class="fas fa-sign-out-alt"></i> Logout</a>
   </div>
 </div>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+  const openBtn = document.getElementById("userProfileToggle");
+  const modal = document.getElementById("profileModal");
+  const overlay = document.getElementById("profileModalOverlay");
+  const closeBtn = document.getElementById("closeProfileModal");
+  const cancelBtn = document.getElementById("cancelProfile");
+
+  function openModal() {
+    modal.style.display = "block";
+    overlay.style.display = "block";
+  }
+
+  function closeModal() {
+    modal.style.display = "none";
+    overlay.style.display = "none";
+  }
+
+  openBtn.addEventListener("click", openModal);
+  closeBtn.addEventListener("click", closeModal);
+  cancelBtn.addEventListener("click", closeModal);
+  overlay.addEventListener("click", closeModal);
+});
+</script>

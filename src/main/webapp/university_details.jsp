@@ -68,17 +68,17 @@
             margin-bottom: 22px;
         }
 
-        /* COURSE ITEM - ΔΙΟΡΘΩΣΗ: Προστέθηκε display: block και αφαίρεση υπογράμμισης */
         .course-item {
-            display: block; /* ΣΗΜΑΝΤΙΚΗ ΔΙΟΡΘΩΣΗ: Κάνει το <a> να συμπεριφέρεται σαν block/div */
-            text-decoration: none; /* Αφαιρεί την υπογράμμιση του συνδέσμου */
-            color: inherit; /* Κληρονομεί το χρώμα κειμένου για να μη φαίνεται μπλε */
+            display: block;
+            text-decoration: none;
+            color: inherit;
 
             background: #f3f6ff;
             padding: 18px 20px;
             border-radius: 14px;
             margin-bottom: 16px;
             transition: 0.2s;
+            cursor: pointer;
         }
 
         .course-item:hover {
@@ -194,6 +194,7 @@
             font-weight: 600;
             text-decoration: none;
             transition: 0.2s;
+            cursor: pointer;
         }
         .back-btn:hover {
             background: #001f4d;
@@ -411,6 +412,117 @@
             border-left: 6px solid #e74c3c;
         }
 
+        .selected-box {
+            margin-top: 15px;
+        }
+
+        .selected-item {
+            background: #dfe9ff;
+            padding: 12px 15px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+        }
+
+        .remove-btn {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 6px 12px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .remove-btn:hover {
+            background: #c0392b;
+        }
+
+        .notice-box {
+            background: #fff8d8;
+            border-left: 5px solid #f4c542;
+            padding: 10px 16px;
+            border-radius: 10px;
+            font-size: 13px;
+            color: #7a6300;
+            max-width: 850px;
+            margin: 0 auto 25px auto;
+            box-shadow: 0px 2px 6px rgba(0,0,0,0.06);
+            line-height: 1.4;
+            text-align: left;
+        }
+
+        /* χρώμα στο SELECT μετά την επιλογή */
+        select.equiv-yes {
+            background-color: #e7ffe7 !important;
+            border-color: #2ecc71 !important;
+            color: #1f7a1f;
+            font-weight: 600;
+        }
+
+        select.equiv-no {
+            background-color: #ffe7e7 !important;
+            border-color: #e74c3c !important;
+            color: #8b1a1a;
+            font-weight: 600;
+        }
+
+        .custom-select {
+            position: relative;
+            margin-bottom: 12px;
+        }
+
+        .custom-select .selected {
+            padding: 14px 18px;
+            border-radius: 12px;
+            border: 2px solid #ccd9f6;
+            background: #f7faff;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .custom-select .options {
+            display: none;
+            position: absolute;
+            width: 100%;
+            background: white;
+            border-radius: 12px;
+            margin-top: 6px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            max-height: 260px;
+            overflow-y: auto;
+            z-index: 999;
+        }
+
+        .custom-select.open .options {
+            display: block;
+        }
+
+        .option {
+            padding: 12px 16px;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .option:hover {
+            opacity: 0.9;
+        }
+
+        /* ΧΡΩΜΑΤΑ */
+        .option.equiv-yes {
+            background: #e7ffe7;
+            color: #1f7a1f;
+        }
+
+        .option.equiv-no {
+            background: #ffe7e7;
+            color: #8b1a1a;
+        }
+
+
 
     </style>
 </head>
@@ -427,9 +539,11 @@
             Map<Integer, List<CourseDet>> detCourses =
                     (Map<Integer, List<CourseDet>>) request.getAttribute("detCourses");
 
-            // ➤ ΠΡΟΣΘΗΚΗ ΑΥΤΗΣ ΤΗΣ ΓΡΑΜΜΗΣ
             Map<Integer, Boolean> hasEquiv =
                     (Map<Integer, Boolean>) request.getAttribute("hasEquiv");
+
+            List<CourseDet> coreMandatory7 = (List<CourseDet>) request.getAttribute("coreMandatory7");
+            List<String> orientations7 = (List<String>) request.getAttribute("orientations7");
 
             double lat = uni.getLatitude();
             double lng = uni.getLongitude();
@@ -450,217 +564,89 @@
             <a href="<%= googleLink %>" target="_blank" class="map-click-layer"></a>
         </div>
 
-        <!-- SEMESTERS 1–5 -->
-        <div class="semester-grid">
+        <div class="notice-box">
+            ⚠️ <b>Important Note:</b><br>
+            The course equivalences shown below are based on past Erasmus approvals and should be used for guidance only.
+            University courses and equivalence rules may have changed. Always confirm final equivalences with the Erasmus Office.
+        </div>
+        
+        <%
+            String selected = (String) request.getAttribute("selectedOrientation");
+            String selected7 = (String) request.getAttribute("selectedOrientation7");
+        %>
 
+        <!-- SEMESTERS 1–7 -->
+        <div class="semester-grid">
             <% for (int sem = 1; sem <= 5; sem++) { %>
                 <div class="semester-card">
                     <div class="semester-title">Semester <%= sem %></div>
 
-                    <% for (CourseDet c : detCourses.get(sem)) { %>
-                        <a href="UniversityDetailsServlet?id=<%= uni.getUniversityId() %>&detId=<%= c.getId() %>#course-modal" class="course-item <%= hasEquiv.get(c.getId()) ? "equiv-yes" : "equiv-no" %>">
+                    <% 
+                        List<CourseDet> list = detCourses.get(sem);
+                        if (list != null) {
+                            for (CourseDet c : list) {
+                    %>
+
+                        <div class="course-item <%= Boolean.TRUE.equals(hasEquiv.get(c.getId())) ? "equiv-yes" : "equiv-no" %>"
+                            onclick="openCourseModal(<%= c.getId() %>)">
 
                             <div class="course-name">
                                 <%= c.getCourseName() %>
                                 <span class="ects-badge"><%= c.getEcts() %> ECTS</span>
                             </div>
+
                             <div class="course-info">
                                 Code: <%= c.getCourseCode() %> | Period: <%= c.getPeriod() %>
                             </div>
-                        </a>
-                    <% } %>
+
+                        </div>
+
+                    <% 
+                            }
+                        }
+                    %>
+
                 </div>
             <% } %>
+
 
             <!-- SEMESTER 6 -->
             <div class="semester-card">
                 <div class="semester-title">Semester 6</div>
-
-                <%
-                    List<String> orientations = (List<String>) request.getAttribute("orientations");
-                    String selected = (String) request.getAttribute("selectedOrientation");
-                    List<CourseDet> mand6 = (List<CourseDet>) request.getAttribute("mandatory6");
-                    List<CourseDet> elec6 = (List<CourseDet>) request.getAttribute("electives6");
-                %>
-                <%
-                    List<CourseDet> coreMandatory6 = (List<CourseDet>) request.getAttribute("coreMandatory6");
-                %>
-                <h3 class="orient-title">Mandatory Courses (for all orientations)</h3>
-
-                    <% for (CourseDet c : coreMandatory6) { %>
-                        <a href="UniversityDetailsServlet?id=<%= uni.getUniversityId() %>&detId=<%= c.getId() %>#course-modal" class="course-item <%= hasEquiv.get(c.getId()) ? "equiv-yes" : "equiv-no" %>">
-
-                            
-                        <div class="course-name">
-                            <%= c.getCourseName() %>
-                            <span class="ects-badge"><%= c.getEcts() %> ECTS</span>
-                        </div>
-                        <div class="course-info">
-                            Code: <%= c.getCourseCode() %> | Period: <%= c.getPeriod() %>
-                        </div>
-                    </a>
-                <% } %>
-
-                <% if (selected == null) { %>
-                    
-
-                    <h3 class="orient-title">Choose Orientation</h3>
-
-                    <% for (String o : orientations) { %>
-                        <form method="get" action="" style="margin:0;padding:0;">
-                            <input type="hidden" name="id" value="<%= uni.getUniversityId() %>">
-                            <input type="hidden" name="orientation" value="<%= o %>">
-
-                            <button class="orientation-btn">
-                                <%= o %>
-                            </button>
-                        </form>
-                    <% } %>
-
-                <% } else { %>
-
-                    <!-- BACK BUTTON -->
-                    <a href="?id=<%= uni.getUniversityId() %>" class="back-btn">
-                        ← Back to Orientations
-                    </a>
-
-                    <h3 class="orient-title">
-                        Mandatory Courses – <%= selected %>
-                    </h3>
-
-                    <% for (CourseDet c : mand6) { %>
-                        <a href="UniversityDetailsServlet?id=<%= uni.getUniversityId() %>&detId=<%= c.getId() %>#course-modal" class="course-item <%= hasEquiv.get(c.getId()) ? "equiv-yes" : "equiv-no" %>">
-                            <div class="course-name">
-                                <%= c.getCourseName() %>
-                                <span class="ects-badge"><%= c.getEcts() %> ECTS</span>
-                            </div>
-                            <div class="course-info">
-                                Code: <%= c.getCourseCode() %> | Period: <%= c.getPeriod() %>
-                            </div>
-                        </a>
-                    <% } %>
-
-                    <h3 class="electives-title">Elective Courses</h3>
-
-                    <div class="select-wrapper">
-                        <select class="styled-select">
-                            <option value="">-- Select Elective Course --</option>
-                            <% for (CourseDet c : elec6) { %>
-                                <option><%= c.getCourseName() %> (<%= c.getEcts() %> ECTS)</option>
-                            <% } %>
-                        </select>
-                    </div>
-
-                <% } %>
-
+                <div id="semester6-content">
+                    <!-- φορτώνεται με AJAX -->
+                </div>
             </div>
+
             <!-- SEMESTER 7 -->
             <div class="semester-card">
                 <div class="semester-title">Semester 7</div>
-
-                <%
-                    List<CourseDet> coreMandatory7 = (List<CourseDet>) request.getAttribute("coreMandatory7");
-                    List<String> orientations7 = (List<String>) request.getAttribute("orientations");
-
-                    String selected7 = (String) request.getAttribute("selectedOrientation7");
-
-                    List<CourseDet> mand7 = (List<CourseDet>) request.getAttribute("mandatory7");
-                    List<CourseDet> elec7 = (List<CourseDet>) request.getAttribute("electives7");
-                %>
-
-                <h3 class="orient-title">Mandatory Courses (for all orientations)</h3>
-
-                <% for (CourseDet c : coreMandatory7) { %>
-                    <a href="UniversityDetailsServlet?id=<%= uni.getUniversityId() %>&detId=<%= c.getId() %>#course-modal" class="course-item <%= hasEquiv.get(c.getId()) ? "equiv-yes" : "equiv-no" %>">
-
-                        <div class="course-name">
-                            <%= c.getCourseName() %>
-                            <span class="ects-badge"><%= c.getEcts() %> ECTS</span>
-                        </div>
-                        <div class="course-info">
-                            Code: <%= c.getCourseCode() %> | Period: <%= c.getPeriod() %>
-                        </div>
-                    </a>
-
-                <% } %>
-
-                <% if (selected7 == null) { %>
-
-                    <h3 class="orient-title">Choose Orientation</h3>
-
-                    <% for (String o : orientations7) { %>
-                        <form method="get" action="" style="margin:0;padding:0;">
-                            <input type="hidden" name="id" value="<%= uni.getUniversityId() %>">
-                            <input type="hidden" name="orientation7" value="<%= o %>">
-
-                            <button class="orientation-btn">
-                                <%= o %>
-                            </button>
-                        </form>
-                    <% } %>
-
-                <% } else { %>
-
-                    <!-- BACK BUTTON -->
-                    <a href="?id=<%= uni.getUniversityId() %>" class="back-btn">
-                        ← Back to Orientations
-                    </a>
-
-                    <!-- Mandatory Courses Title -->
-                    <h3 class="orient-title">
-                        Mandatory Courses – <%= selected7 %>
-                    </h3>
-
-                    <!-- Mandatory Courses List -->
-                    <% for (CourseDet c : mand7) { %>
-                        <a href="UniversityDetailsServlet?id=<%= uni.getUniversityId() %>&detId=<%= c.getId() %>#course-modal" class="course-item <%= hasEquiv.get(c.getId()) ? "equiv-yes" : "equiv-no" %>">
-                            <div class="course-name">
-                                <%= c.getCourseName() %>
-                                <span class="ects-badge"><%= c.getEcts() %> ECTS</span>
-                            </div>
-                            <div class="course-info">
-                                Code: <%= c.getCourseCode() %> | Period: <%= c.getPeriod() %>
-                            </div>
-                        </a>
-                    <% } %>
-
-                    <!-- Electives Title -->
-                    <h3 class="electives-title">Elective Courses</h3>
-
-                    <!-- Elective Dropdown -->
-                    <div class="select-wrapper">
-                        <select class="styled-select">
-                            <option value="">-- Select Elective Course --</option>
-                            <% for (CourseDet c : elec7) { %>
-                                <option><%= c.getCourseName() %> (<%= c.getEcts() %> ECTS)</option>
-                            <% } %>
-                        </select>
-                    </div>
-
-                <% } %>
-
+                <div id="semester7-content">
+                    <!-- φορτώνεται με AJAX -->
+                </div>
             </div>
 
+        </div>
 
-
-
-        </div>  <!-- close semester-grid -->
-
-    </div>
 </main>
 
     <div id="course-modal" class="modal-backdrop">
         <div class="modal-glass">
 
-            <% List<com.erasmus.web.model.CourseExternal> eq =
-                (List<com.erasmus.web.model.CourseExternal>) request.getAttribute("equivalents"); %>
+            <% 
+                List<com.erasmus.web.model.CourseExternal> eq =
+                    (List<com.erasmus.web.model.CourseExternal>) request.getAttribute("equivalents");
+
+                Integer timesMatched = (Integer) request.getAttribute("timesMatched");
+                if (timesMatched == null) timesMatched = 0;
+            %>
 
             <!-- HEADER -->
             <div class="modal-header">
                 <div class="modal-icon">🎓</div>
                 <div class="modal-title">Equivalent Course Found</div>
                 <div class="modal-subtitle">
-                    This match is based on a previously approved equivalence.
+                    This match is based on past Erasmus approvals and may not reflect current course rules.
                 </div>
             </div>
 
@@ -679,14 +665,28 @@
                         <span class="label">ECTS:</span>
                         <span class="value"><%= eq.get(0).getEcts() %></span>
                     </div>
+
+                    <div class="course-info-row">
+                        <span class="label">Times Matched:</span>
+                        <span class="value">
+                            <%= timesMatched %> time(s)
+                            <span style="font-size:13px; color:#666;">
+                                in previous years
+                            </span>
+                        </span>
+                    </div>
                 </div>
 
             <% } else { %>
+
                 <div class="modal-course-card">
                     <div class="course-title">No Equivalent Courses Found</div>
                     <div class="course-line"></div>
-                    <p class="no-data">There is no historical equivalence recorded.</p>
+                    <p class="no-data">
+                        There is no historical equivalence recorded for this course.
+                    </p>
                 </div>
+
             <% } %>
 
             <a href="#" class="modal-btn">Close</a>
@@ -697,7 +697,199 @@
 
 
 
+
     <%@ include file="footer.jsp" %>
+    <script>
+        const UNIVERSITY_ID = <%= uni.getUniversityId() %>;
+        let selectedOrientation = "<%= selected != null ? selected : "" %>";
+        let selectedOrientation7 = "<%= selected7 != null ? selected7 : "" %>";
+
+
+        function loadSemester6(orientation) {
+            if (orientation === null) {
+                selectedOrientation = "";
+            } else {
+                selectedOrientation = orientation;
+            }
+
+            let url = "UniversityDetailsServlet?ajax=load6&id=" + UNIVERSITY_ID;
+
+            if (selectedOrientation) {
+                url += "&orientation=" + encodeURIComponent(selectedOrientation);
+            }
+
+            fetch(url)
+                .then(r => r.text())
+                .then(html => {
+                    document.getElementById("semester6-content").innerHTML = html;
+                });
+        }
+
+
+        function loadSemester7(orientation) {
+            if (orientation === null) {
+                selectedOrientation7 = "";
+            } else {
+                selectedOrientation7 = orientation;
+            }
+
+            let url = "UniversityDetailsServlet?ajax=load7&id=" + UNIVERSITY_ID;
+
+            if (selectedOrientation7) {
+                url += "&orientation7=" + encodeURIComponent(selectedOrientation7);
+            }
+
+            fetch(url)
+                .then(r => r.text())
+                .then(html => {
+                    document.getElementById("semester7-content").innerHTML = html;
+                });
+        }
+
+
+
+        let selectedElective6 = null;
+
+        function toggleDropdown(sem) {
+            document.getElementById("elective" + sem)
+                .classList.toggle("open");
+        }
+
+        function selectElective(sem, id, name) {
+            if (sem === 6) {
+                selectedElective6 = id;
+            } else if (sem === 7) {
+                selectedElective7 = id;
+            }
+
+            const box = document.querySelector("#elective" + sem + " .selected");
+            box.innerText = name;
+
+            document.getElementById("elective" + sem)
+                .classList.remove("open");
+        }
+
+
+        function addElective6() {
+            if (!selectedElective6) return;
+
+            let url = "UniversityDetailsServlet?ajax=add6"
+                + "&id=" + UNIVERSITY_ID
+                + "&add6=" + selectedElective6
+                + "&orientation=" + encodeURIComponent(selectedOrientation);
+
+            fetch(url)
+                .then(r => r.text())
+                .then(html => {
+                    document.getElementById("semester6-content").innerHTML = html;
+                });
+        }
+
+        function addElective7() {
+            if (!selectedElective7) return;
+
+            let url = "UniversityDetailsServlet?ajax=add7"
+                + "&id=" + UNIVERSITY_ID
+                + "&add7=" + selectedElective7
+                + "&orientation7=" + encodeURIComponent(selectedOrientation7);
+
+            fetch(url)
+                .then(r => r.text())
+                .then(html => {
+                    document.getElementById("semester7-content").innerHTML = html;
+                });
+        }
+
+
+        function removeElective6(courseId) {
+            let url = "UniversityDetailsServlet?ajax=remove6"
+                + "&id=" + UNIVERSITY_ID
+                + "&remove6=" + courseId;
+            if (selectedOrientation) {
+                url += "&orientation=" + encodeURIComponent(selectedOrientation);
+            }
+
+
+            fetch(url)
+                .then(r => r.text())
+                .then(html => {
+                    document.getElementById("semester6-content").innerHTML = html;
+                });
+        }
+
+        function removeElective7(courseId) {
+            let url = "UniversityDetailsServlet?ajax=remove7"
+                + "&id=" + UNIVERSITY_ID
+                + "&remove7=" + courseId;
+
+            if (selectedOrientation7) {
+                url += "&orientation7=" + encodeURIComponent(selectedOrientation7);
+            }
+
+            if (selectedOrientation) {
+                url += "&orientation=" + encodeURIComponent(selectedOrientation);
+            }
+
+
+            fetch(url)
+                .then(r => r.text())
+                .then(html => {
+                    document.getElementById("semester7-content").innerHTML = html;
+                });
+        }
+        function openCourseModal(courseId) {
+            fetch(
+                "UniversityDetailsServlet"
+                + "?ajax=courseModal"
+                + "&id=<%= uni.getUniversityId() %>"
+                + "&detId=" + courseId
+            )
+            .then(r => r.text())
+            .then(html => {
+                const old = document.getElementById("course-modal");
+                if (old) old.remove();
+
+                document.body.insertAdjacentHTML("beforeend", html);
+                location.hash = "course-modal";
+            });
+        }
+        /* ====== ΧΡΩΜΑ SELECT ΓΙΑ SEMESTER 6 ====== */
+        document.addEventListener("change", function (e) {
+            if (e.target && e.target.id === "add6-select") {
+                const select = e.target;
+                const option = select.selectedOptions[0];
+
+                select.classList.remove("equiv-yes", "equiv-no");
+
+                if (option && option.classList.length > 0) {
+                    select.classList.add(option.className);
+                }
+            }
+        });
+
+        /* ====== ΧΡΩΜΑ SELECT ΓΙΑ SEMESTER 7 ====== */
+        document.addEventListener("change", function (e) {
+            if (e.target && e.target.id === "add7-select") {
+                const select = e.target;
+                const option = select.selectedOptions[0];
+
+                select.classList.remove("equiv-yes", "equiv-no");
+
+                if (option && option.classList.length > 0) {
+                    select.classList.add(option.className);
+                }
+            }
+        });
+
+
+        window.addEventListener("DOMContentLoaded", () => {
+            loadSemester6(selectedOrientation || null);
+            loadSemester7(selectedOrientation7 || null);
+        });
+
+
+
+    </script>
 
     </body>
 </html>

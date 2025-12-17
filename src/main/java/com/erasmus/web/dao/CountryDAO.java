@@ -20,16 +20,21 @@ public class CountryDAO {
     public List<Country> getAllCountries() {
         List<Country> list = new ArrayList<>();
 
-        String sql = "SELECT countryId, countryName FROM country ORDER BY countryName ASC";
+        String sql =
+            "SELECT countryId, countryName " +
+            "FROM country " +
+            "WHERE isActive = 1 " +
+            "ORDER BY countryName ASC";
+
 
         try (Connection conn = getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql);
-             ResultSet rs = stmt.executeQuery()) {
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
                 list.add(new Country(
-                        rs.getInt("countryId"),
-                        rs.getString("countryName")
+                    rs.getInt("countryId"),
+                    rs.getString("countryName")
                 ));
             }
 
@@ -39,4 +44,5 @@ public class CountryDAO {
 
         return list;
     }
+
 }

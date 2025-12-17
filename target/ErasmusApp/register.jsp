@@ -79,7 +79,7 @@
       height: 100%;
       max-height: 500px;
       transform: translate(-50%, -50%);
-      background-image: url('imgtravel.jpg'); /* replace later */
+      background-image: url('imgtravel.jpg');
       background-size: contain;
       background-repeat: no-repeat;
       background-position: center;
@@ -200,15 +200,21 @@
       margin-top: auto;
       text-align: center;
     }
+    .server-error {
+      background: #ffe6e6;
+      color: #a10000;
+      padding: 12px 16px;
+      border-radius: 10px;
+      margin-bottom: 1.2rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border: 1px solid #ffb3b3;
+    }
+
 
     .footer-text { color: rgba(255,255,255,0.7); }
-
-    @media (max-width: 500px) {
-      .content-card { padding: 2rem; }
-      .app-name { font-size: 2.2rem; }
-      .header-title { font-size: 1.5rem; }
-      .section-title { font-size: 1.5rem; }
-    }
   </style>
 </head>
 <body>
@@ -224,33 +230,44 @@
 
     <div class="content-card">
       <h2 class="section-title">Register</h2>
-      <form onsubmit="return validatePasswords()">
+      <% String error = (String) request.getAttribute("error"); %>
+
+      <% if (error != null) { %>
+        <div class="server-error">
+          <i class="fas fa-circle-exclamation"></i>
+          <%= error %>
+        </div>
+      <% } %>
+
+
+      <!-- 🔥 FIXED FORM -->
+      <form action="RegisterServlet" method="post" onsubmit="return validatePasswords()">
+
         <label for="firstname">First name:</label>
-        <input type="text" id="firstname" name="firstname" placeholder="Enter your first name" required>
+        <input type="text" id="firstname" name="firstname" required>
 
         <label for="lastname">Last name:</label>
-        <input type="text" id="lastname" name="lastname" placeholder="Enter your last name" required>
-
-        
+        <input type="text" id="lastname" name="lastname" required>
 
         <div class="form-group password-wrapper">
           <label for="password">Password:</label>
-          <input type="password" id="password" name="password" placeholder="Create your password" required>
+          <input type="password" id="password" name="password" required>
           <span class="toggle-password" onclick="togglePassword('password', this)">👁</span>
         </div>
 
         <div class="form-group password-wrapper">
           <label for="confirmPassword">Re-enter Password:</label>
-          <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Re-enter your password" required>
+          <input type="password" id="confirmPassword" required>
           <span class="toggle-password" onclick="togglePassword('confirmPassword', this)">👁</span>
           <div class="error" id="errorMessage">Passwords do not match!</div>
         </div>
 
         <label for="email">Email:</label>
-        <input type="email" id="email" name="email" placeholder="Enter your email" required>
+        <input type="email" id="email" name="email" required>
 
         <button type="submit" class="btn btn-primary">Register</button>
       </form>
+
     </div>
   </main>
 
@@ -258,32 +275,26 @@
     <div class="footer-text">&copy; 2025 UNIERA. All rights reserved.</div>
   </footer>
 
-  <script>
-    function togglePassword(id, el) {
-      const input = document.getElementById(id);
-      if (input.type === "password") {
-        input.type = "text";
-        el.textContent = "⌣";
-      } else {
-        input.type = "password";
-        el.textContent = "👁";
-      }
+
+<script>
+  function togglePassword(id, el) {
+    const input = document.getElementById(id);
+    input.type = input.type === "password" ? "text" : "password";
+  }
+
+  function validatePasswords() {
+    const p1 = document.getElementById("password");
+    const p2 = document.getElementById("confirmPassword");
+    const error = document.getElementById("errorMessage");
+
+    if (p1.value !== p2.value) {
+      error.style.display = "block";
+      return false;
     }
 
-    function validatePasswords() {
-      const p1 = document.getElementById('password');
-      const p2 = document.getElementById('confirmPassword');
-      const error = document.getElementById('errorMessage');
+    return true;
+  }
+</script>
 
-      if (p1.value !== p2.value) {
-        error.style.display = 'block';
-        return false;
-      } else {
-        error.style.display = 'none';
-        alert('Registration successful!');
-        return true;
-      }
-    }
-  </script>
 </body>
 </html>

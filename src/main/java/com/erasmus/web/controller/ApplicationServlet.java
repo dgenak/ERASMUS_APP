@@ -16,3 +16,4 @@ public class ApplicationServlet extends HttpServlet {
         response.getWriter().write("Application form will be here soon!");
     }
 }
+

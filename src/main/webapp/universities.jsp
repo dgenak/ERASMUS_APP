@@ -269,7 +269,7 @@
         %>
 
             <div class="university-item">
-                <a href="UniversityDetailsServlet?id=<%= u.getUniversityId() %>">
+                <a href="<%=request.getContextPath()%>/UniversityDetailsServlet?id=<%= u.getUniversityId() %>">
                     <%= u.getUniversityName() %>
                 </a>
             </div>

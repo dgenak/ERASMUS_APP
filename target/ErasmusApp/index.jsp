@@ -271,7 +271,8 @@
         <i class="fa-solid fa-magnifying-glass-chart"></i>
         <h3>Best University Finder</h3>
         <p>Select AUEB courses you want to match and find the best partner universities.</p>
-        <a href="CourseMatchSelect">Find Course Matches</a>
+        <a href="/ismgroup29/CourseMatchSelect">Find Course Matches</a>
+
       </div>
 
     </section>
