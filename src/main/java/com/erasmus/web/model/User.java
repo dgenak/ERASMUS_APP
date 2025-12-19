@@ -21,9 +21,10 @@ public class User {
     public User() { }
 
     // Constructor για RegisterServlet
-    public User(String firstName, String lastName, String email, String password) {
+    public User(String firstName, String lastName, String username, String email, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.username = username;
         this.email = email;
         this.password = password;
     }

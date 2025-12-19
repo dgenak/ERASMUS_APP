@@ -1,30 +1,25 @@
 com\erasmus\web\dao\CountryDAO.class
 com\erasmus\web\controller\RegisterServlet.class
-com\erasmus\web\model\ForumPost.class
 com\erasmus\web\dao\UniversityDAO.class
 com\erasmus\web\controller\HomeServlet.class
 com\erasmus\web\model\CourseExternal.class
+com\erasmus\web\test\TestForumDAO.class
 com\erasmus\web\controller\UniversityServlet.class
 com\erasmus\web\util\DatabaseConnection.class
 com\erasmus\web\dao\UserDAO.class
 com\erasmus\web\controller\CourseMatchSelectServlet.class
 com\erasmus\web\controller\LogoutServlet.class
+com\erasmus\web\model\Answer.class
 com\erasmus\web\controller\UpdateProfileServlet.class
 com\erasmus\web\model\Course.class
-com\erasmus\web\model\ForumReply.class
 com\erasmus\web\controller\ApplicationServlet.class
 com\erasmus\web\controller\FindBestUniversitiesServlet.class
 com\erasmus\web\controller\UniversityDetailsServlet.class
 com\erasmus\web\model\User.class
 com\erasmus\web\dao\CourseDetDAO.class
 com\erasmus\web\model\CourseDet.class
+com\erasmus\web\model\Post.class
 com\erasmus\web\model\Country.class
-<<<<<<< HEAD
-com\erasmus\web\controller\HomeServlet.class
-com\erasmus\web\model\CourseExternal.class
-com\erasmus\web\test\TestForumDAO.class
-=======
->>>>>>> 66da0a6 (f1)
 com\erasmus\web\controller\ForumServlet.class
 com\erasmus\web\controller\LoginServlet.class
 com\erasmus\web\model\University.class

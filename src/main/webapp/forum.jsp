@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.List" %>
-<%@ page import="com.erasmus.web.model.ForumPost" %>
+<%@ page import="com.erasmus.web.model.Post" %>
 
 <!DOCTYPE html>
 <html lang="el">
@@ -22,6 +22,11 @@
     background: #f4f7fb;
     color: #1f2a44;
   }
+
+  *, *::before, *::after {
+  box-sizing: border-box;
+  }
+
 
   main {
     flex: 1;
@@ -92,6 +97,7 @@
 
   .btn.secondary:hover {
     background-color: #cce0ff;
+    transform: scale(1.05)
   }
 
   .section-divider {
@@ -306,7 +312,7 @@
     }
 
     #newPostForm {
-      padding: 15px;
+      padding: 30px 40px;
     }
   }
 
@@ -324,7 +330,7 @@
 
     <!-- Main Buttons -->
     <div class="buttons">
-      <a href="forum.jsp?action=newPost" class="btn primary">
+      <a href="forum.jsp?action=newQuestion" class="btn primary">
         <i class="fa-solid fa-plus"></i> Ask a question
       </a>
 
@@ -342,7 +348,7 @@
 
     <!-- POSTS SECTION -->
     <%
-      List<ForumPost> posts = (List<ForumPost>) request.getAttribute("posts");
+      List<Post> posts = (List<Post>) request.getAttribute("posts");
       String actionPosts = request.getParameter("action");
     %>
 
@@ -350,7 +356,8 @@
       <%
         if ("load".equals(actionPosts)) {
           if (posts != null && !posts.isEmpty()) {
-            for (ForumPost post : posts) {
+            for (Post post : posts) {
+              String type = post.getPostType();
       %>
 
         <div class="post">
@@ -362,6 +369,18 @@
             </div>
           </div>
           <p><%= post.getBody() %></p>
+
+          <div class="post-footer">
+            <span><i class="fa-regular fa-thumbs-up"></i> <%= post.getLikes() %></span>
+            <span><i class="fa-regular fa-thumbs-down"> <%= post.getDislikes() %></i></span>
+
+            <% if ("QUESTION".equals(type)) { %>
+                <a class="btn secondary" 
+                href="question.jsp?postId=<%= post.getPostId() %>">
+                <i class="fa-solid fa-reply"></i> View & Reply
+                </a>
+            <% } %>
+          </div>
         </div>
 
       <%
@@ -383,15 +402,24 @@
     <!-- NEW POST FORM -->
     <%
       String action = request.getParameter("action");
-      boolean showForm = "newPost".equals(action) || "newExperience".equals(action);
+      boolean showQuestionForm = "newQuestion".equals(action);
+      boolean showExperienceForm = "newExperience".equals(action);
+      boolean showForm = showQuestionForm || showExperienceForm;
+
+      String formTitle = showQuestionForm ? "Add New Question" : "Add New Experience ";
+      String placeholderTitle = showQuestionForm ? "Question Title" : "Experience Title";
+      String placeholderBody = showQuestionForm ? "Ask a question..." : "Share your experience...";
+      String postTypeValue = showQuestionForm ? "QUESTION" : "EXPERIENCE";
     %>
 
     <div id="newPostForm" style="display:<%= showForm ? "block" : "none" %>;">
-      <h3><i class="fa-solid fa-pen-to-square"></i> Create New Post</h3>
+      <h3><i class="fa-solid fa-pen-to-square"></i> <%= formTitle %> </h3>
 
       <form id="postForm" action="ForumServlet" method="post">
-        <input id="postTitle" name="postTitle" placeholder="Post Title">
-        <textarea id="postBody" name="postBody" placeholder="Tell us your experience or ask a question..."></textarea>
+        <input id="postTitle" name="postTitle" placeholder="<%= placeholderTitle %>">
+        <textarea id="postBody" name="postBody" placeholder="<%= placeholderBody %>"></textarea>
+
+        <input type="hidden" name="postType" value="<%= postTypeValue %>" >
 
         <button type="submit" class="btn primary">
           <i class="fa-solid fa-paper-plane"></i> Submit
@@ -406,6 +434,7 @@
     <!-- STATUS ALERTS -->
     <%
       String status = request.getParameter("status");
+      String reason = request.getParameter("reason");
 
       if ("success".equals(status)) {
     %>
@@ -416,10 +445,15 @@
       </div>
 
     <% } else if ("error".equals(status)) { %>
-
       <div class="alert error">
         <i class="fa-solid fa-exclamation-circle"></i>
-        Error submitting your post.
+        <% if ("INVALID_USER".equals(reason)) { %>
+              You must be logged in to share.
+        <% } else if ("MISSING_FIELDS".equals(reason)) { %>
+              Please fill in all required fields.
+        <% } else { %>
+              Database Error.
+        <% } %>
       </div>
 
     <% } %>

@@ -82,15 +82,15 @@ public class UserDAO {
     /* =========================
        LOGIN
        ========================= */
-    public User loginUser(String email, String password) {
+    public User loginUser(String username, String password) {
 
-        String sql = "SELECT * FROM users WHERE email = ? AND password = ?";
+        String sql = "SELECT * FROM users WHERE username = ? AND password = ?";
         User user = null;
 
         try (Connection conn = DatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setString(1, email);
+            stmt.setString(1, username);
             stmt.setString(2, password);
 
             ResultSet rs = stmt.executeQuery();
@@ -99,6 +99,7 @@ public class UserDAO {
                 user = new User();
                 user.setUserId(rs.getInt("userId"));
                 user.setEmail(rs.getString("email"));
+                user.setUsername(rs.getString("username"));
                 user.setPassword(rs.getString("password"));
                 user.setFirstName(rs.getString("firstName"));
                 user.setLastName(rs.getString("lastName"));

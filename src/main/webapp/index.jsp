@@ -210,9 +210,9 @@
       position: relative;
       overflow: hidden;
 
-      display: flex;              /* 🔥 επιτρέπει κεντράρισμα */
-      flex-direction: column;     /* τα στοιχεία κάθετα */
-      justify-content: space-between; /* κρατάει το κουμπί στο κάτω μέρος */
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
 
     .card a {
@@ -223,8 +223,8 @@
       font-weight: 500;
       text-decoration: none;
       transition: all 0.3s ease;
-      width: 160px;            /* μικρότερο κουμπί */
-      margin: 0 auto;          /* 🔥 ΤΟ ΚΕΝΤΡΟΝΕΙ */
+      width: 160px;
+      margin: 0 auto;
       margin-top: 20px;
       text-align: center;
     }

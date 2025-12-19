@@ -15,21 +15,22 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String email = request.getParameter("email").trim();
+        String username = request.getParameter("username").trim();
         String password = request.getParameter("password").trim();
 
 
-        User user = userDAO.loginUser(email, password);
+        User user = userDAO.loginUser(username, password);
 
         if (user != null) {
             HttpSession session = request.getSession();
 
-            // ✅ ΙΔΙΟ attribute με το header
             session.setAttribute("authUser", user);
-
+            session.setAttribute("username", username);
+            session.setAttribute("userId", user.getUserId());
             response.sendRedirect("index.jsp");
+
         } else {
-            request.setAttribute("error", "Invalid email or password");
+            request.setAttribute("error", "Invalid username or password");
             request.getRequestDispatcher("login.jsp").forward(request, response);
         }
     }

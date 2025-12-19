@@ -240,7 +240,6 @@
       <% } %>
 
 
-      <!-- 🔥 FIXED FORM -->
       <form action="RegisterServlet" method="post" onsubmit="return validatePasswords()">
 
         <label for="firstname">First name:</label>
@@ -248,6 +247,9 @@
 
         <label for="lastname">Last name:</label>
         <input type="text" id="lastname" name="lastname" required>
+
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
 
         <div class="form-group password-wrapper">
           <label for="password">Password:</label>

@@ -21,6 +21,7 @@ public class RegisterServlet extends HttpServlet {
         // 🔹 Παίρνουμε δεδομένα από τη φόρμα
         String firstName = request.getParameter("firstname");
         String lastName  = request.getParameter("lastname");
+        String username = request.getParameter("username");
         String email     = request.getParameter("email");
         String password  = request.getParameter("password");
 
@@ -47,7 +48,7 @@ public class RegisterServlet extends HttpServlet {
         }
 
         // 🔹 Δημιουργία χρήστη
-        User user = new User(firstName, lastName, email, password);
+        User user = new User(firstName, lastName, username, email, password);
         boolean inserted = userDAO.insertUser(user);
 
         if (inserted) {
