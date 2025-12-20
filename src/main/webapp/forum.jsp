@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.List" %>
 <%@ page import="com.erasmus.web.model.Post" %>
+<%@ page import="com.erasmus.web.dao.ReplyDAO" %>
+<%@ page import="com.erasmus.web.model.Reply" %>
 
 <!DOCTYPE html>
 <html lang="el">
@@ -158,6 +160,7 @@
 
   .post-footer {
     display: flex;
+    flex-wrap: wrap;
     justify-content: flex-start;
     gap: 20px;
     margin-top: 15px;
@@ -172,6 +175,12 @@
 
   .post-footer span:hover {
     color: #0073e6;
+  }
+
+  .post-footer .btn {
+    margin-top: 12px;
+    flex-basis: 100%;
+    align-self: flex-start;
   }
 
   .no-posts {
@@ -218,6 +227,11 @@
     font-family: inherit;
     font-size: 14px;
   }
+
+  .reply-actions {
+  margin-top: 20px; 
+}
+
 
   .reply-form button {
     margin-top: 8px;
@@ -353,51 +367,88 @@
     %>
 
     <div class="posts">
-      <%
-        if ("load".equals(actionPosts)) {
-          if (posts != null && !posts.isEmpty()) {
-            for (Post post : posts) {
-              String type = post.getPostType();
-      %>
+    <%
+      if ("load".equals(actionPosts)) {
+        if (posts != null && !posts.isEmpty()) {
+          for (Post post : posts) {
 
-        <div class="post">
-          <div class="post-header">
-            <div class="avatar"><%= post.getUsername().substring(0,1).toUpperCase() %></div>
-            <div>
-              <h3><%= post.getTitle() %></h3>
-              <small>by <strong><%= post.getUsername() %></strong> on <%= post.getTimestamp() %></small>
+            String type = post.getPostType();
+            ReplyDAO replyDAO = new ReplyDAO();
+            List<Reply> replies = replyDAO.getReplies(post.getPostId());
+    %>
+
+      <div class="post">
+        <div class="post-header">
+          <div class="avatar"><%= post.getUsername().substring(0,1).toUpperCase() %></div>
+          <div>
+            <h3><%= post.getTitle() %></h3>
+            <small>by <strong><%= post.getUsername() %></strong> on <%= post.getTimestamp() %></small>
+          </div>
+        </div>
+
+        <p><%= post.getBody() %></p>
+
+        <div class="post-footer">
+          <span><i class="fa-regular fa-thumbs-up"></i> <%= post.getLikes() %></span>
+          <span><i class="fa-regular fa-thumbs-down"></i> <%= post.getDislikes() %></span>
+        </div>
+
+        <% if ("QUESTION".equalsIgnoreCase(type.trim())) { %>
+
+          <%
+            if (replies != null && !replies.isEmpty()) {
+              Reply firstReply = replies.get(0);
+          %>
+            <div class="reply">
+              <strong><%= firstReply.getUsername() %></strong><br>
+              <%= firstReply.getBody() %><br>
+              <small><%= firstReply.getTimestamp() %></small>
             </div>
-          </div>
-          <p><%= post.getBody() %></p>
+          <% } %>
 
-          <div class="post-footer">
-            <span><i class="fa-regular fa-thumbs-up"></i> <%= post.getLikes() %></span>
-            <span><i class="fa-regular fa-thumbs-down"> <%= post.getDislikes() %></i></span>
+          <div class="reply-actions">
 
-            <% if ("QUESTION".equals(type)) { %>
-                <a class="btn secondary" 
-                href="question.jsp?postId=<%= post.getPostId() %>">
-                <i class="fa-solid fa-reply"></i> View & Reply
-                </a>
+            <% if (replies != null && replies.size() > 1) { %>
+              <a class="btn primary"
+                href="ReplyServlet?postId=<%= post.getPostId() %>">
+                View All (<%= replies.size() %>)
+              </a>
             <% } %>
+
+            <button class="btn secondary reply-btn"
+                    data-post-id="<%= post.getPostId() %>">
+              <i class="fa-solid fa-reply"></i> Reply
+            </button>
+            <form action="ReplyServlet" method="post" class="reply-form" id="reply-form-<%= post.getPostId() %>" style="display:none;">
+              <input type="hidden" name="postId" value="<%= post.getPostId() %>">
+              <textarea name="replyBody" placeholder="Write your reply..." required></textarea>
+
+              <button type="submit" class="btn primary">
+                <i class="fa-solid fa-paper-plane"></i> Submit Reply
+              </button>
+            </form>
           </div>
-        </div>
 
-      <%
-            }
-          } else {
-      %>
+        <% } %>
 
-        <div class="no-posts">
-          <i class="fa-solid fa-circle-info" style="font-size: 2rem; color: #0073e6;"></i><br>
-          No posts available.
-        </div>
+      </div>
 
-      <%
-          }
+    <%
+          } // end for
+        } else {
+    %>
+
+      <div class="no-posts">
+        <i class="fa-solid fa-circle-info" style="font-size: 2rem; color: #0073e6;"></i><br>
+        No posts available.
+      </div>
+
+    <%
         }
-      %>
+      } 
+    %>
     </div>
+
 
     <!-- NEW POST FORM -->
     <%
@@ -461,6 +512,23 @@
   </main>
 
   <%@ include file="footer.jsp" %>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll(".reply-btn").forEach(btn => {
+      btn.addEventListener("click", function () {
+        const postId = this.getAttribute("data-post-id");
+
+        const form = document.getElementById("reply-form-" + postId);
+        if (form) {
+          form.style.display =
+            form.style.display === "none" ? "block" : "none";
+        }
+      });
+    });
+  });
+</script>
+
 
 </body>
 </html>

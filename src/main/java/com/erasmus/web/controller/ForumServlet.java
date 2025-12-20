@@ -26,7 +26,6 @@ public class ForumServlet extends HttpServlet {
         List<Post> posts = forumDAO.getAllPosts();
         String action = request.getParameter("action");
 
-        // Only load posts if action=load
         if ("load".equals(action)) {
             posts = forumDAO.getAllPosts();
             request.setAttribute("posts", posts);
@@ -48,7 +47,7 @@ public class ForumServlet extends HttpServlet {
                 }
 
 
-                int userId = user.getUserId();
+                int userId = user.getUserId();  
                 String username = user.getUsername();
                 String title = request.getParameter("postTitle");
                 String body = request.getParameter("postBody");

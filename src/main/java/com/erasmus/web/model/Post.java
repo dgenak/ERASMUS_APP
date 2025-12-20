@@ -35,6 +35,7 @@ public class Post {
 
     public String getPostType() { return postType; }
     public void setPostType(String postType) { this.postType = postType; }
+    
     public int getLikes() { return likes; }
     public void setLikes(int likes) { this.likes = likes; }
 

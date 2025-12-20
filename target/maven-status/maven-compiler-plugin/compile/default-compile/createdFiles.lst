@@ -1,3 +1,4 @@
+com\erasmus\web\dao\ReplyDAO.class
 com\erasmus\web\dao\CountryDAO.class
 com\erasmus\web\controller\RegisterServlet.class
 com\erasmus\web\dao\UniversityDAO.class
@@ -6,10 +7,11 @@ com\erasmus\web\model\CourseExternal.class
 com\erasmus\web\test\TestForumDAO.class
 com\erasmus\web\controller\UniversityServlet.class
 com\erasmus\web\util\DatabaseConnection.class
+com\erasmus\web\model\Reply.class
 com\erasmus\web\dao\UserDAO.class
 com\erasmus\web\controller\CourseMatchSelectServlet.class
 com\erasmus\web\controller\LogoutServlet.class
-com\erasmus\web\model\Answer.class
+com\erasmus\web\controller\ReplyServlet.class
 com\erasmus\web\controller\UpdateProfileServlet.class
 com\erasmus\web\model\Course.class
 com\erasmus\web\controller\ApplicationServlet.class

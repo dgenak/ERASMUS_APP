@@ -2,8 +2,8 @@ package com.erasmus.web.model;
 import java.util.Date;
 import java.util.List;
 
-    public class Answer {
-        private int answerId;
+    public class Reply {
+        private int replyId;
         private int questionPostId;
 
         private int userId;
@@ -11,12 +11,10 @@ import java.util.List;
 
         private String body;
         private Date timestamp;
-        private int likes;
-        private int dislikes;
-        private List<Post> answers;
+        private List<Reply> replies;
 
-        public int getAnswerId() { return answerId; }
-        public void setAnswerId(int answerId) { this.answerId = answerId; }
+        public int getReplyId() { return replyId; }
+        public void setReplyId(int replyId) { this.replyId = replyId; }
 
         public int getQuestionId() { return questionPostId; }
         public void setQuestionId(int questionId) { this.questionPostId = questionId; }
@@ -33,13 +31,7 @@ import java.util.List;
         public Date getTimestamp() { return timestamp; }
         public void setTimestamp(Date timestamp) { this.timestamp = timestamp; }
 
-        public int getLikes() { return likes; }
-        public void setLikes(int likes) { this.likes = likes; }
-
-        public int getDislikes() { return dislikes; }
-        public void setDislikes(int dislikes) { this.dislikes = dislikes; }
-
-        public List<Post> getAnswers() { return answers; }
-        public void setAnswers(List<Post> answers) { this.answers = answers; }
+        public List<Reply> getReplies() { return replies; }
+        public void setReplies (List<Reply> replies) { this.replies = replies; }
     }
 

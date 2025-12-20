@@ -15,7 +15,7 @@
         <url-pattern>/home</url-pattern>
     </servlet-mapping>
 
-    <!-- FORUM -->
+    <!-- FORUM POST -->
     <servlet>
         <servlet-name>ForumServlet</servlet-name>
         <servlet-class>com.erasmus.web.controller.ForumServlet</servlet-class>
@@ -24,6 +24,18 @@
         <servlet-name>ForumServlet</servlet-name>
         <url-pattern>/ForumServlet</url-pattern>
     </servlet-mapping>
+
+    <!-- FORUM REPLY-->
+    <servlet>
+        <servlet-name>ReplyServlet</servlet-name>
+        <servlet-class>com.erasmus.web.controller.ReplyServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ReplyServlet</servlet-name>
+        <url-pattern>/ReplyServlet</url-pattern>
+    </servlet-mapping>
+
 
     <!-- APPLICATIONS -->
     <servlet>

@@ -17,8 +17,6 @@ public class ForumDAO {
     private static final String JDBC_USER = "ismgroup29";
     private static final String JDBC_PASSWORD = "r2m$e9";
 
-    private static final List<Post> posts = new ArrayList<>();
-
     private Connection getConnection() throws SQLException {
         return DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD);
     }
@@ -74,7 +72,6 @@ public class ForumDAO {
 
             stmt.close();
             conn.close();
-            posts.add(post);
 
             return rows == 1;
 
