@@ -3,6 +3,8 @@
 <%@ page import="com.erasmus.web.model.Post" %>
 <%@ page import="com.erasmus.web.dao.ReplyDAO" %>
 <%@ page import="com.erasmus.web.model.Reply" %>
+<%@ page import="java.util.Map" %>
+<%@ page import="java.util.List" %>
 
 <!DOCTYPE html>
 <html lang="el">
@@ -229,8 +231,14 @@
   }
 
   .reply-actions {
-  margin-top: 20px; 
-}
+    margin-top: 20px; 
+    gap: 20px;
+  }
+
+  .reply-actions .reply-btn {
+    margin-left: 12px;
+  }
+
 
 
   .reply-form button {
@@ -364,6 +372,7 @@
     <%
       List<Post> posts = (List<Post>) request.getAttribute("posts");
       String actionPosts = request.getParameter("action");
+      Map<Integer, List<Reply>> repliesMap =  (Map<Integer, List<Reply>>) request.getAttribute("repliesMap");
     %>
 
     <div class="posts">
@@ -373,8 +382,7 @@
           for (Post post : posts) {
 
             String type = post.getPostType();
-            ReplyDAO replyDAO = new ReplyDAO();
-            List<Reply> replies = replyDAO.getReplies(post.getPostId());
+            List<Reply> replies = repliesMap.get(post.getPostId());
     %>
 
       <div class="post">
@@ -415,7 +423,7 @@
               </a>
             <% } %>
 
-            <button class="btn secondary reply-btn"
+            <button class="btn secondary reply-btn" 
                     data-post-id="<%= post.getPostId() %>">
               <i class="fa-solid fa-reply"></i> Reply
             </button>
