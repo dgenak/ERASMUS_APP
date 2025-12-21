@@ -1,6 +1,8 @@
 package com.erasmus.web.controller;
 
+import com.erasmus.web.dao.ForumDAO;
 import com.erasmus.web.dao.ReplyDAO;
+import com.erasmus.web.model.Post;
 import com.erasmus.web.model.Reply;
 import com.erasmus.web.model.User;
 
@@ -17,6 +19,7 @@ import java.util.List;
 public class ReplyServlet extends HttpServlet {
     
     private ReplyDAO replyDAO = new ReplyDAO();
+    private ForumDAO forumDAO = new ForumDAO();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -24,13 +27,14 @@ public class ReplyServlet extends HttpServlet {
             String postId = request.getParameter("postId");
 
             int IntPostId = Integer.parseInt(postId);
+            Post post = forumDAO.getPostById(IntPostId);
             
             List<Reply> replies = replyDAO.getReplies(IntPostId);
 
             request.setAttribute("replies", replies);
-            request.setAttribute("postId", postId);
+            request.setAttribute("post", post);
 
-            request.getRequestDispatcher("forum.jsp").forward(request, response);
+            request.getRequestDispatcher("question.jsp").forward(request, response);
         }
 
     @Override

@@ -88,4 +88,33 @@ public class ForumDAO {
         }
 
     }
+
+    public Post getPostById(int postId) {
+        String sql = "SELECT * FROM posts WHERE postId = ?";
+        Post post = null;
+
+        try (Connection conn = getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, postId);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                post = new Post();
+                post.setPostId(rs.getInt("postId"));
+                post.setUserId(rs.getInt("userId"));
+                post.setUsername(rs.getString("username"));
+                post.setTitle(rs.getString("title"));
+                post.setBody(rs.getString("body"));
+                post.setTimestamp(rs.getDate("timestamp"));
+                post.setPostType(rs.getString("post_type"));
+                post.setLikes(rs.getInt("likes"));
+                post.setDislikes(rs.getInt("dislikes"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return post;
+    }
+
 }
