@@ -36,6 +36,16 @@
         <url-pattern>/ReplyServlet</url-pattern>
     </servlet-mapping>
 
+    <!-- FORUM REACTION-->
+    <servlet>
+        <servlet-name>ReactionServlet</servlet-name>
+        <servlet-class>com.erasmus.web.controller.ReactionServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ReactionServlet</servlet-name>
+        <url-pattern>/ReactionServlet</url-pattern>
+    </servlet-mapping>
 
     <!-- APPLICATIONS -->
     <servlet>

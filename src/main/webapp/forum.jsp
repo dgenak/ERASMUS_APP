@@ -3,6 +3,8 @@
 <%@ page import="com.erasmus.web.model.Post" %>
 <%@ page import="com.erasmus.web.dao.ReplyDAO" %>
 <%@ page import="com.erasmus.web.model.Reply" %>
+<%@ page import="java.util.Map" %>
+<%@ page import="java.util.List" %>
 
 <!DOCTYPE html>
 <html lang="el">
@@ -229,13 +231,48 @@
   }
 
   .reply-actions {
-  margin-top: 20px; 
-}
+    margin-top: 20px; 
+    gap: 20px;
+  }
+
+  .reply-actions .reply-btn {
+    margin-left: 12px;
+  }
+
 
 
   .reply-form button {
     margin-top: 8px;
   }
+
+  .reaction-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0 6px;
+    cursor: pointer;
+    font-size: 1rem;
+    color: inherit;
+  }
+
+  .reaction-btn[value="like"]:hover {
+    color: #0a84ff;
+  }
+
+  .reaction-btn[value="dislike"]:hover {
+    color: #ff3b30; 
+  }
+
+  .active-like {
+    color: #0a84ff;
+    font-weight: bold;
+  }
+
+  .active-dislike {
+    color: #ff3b30;
+    font-weight: bold;
+  }
+
 
   /* === NEW POST === */
   #newPostForm {
@@ -364,6 +401,7 @@
     <%
       List<Post> posts = (List<Post>) request.getAttribute("posts");
       String actionPosts = request.getParameter("action");
+      Map<Integer, List<Reply>> repliesMap =  (Map<Integer, List<Reply>>) request.getAttribute("repliesMap");
     %>
 
     <div class="posts">
@@ -373,8 +411,7 @@
           for (Post post : posts) {
 
             String type = post.getPostType();
-            ReplyDAO replyDAO = new ReplyDAO();
-            List<Reply> replies = replyDAO.getReplies(post.getPostId());
+            List<Reply> replies = repliesMap.get(post.getPostId());
     %>
 
       <div class="post">
@@ -389,8 +426,20 @@
         <p><%= post.getBody() %></p>
 
         <div class="post-footer">
-          <span><i class="fa-regular fa-thumbs-up"></i> <%= post.getLikes() %></span>
-          <span><i class="fa-regular fa-thumbs-down"></i> <%= post.getDislikes() %></span>
+          <form action="ReactionServlet" method="post" style="display:inline;">
+            <input type="hidden" name="postId" value="<%= post.getPostId() %>">
+            <button type="submit" name="reaction" value="like" class="reaction-btn <%= "like".equals(post.getUserReaction()) ? "active-like" : "" %>">
+              <i class="fa-regular fa-thumbs-up"></i> <%= post.getLikes() %>
+            </button>
+          </form>
+
+          <form action="ReactionServlet" method="post" style="display:inline">
+            <input type="hidden" name="postId" value="<%= post.getPostId() %>">
+            <button type="sumbit" name="reaction" value="dislike" class="reaction-btn <%= "dislike".equals(post.getUserReaction()) ? "active-like" : "" %>">
+              <i class="fa-regular fa-thumbs-down"></i> <%= post.getDislikes() %>
+            </button>
+
+          </form>
         </div>
 
         <% if ("QUESTION".equalsIgnoreCase(type.trim())) { %>
@@ -415,7 +464,7 @@
               </a>
             <% } %>
 
-            <button class="btn secondary reply-btn"
+            <button class="btn secondary reply-btn" 
                     data-post-id="<%= post.getPostId() %>">
               <i class="fa-solid fa-reply"></i> Reply
             </button>

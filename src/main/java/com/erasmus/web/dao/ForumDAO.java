@@ -24,6 +24,8 @@ public class ForumDAO {
     public List<Post> getAllPosts() {
         String sql = "SELECT * FROM posts ORDER BY timestamp DESC";
         List<Post> posts = new ArrayList<>();
+        ReactionDAO reactionDAO = new ReactionDAO();
+
 
         try (Connection conn = getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);
@@ -38,8 +40,9 @@ public class ForumDAO {
                 post.setBody(rs.getString("body"));
                 post.setTimestamp(rs.getDate("timestamp"));
                 post.setPostType(rs.getString("post_type"));
-                post.setLikes(rs.getInt("likes"));
-                post.setDislikes(rs.getInt("dislikes"));
+
+                post.setLikes(reactionDAO.countReaction(post.getPostId(), "like"));
+                post.setDislikes(reactionDAO.countReaction(post.getPostId(), "dislike"));
                 posts.add(post);
             }
 

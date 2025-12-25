@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
@@ -69,7 +70,7 @@ public class ReplyServlet extends HttpServlet {
             reply.setUserId(userId);
             reply.setUsername(username);
             reply.setBody(body);
-            reply.setTimestamp(new Date());
+            reply.setTimestamp(new Timestamp(System.currentTimeMillis()));
 
             try {
                 boolean success = replyDAO.addReply(reply);
