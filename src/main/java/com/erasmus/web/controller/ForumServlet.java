@@ -1,6 +1,7 @@
 package com.erasmus.web.controller;
 
 import com.erasmus.web.dao.ForumDAO;
+import com.erasmus.web.dao.ReactionDAO;
 import com.erasmus.web.dao.ReplyDAO;
 import com.erasmus.web.model.Post;
 import com.erasmus.web.model.Reply;
@@ -23,6 +24,7 @@ public class ForumServlet extends HttpServlet {
 
     private ForumDAO forumDAO = new ForumDAO();
     private ReplyDAO replyDAO = new ReplyDAO();
+    private ReactionDAO reactionDAO = new ReactionDAO();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -31,6 +33,9 @@ public class ForumServlet extends HttpServlet {
         String action = request.getParameter("action");
         Map<Integer, List<Reply>> repliesMap = new HashMap<>();
 
+        HttpSession session = request.getSession(false);
+        User user = (session!= null) ? (User) session.getAttribute("authUser") : null;
+        int userId = user.getUserId();
 
         if ("load".equals(action)) {
             List<Post> posts = forumDAO.getAllPosts();
@@ -38,6 +43,13 @@ public class ForumServlet extends HttpServlet {
             for (Post p : posts) {
                 List<Reply> replies = replyDAO.getReplies(p.getPostId());
                 repliesMap.put(p.getPostId(), replies);
+
+                p.setDislikes(reactionDAO.countReaction(p.getPostId(), "dislike"));
+                p.setLikes(reactionDAO.countReaction(p.getPostId(), "like"));
+
+                if (user != null) {
+                    p.setUserReaction(reactionDAO.getReaction(p.getPostId(), user.getUserId()));
+                }
             }
             request.setAttribute("posts", posts);
             request.setAttribute("repliesMap", repliesMap);

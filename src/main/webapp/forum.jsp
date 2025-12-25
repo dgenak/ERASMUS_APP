@@ -245,6 +245,35 @@
     margin-top: 8px;
   }
 
+  .reaction-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0 6px;
+    cursor: pointer;
+    font-size: 1rem;
+    color: inherit;
+  }
+
+  .reaction-btn[value="like"]:hover {
+    color: #0a84ff;
+  }
+
+  .reaction-btn[value="dislike"]:hover {
+    color: #ff3b30; 
+  }
+
+  .active-like {
+    color: #0a84ff;
+    font-weight: bold;
+  }
+
+  .active-dislike {
+    color: #ff3b30;
+    font-weight: bold;
+  }
+
+
   /* === NEW POST === */
   #newPostForm {
     background: #f0f7ff;
@@ -397,8 +426,20 @@
         <p><%= post.getBody() %></p>
 
         <div class="post-footer">
-          <span><i class="fa-regular fa-thumbs-up"></i> <%= post.getLikes() %></span>
-          <span><i class="fa-regular fa-thumbs-down"></i> <%= post.getDislikes() %></span>
+          <form action="ReactionServlet" method="post" style="display:inline;">
+            <input type="hidden" name="postId" value="<%= post.getPostId() %>">
+            <button type="submit" name="reaction" value="like" class="reaction-btn <%= "like".equals(post.getUserReaction()) ? "active-like" : "" %>">
+              <i class="fa-regular fa-thumbs-up"></i> <%= post.getLikes() %>
+            </button>
+          </form>
+
+          <form action="ReactionServlet" method="post" style="display:inline">
+            <input type="hidden" name="postId" value="<%= post.getPostId() %>">
+            <button type="sumbit" name="reaction" value="dislike" class="reaction-btn <%= "dislike".equals(post.getUserReaction()) ? "active-like" : "" %>">
+              <i class="fa-regular fa-thumbs-down"></i> <%= post.getDislikes() %>
+            </button>
+
+          </form>
         </div>
 
         <% if ("QUESTION".equalsIgnoreCase(type.trim())) { %>
