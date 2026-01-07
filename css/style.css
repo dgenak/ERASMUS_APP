@@ -40,70 +40,6 @@ body {
   min-height: 100vh;
 }
 
-/* ==========================================================
-   🧭 HEADER
-========================================================== */
-header {
-  background: linear-gradient(135deg, var(--primary-dark), var(--primary));
-  color: white;
-  padding: 1.5rem 0;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-
-.header-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 2rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.logo-container {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.logo {
-  width: 60px;
-  height: 60px;
-  background: white;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-  color: var(--primary);
-  font-size: 1.5rem;
-}
-
-.header-title {
-  font-size: 2.5rem;
-  font-weight: 700;
-  background: linear-gradient(to right, #fff, #e6f7ff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-.auth-section {
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-}
-
-.auth-btn {
-  background: rgba(255, 255, 255, 0.2);
-  color: white;
-  border: none;
-  padding: 0.5rem 1.2rem;
-  border-radius: 30px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: var(--transition);
-}
-
 .auth-btn:hover {
   background: rgba(255, 255, 255, 0.3);
   transform: translateY(-2px);
@@ -112,43 +48,8 @@ header {
 /* ==========================================================
    📑 NAVIGATION
 ========================================================== */
-nav {
-  background: white;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
-
-.nav-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 2rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.nav-links {
-  display: flex;
-  list-style: none;
-  gap: 0.5rem;
-}
-
-.nav-link {
-  padding: 1.2rem 1.5rem;
-  text-decoration: none;
-  color: var(--dark);
-  font-weight: 500;
-  transition: var(--transition);
-  position: relative;
-}
 
 .nav-link:hover {
-  color: var(--primary);
-}
-
-.nav-link.active {
   color: var(--primary);
 }
 
@@ -163,27 +64,6 @@ nav {
   border-radius: 3px 3px 0 0;
 }
 
-/* ==========================================================
-   🔽 DROPDOWN
-========================================================== */
-.dropdown {
-  position: relative;
-}
-
-.dropdown-content {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  background: white;
-  min-width: 250px;
-  box-shadow: var(--box-shadow);
-  border-radius: 0 0 var(--border-radius) var(--border-radius);
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(10px);
-  transition: var(--transition);
-  z-index: 10;
-}
 
 .dropdown:hover .dropdown-content {
   opacity: 1;
@@ -191,14 +71,6 @@ nav {
   transform: translateY(0);
 }
 
-.dropdown-item {
-  display: block;
-  padding: 1rem 1.5rem;
-  text-decoration: none;
-  color: var(--dark);
-  transition: var(--transition);
-  border-bottom: 1px solid var(--light-gray);
-}
 
 .dropdown-item:hover {
   background: var(--light);
@@ -399,37 +271,6 @@ footer {
   transform: scale(1.2);
 }
 
-/* ==========================================================
-   📱 RESPONSIVE DESIGN
-========================================================== */
-@media (max-width: 768px) {
-  .header-container {
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .nav-container {
-    flex-direction: column;
-    padding: 1rem;
-  }
-
-  .nav-links {
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
-  .content-card {
-    padding: 1.5rem;
-  }
-
-  .section-title {
-    font-size: 1.5rem;
-  }
-
-  .footer-container {
-    text-align: center;
-  }
-}
 /* === FOOTER FIX === */
 html, body {
   height: 100%;

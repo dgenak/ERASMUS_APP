@@ -1,7 +1,12 @@
 package com.erasmus.web.dao;
 
 import com.erasmus.web.model.University;
-import java.sql.*;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,10 +26,11 @@ public class UniversityDAO {
     // 1) Get universities by country
     // ================================================================
     public List<University> getUniversitiesByCountry(int countryId) {
+
         List<University> list = new ArrayList<>();
 
         String sql =
-                "SELECT universityId, universityName, countryId, latitude, longitude " +
+                "SELECT universityId, universityName, countryId, latitude, longitude, image_url " +
                 "FROM university WHERE countryId = ?";
 
         try (Connection conn = getConnection();
@@ -40,10 +46,11 @@ public class UniversityDAO {
                 u.setCountryId(rs.getInt("countryId"));
                 u.setLatitude(rs.getDouble("latitude"));
                 u.setLongitude(rs.getDouble("longitude"));
+                u.setImageUrl(rs.getString("image_url")); // 👈 ΝΕΟ
                 list.add(u);
             }
 
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
@@ -56,7 +63,7 @@ public class UniversityDAO {
     public University getUniversityById(int universityId) {
 
         String sql =
-                "SELECT universityId, universityName, countryId, latitude, longitude " +
+                "SELECT universityId, universityName, countryId, latitude, longitude, image_url " +
                 "FROM university WHERE universityId = ?";
 
         try (Connection conn = getConnection();
@@ -72,10 +79,11 @@ public class UniversityDAO {
                 u.setCountryId(rs.getInt("countryId"));
                 u.setLatitude(rs.getDouble("latitude"));
                 u.setLongitude(rs.getDouble("longitude"));
+                u.setImageUrl(rs.getString("image_url")); // 👈 ΝΕΟ
                 return u;
             }
 
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
@@ -83,18 +91,19 @@ public class UniversityDAO {
     }
 
     // ================================================================
-    // 3) NEW — Get ALL universities (for map on universities.jsp)
+    // 3) Get ALL universities
     // ================================================================
     public List<University> getAllUniversities() {
+
         List<University> list = new ArrayList<>();
 
         String sql =
-                "SELECT universityId, universityName, countryId, latitude, longitude " +
+                "SELECT universityId, universityName, countryId, latitude, longitude, image_url " +
                 "FROM university";
 
         try (Connection conn = getConnection();
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            ResultSet rs = stmt.executeQuery()) {
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
                 University u = new University();
@@ -103,15 +112,14 @@ public class UniversityDAO {
                 u.setCountryId(rs.getInt("countryId"));
                 u.setLatitude(rs.getDouble("latitude"));
                 u.setLongitude(rs.getDouble("longitude"));
+                u.setImageUrl(rs.getString("image_url")); // 👈 ΝΕΟ
                 list.add(u);
             }
 
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
         return list;
     }
-
 }
-

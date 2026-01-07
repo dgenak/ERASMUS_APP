@@ -1,27 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.List" %>
-<%@ page import="com.erasmus.web.model.Post" %>
-<%@ page import="com.erasmus.web.dao.ReplyDAO" %>
-<%@ page import="com.erasmus.web.model.Reply" %>
+<%@ page import="com.erasmus.web.model.ForumPost" %>
 
 <!DOCTYPE html>
 <html lang="el">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>UniEra+ | Erasmus Forum</title>
-  <link rel="stylesheet" href="css/style.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
-    html, body {
-      width: 100%;
-      margin: 0;
-      padding: 0;
-    }
 
-<<<<<<< HEAD
 /* === GENERAL === */
   html, body {
     height: 100%;
@@ -32,11 +22,6 @@
     background: #f4f7fb;
     color: #1f2a44;
   }
-
-  *, *::before, *::after {
-  box-sizing: border-box;
-  }
-
 
   main {
     flex: 1;
@@ -50,8 +35,6 @@
     padding: 3rem;
     animation: fadeIn 0.6s ease-in-out;
   }
-=======
->>>>>>> 52d49cf (mobile change)
 
   @keyframes fadeIn {
     from { opacity: 0; transform: translateY(20px); }
@@ -109,7 +92,6 @@
 
   .btn.secondary:hover {
     background-color: #cce0ff;
-    transform: scale(1.05)
   }
 
   .section-divider {
@@ -170,7 +152,6 @@
 
   .post-footer {
     display: flex;
-    flex-wrap: wrap;
     justify-content: flex-start;
     gap: 20px;
     margin-top: 15px;
@@ -185,12 +166,6 @@
 
   .post-footer span:hover {
     color: #0073e6;
-  }
-
-  .post-footer .btn {
-    margin-top: 12px;
-    flex-basis: 100%;
-    align-self: flex-start;
   }
 
   .no-posts {
@@ -237,11 +212,6 @@
     font-family: inherit;
     font-size: 14px;
   }
-
-  .reply-actions {
-  margin-top: 20px; 
-}
-
 
   .reply-form button {
     margin-top: 8px;
@@ -336,7 +306,7 @@
     }
 
     #newPostForm {
-      padding: 30px 40px;
+      padding: 15px;
     }
   }
 
@@ -354,7 +324,7 @@
 
     <!-- Main Buttons -->
     <div class="buttons">
-      <a href="forum.jsp?action=newQuestion" class="btn primary">
+      <a href="forum.jsp?action=newPost" class="btn primary">
         <i class="fa-solid fa-plus"></i> Ask a question
       </a>
 
@@ -372,115 +342,56 @@
 
     <!-- POSTS SECTION -->
     <%
-      List<Post> posts = (List<Post>) request.getAttribute("posts");
+      List<ForumPost> posts = (List<ForumPost>) request.getAttribute("posts");
       String actionPosts = request.getParameter("action");
     %>
 
     <div class="posts">
-    <%
-      if ("load".equals(actionPosts)) {
-        if (posts != null && !posts.isEmpty()) {
-          for (Post post : posts) {
+      <%
+        if ("load".equals(actionPosts)) {
+          if (posts != null && !posts.isEmpty()) {
+            for (ForumPost post : posts) {
+      %>
 
-            String type = post.getPostType();
-            ReplyDAO replyDAO = new ReplyDAO();
-            List<Reply> replies = replyDAO.getReplies(post.getPostId());
-    %>
-
-      <div class="post">
-        <div class="post-header">
-          <div class="avatar"><%= post.getUsername().substring(0,1).toUpperCase() %></div>
-          <div>
-            <h3><%= post.getTitle() %></h3>
-            <small>by <strong><%= post.getUsername() %></strong> on <%= post.getTimestamp() %></small>
-          </div>
-        </div>
-
-        <p><%= post.getBody() %></p>
-
-        <div class="post-footer">
-          <span><i class="fa-regular fa-thumbs-up"></i> <%= post.getLikes() %></span>
-          <span><i class="fa-regular fa-thumbs-down"></i> <%= post.getDislikes() %></span>
-        </div>
-
-        <% if ("QUESTION".equalsIgnoreCase(type.trim())) { %>
-
-          <%
-            if (replies != null && !replies.isEmpty()) {
-              Reply firstReply = replies.get(0);
-          %>
-            <div class="reply">
-              <strong><%= firstReply.getUsername() %></strong><br>
-              <%= firstReply.getBody() %><br>
-              <small><%= firstReply.getTimestamp() %></small>
+        <div class="post">
+          <div class="post-header">
+            <div class="avatar"><%= post.getUsername().substring(0,1).toUpperCase() %></div>
+            <div>
+              <h3><%= post.getTitle() %></h3>
+              <small>by <strong><%= post.getUsername() %></strong> on <%= post.getTimestamp() %></small>
             </div>
-          <% } %>
-
-          <div class="reply-actions">
-
-            <% if (replies != null && replies.size() > 1) { %>
-              <a class="btn primary"
-                href="ReplyServlet?postId=<%= post.getPostId() %>">
-                View All (<%= replies.size() %>)
-              </a>
-            <% } %>
-
-            <button class="btn secondary reply-btn"
-                    data-post-id="<%= post.getPostId() %>">
-              <i class="fa-solid fa-reply"></i> Reply
-            </button>
-            <form action="ReplyServlet" method="post" class="reply-form" id="reply-form-<%= post.getPostId() %>" style="display:none;">
-              <input type="hidden" name="postId" value="<%= post.getPostId() %>">
-              <textarea name="replyBody" placeholder="Write your reply..." required></textarea>
-
-              <button type="submit" class="btn primary">
-                <i class="fa-solid fa-paper-plane"></i> Submit Reply
-              </button>
-            </form>
           </div>
+          <p><%= post.getBody() %></p>
+        </div>
 
-        <% } %>
+      <%
+            }
+          } else {
+      %>
 
-      </div>
+        <div class="no-posts">
+          <i class="fa-solid fa-circle-info" style="font-size: 2rem; color: #0073e6;"></i><br>
+          No posts available.
+        </div>
 
-    <%
-          } // end for
-        } else {
-    %>
-
-      <div class="no-posts">
-        <i class="fa-solid fa-circle-info" style="font-size: 2rem; color: #0073e6;"></i><br>
-        No posts available.
-      </div>
-
-    <%
+      <%
+          }
         }
-      } 
-    %>
+      %>
     </div>
-
 
     <!-- NEW POST FORM -->
     <%
       String action = request.getParameter("action");
-      boolean showQuestionForm = "newQuestion".equals(action);
-      boolean showExperienceForm = "newExperience".equals(action);
-      boolean showForm = showQuestionForm || showExperienceForm;
-
-      String formTitle = showQuestionForm ? "Add New Question" : "Add New Experience ";
-      String placeholderTitle = showQuestionForm ? "Question Title" : "Experience Title";
-      String placeholderBody = showQuestionForm ? "Ask a question..." : "Share your experience...";
-      String postTypeValue = showQuestionForm ? "QUESTION" : "EXPERIENCE";
+      boolean showForm = "newPost".equals(action) || "newExperience".equals(action);
     %>
 
     <div id="newPostForm" style="display:<%= showForm ? "block" : "none" %>;">
-      <h3><i class="fa-solid fa-pen-to-square"></i> <%= formTitle %> </h3>
+      <h3><i class="fa-solid fa-pen-to-square"></i> Create New Post</h3>
 
       <form id="postForm" action="ForumServlet" method="post">
-        <input id="postTitle" name="postTitle" placeholder="<%= placeholderTitle %>">
-        <textarea id="postBody" name="postBody" placeholder="<%= placeholderBody %>"></textarea>
-
-        <input type="hidden" name="postType" value="<%= postTypeValue %>" >
+        <input id="postTitle" name="postTitle" placeholder="Post Title">
+        <textarea id="postBody" name="postBody" placeholder="Tell us your experience or ask a question..."></textarea>
 
         <button type="submit" class="btn primary">
           <i class="fa-solid fa-paper-plane"></i> Submit
@@ -495,7 +406,6 @@
     <!-- STATUS ALERTS -->
     <%
       String status = request.getParameter("status");
-      String reason = request.getParameter("reason");
 
       if ("success".equals(status)) {
     %>
@@ -506,15 +416,10 @@
       </div>
 
     <% } else if ("error".equals(status)) { %>
+
       <div class="alert error">
         <i class="fa-solid fa-exclamation-circle"></i>
-        <% if ("INVALID_USER".equals(reason)) { %>
-              You must be logged in to share.
-        <% } else if ("MISSING_FIELDS".equals(reason)) { %>
-              Please fill in all required fields.
-        <% } else { %>
-              Database Error.
-        <% } %>
+        Error submitting your post.
       </div>
 
     <% } %>
@@ -522,23 +427,6 @@
   </main>
 
   <%@ include file="footer.jsp" %>
-
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    document.querySelectorAll(".reply-btn").forEach(btn => {
-      btn.addEventListener("click", function () {
-        const postId = this.getAttribute("data-post-id");
-
-        const form = document.getElementById("reply-form-" + postId);
-        if (form) {
-          form.style.display =
-            form.style.display === "none" ? "block" : "none";
-        }
-      });
-    });
-  });
-</script>
-
 
 </body>
 </html>

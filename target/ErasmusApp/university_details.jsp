@@ -5,15 +5,24 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>DMST Courses</title>
-    <link rel="stylesheet" href="css/style.css">
-
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #eef3ff;
+            margin: 0;
+            font-size: 18px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 50px auto;
+            padding: 0 25px;
+        }
+
         .title-box {
             text-align: center;
             margin-bottom: 40px;
@@ -121,12 +130,6 @@
             width: 100%;
             height: 320px;
             border: 0;
-        }
-
-        @media (max-width: 480px) {
-        .map-box iframe {
-            height: 220px;
-        }
         }
 
         .map-click-layer {
@@ -520,25 +523,16 @@
         }
 
         .title-with-back {
-        position: relative;
-        padding-top: 80px;
-        margin-top: 30px;   /* ⬅️ ΑΥΤΟ ΕΙΝΑΙ ΤΟ ΚΛΕΙΔΙ */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
         }
-
-
-        @media (max-width: 480px) {
-        .modern-back-btn {
-            left: 10px;
-            top: 30px;
-        }
-        }
-
 
         /* ===== MODERN BACK BUTTON ===== */
         .modern-back-btn {
             position: absolute;
             left: 0;
-            top: 0;
 
             display: flex;
             align-items: center;
@@ -590,159 +584,6 @@
         .title-center {
             text-align: center;
         }
-        /* =====================================
-   📱 EXTRA SMALL DEVICES (≤ 480px)
-   ===================================== */
-@media (max-width: 480px) {
-
-  .title-box h1 {
-    font-size: 28px;
-    line-height: 1.25;
-  }
-
-  .title-box p {
-    font-size: 14px;
-    margin-bottom: 20px;
-  }
-
-  .semester-grid {
-    grid-template-columns: 1fr;
-    gap: 18px;
-  }
-
-  .semester-card {
-    padding: 20px;
-    border-radius: 16px;
-  }
-
-  .semester-title {
-    font-size: 20px;
-    margin-bottom: 14px;
-  }
-
-  .course-item {
-    padding: 14px;
-    border-radius: 12px;
-  }
-
-  .course-name {
-    font-size: 15px;
-  }
-
-  .dropdown-header {
-    padding: 12px;
-    font-size: 15px;
-  }
-
-  .orientation-btn {
-    padding: 12px;
-    font-size: 15px;
-  }
-
-  .submit-btn {
-    width: 100%;
-    padding: 16px;
-    font-size: 17px;
-    border-radius: 12px;
-  }
-}
-
-/* =====================================
-   📱 SMALL DEVICES (481px – 768px)
-   ===================================== */
-@media (max-width: 768px) {
-  .container {
-    margin: 30px auto;
-    padding: 0 18px;
-  }
-
-  .title-box h1 {
-    font-size: 34px;
-  }
-
-  .semester-grid {
-    grid-template-columns: 1fr;
-    gap: 24px;
-  }
-
-  .semester-card {
-    padding: 24px;
-  }
-
-  .semester-title {
-    font-size: 23px;
-  }
-
-  .course-name {
-    font-size: 16px;
-  }
-
-  .submit-btn {
-    font-size: 18px;
-    padding: 17px 36px;
-  }
-}
-
-/* =====================================
-   💻 TABLETS / SMALL LAPTOPS (769px – 1024px)
-   ===================================== */
-@media (max-width: 1024px) {
-  .container {
-    max-width: 1100px;
-  }
-
-  .semester-grid {
-    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-  }
-
-  .title-box h1 {
-    font-size: 38px;
-  }
-}
-
-/* =====================================
-   🖥️ LARGE SCREENS (≥ 1400px)
-   ===================================== */
-@media (min-width: 1400px) {
-  body {
-    font-size: 18px;
-  }
-
-  .container {
-    max-width: 1500px;
-  }
-
-  .semester-card {
-    padding: 34px;
-  }
-
-  .semester-title {
-    font-size: 29px;
-  }
-}
-
-/* =====================================
-   📱 LANDSCAPE MOBILE OPTIMIZATION
-   ===================================== */
-@media (max-height: 500px) and (orientation: landscape) {
-  .container {
-    margin: 15px auto;
-  }
-
-  .semester-card {
-    padding: 18px;
-  }
-
-  .submit-btn {
-    margin-top: 25px;
-  }
-}
-
-.page-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 16px;
-}
 
 
 
@@ -755,183 +596,194 @@
 <%@ include file="header.jsp" %>
 
 <main>
-    <section class="page-section">
-        <div class="page-container">
+    <div class="container">
 
-            <%
-                University uni = (University) request.getAttribute("university");
-                Map<Integer, List<CourseDet>> detCourses =
-                        (Map<Integer, List<CourseDet>>) request.getAttribute("detCourses");
+        <%
+            University uni = (University) request.getAttribute("university");
+            Map<Integer, List<CourseDet>> detCourses =
+                    (Map<Integer, List<CourseDet>>) request.getAttribute("detCourses");
 
-                Map<Integer, Boolean> hasEquiv =
-                        (Map<Integer, Boolean>) request.getAttribute("hasEquiv");
+            Map<Integer, Boolean> hasEquiv =
+                    (Map<Integer, Boolean>) request.getAttribute("hasEquiv");
 
-                List<CourseDet> coreMandatory7 = (List<CourseDet>) request.getAttribute("coreMandatory7");
-                List<String> orientations7 = (List<String>) request.getAttribute("orientations7");
+            List<CourseDet> coreMandatory7 = (List<CourseDet>) request.getAttribute("coreMandatory7");
+            List<String> orientations7 = (List<String>) request.getAttribute("orientations7");
 
-                double lat = uni.getLatitude();
-                double lng = uni.getLongitude();
+            double lat = uni.getLatitude();
+            double lng = uni.getLongitude();
 
-                String googleEmbed = "https://www.google.com/maps?q=" + lat + "," + lng + "&hl=en&z=15&output=embed";
-                String googleLink = "https://www.google.com/maps?q=" + lat + "," + lng + "&hl=en";
-            %>
-
-
-            <div class="title-box title-with-back">
-                <button class="modern-back-btn" onclick="history.back()">
-                    <span class="back-icon">←</span>
-                    <span class="back-text">Universities</span>
-                </button>
-
-                <div class="title-center">
-                    <h1>DMST Course Program</h1>
-                    <h3>
-                        Available courses for:
-                        <strong><%= uni.getUniversityName() %></strong>
-                    </h3>
-                </div>
-            </div>
+            String googleEmbed = "https://www.google.com/maps?q=" + lat + "," + lng + "&hl=en&z=15&output=embed";
+            String googleLink = "https://www.google.com/maps?q=" + lat + "," + lng + "&hl=en";
+        %>
 
 
+        <div class="title-box title-with-back">
+            <button class="modern-back-btn" onclick="history.back()">
+                <span class="back-icon">←</span>
+                <span class="back-text">Universities</span>
+            </button>
 
-            <!-- MAP -->
-            <div class="map-box">
-                <iframe loading="lazy" src="<%= googleEmbed %>"></iframe>
-                <a href="<%= googleLink %>" target="_blank" class="map-click-layer"></a>
-            </div>
-
-            <div class="notice-box">
-                ⚠️ <b>Important Note:</b><br>
-                The course equivalences shown below are based on past Erasmus approvals and should be used for guidance only.
-                University courses and equivalence rules may have changed. Always confirm final equivalences with the Erasmus Office.
-            </div>
-            
-            <%
-                String selected = (String) request.getAttribute("selectedOrientation");
-                String selected7 = (String) request.getAttribute("selectedOrientation7");
-            %>
-
-            <!-- SEMESTERS 1–7 -->
-            <div class="semester-grid">
-                <% for (int sem = 1; sem <= 5; sem++) { %>
-                    <div class="semester-card">
-                        <div class="semester-title">Semester <%= sem %></div>
-
-                        <% 
-                            List<CourseDet> list = detCourses.get(sem);
-                            if (list != null) {
-                                for (CourseDet c : list) {
-                        %>
-
-                            <div class="course-item <%= Boolean.TRUE.equals(hasEquiv.get(c.getId())) ? "equiv-yes" : "equiv-no" %>"
-                                onclick="openCourseModal(<%= c.getId() %>)">
-
-                                <div class="course-name">
-                                    <%= c.getCourseName() %>
-                                    <span class="ects-badge"><%= c.getEcts() %> ECTS</span>
-                                </div>
-
-                                <div class="course-info">
-                                    Code: <%= c.getCourseCode() %> | Period: <%= c.getPeriod() %>
-                                </div>
-
-                            </div>
-
-                        <% 
-                                }
-                            }
-                        %>
-
-                    </div>
-                <% } %>
-
-
-                <!-- SEMESTER 6 -->
-                <div class="semester-card">
-                    <div class="semester-title">Semester 6</div>
-                    <div id="semester6-content">
-                        <!-- φορτώνεται με AJAX -->
-                    </div>
-                </div>
-
-                <!-- SEMESTER 7 -->
-                <div class="semester-card">
-                    <div class="semester-title">Semester 7</div>
-                    <div id="semester7-content">
-                        <!-- φορτώνεται με AJAX -->
-                    </div>
-                </div>
-
-            </div>
-
-    </main>
-
-        <div id="course-modal" class="modal-backdrop">
-            <div class="modal-glass">
-
-                <% 
-                    List<com.erasmus.web.model.CourseExternal> eq =
-                        (List<com.erasmus.web.model.CourseExternal>) request.getAttribute("equivalents");
-
-                    Integer timesMatched = (Integer) request.getAttribute("timesMatched");
-                    if (timesMatched == null) timesMatched = 0;
-                %>
-
-                <!-- HEADER -->
-                <div class="modal-header">
-                    <div class="modal-icon">🎓</div>
-                    <div class="modal-title">Equivalent Course Found</div>
-                    <div class="modal-subtitle">
-                        This match is based on past Erasmus approvals and may not reflect current course rules.
-                    </div>
-                </div>
-
-                <% if (eq != null && !eq.isEmpty()) { %>
-
-                    <div class="modal-course-card">
-                        <div class="course-title"><%= eq.get(0).getCourseName() %></div>
-                        <div class="course-line"></div>
-
-                        <div class="course-info-row">
-                            <span class="label">Code:</span>
-                            <span class="value"><%= eq.get(0).getCourseCode() %></span>
-                        </div>
-
-                        <div class="course-info-row">
-                            <span class="label">ECTS:</span>
-                            <span class="value"><%= eq.get(0).getEcts() %></span>
-                        </div>
-
-                        <div class="course-info-row">
-                            <span class="label">Times Matched:</span>
-                            <span class="value">
-                                <%= timesMatched %> time(s)
-                                <span style="font-size:13px; color:#666;">
-                                    in previous years
-                                </span>
-                            </span>
-                        </div>
-                    </div>
-
-                <% } else { %>
-
-                    <div class="modal-course-card">
-                        <div class="course-title">No Equivalent Courses Found</div>
-                        <div class="course-line"></div>
-                        <p class="no-data">
-                            There is no historical equivalence recorded for this course.
-                        </p>
-                    </div>
-
-                <% } %>
-
-                <a href="#" class="modal-btn">Close</a>
-                <a href="#" class="modal-backdrop-close"></a>
-
+            <div class="title-center">
+                <h1>DMST Course Program</h1>
+                <h3>
+                    Available courses for:
+                    <strong><%= uni.getUniversityName() %></strong>
+                </h3>
             </div>
         </div>
-    </section>
 
+
+
+        <!-- MAP -->
+        <div class="map-box image-box">
+            <a href="<%= googleLink %>" target="_blank">
+                <img 
+                    src="<%= uni.getImageUrl() %>" 
+                    alt="University image"
+                    class="university-image"
+                />
+                <div class="image-overlay">
+                    📍 View on Map
+                </div>
+            </a>
+        </div>
+
+
+        <div class="notice-box">
+            ⚠️ <b>Important Note:</b><br>
+            The course equivalences shown below are based on past Erasmus approvals and should be used for guidance only.
+            University courses and equivalence rules may have changed. Always confirm final equivalences with the Erasmus Office.
+        </div>
+        
+        <%
+            String selected = (String) request.getAttribute("selectedOrientation");
+            String selected7 = (String) request.getAttribute("selectedOrientation7");
+        %>
+
+        <!-- SEMESTERS 1–7 -->
+        <div class="semester-grid">
+            <% for (int sem = 1; sem <= 5; sem++) { %>
+                <div class="semester-card">
+                    <div class="semester-title">Semester <%= sem %></div>
+
+                    <% 
+                        List<CourseDet> list = detCourses.get(sem);
+                        if (list != null) {
+                            for (CourseDet c : list) {
+                    %>
+
+                        <div class="course-item <%= Boolean.TRUE.equals(hasEquiv.get(c.getId())) ? "equiv-yes" : "equiv-no" %>"
+                            onclick="openCourseModal(<%= c.getId() %>)">
+
+                            <div class="course-name">
+                                <%= c.getCourseName() %>
+                                <span class="ects-badge"><%= c.getEcts() %> ECTS</span>
+                            </div>
+
+                            <div class="course-info">
+                                Code: <%= c.getCourseCode() %> | Period: <%= c.getPeriod() %>
+                            </div>
+
+                        </div>
+
+                    <% 
+                            }
+                        }
+                    %>
+
+                </div>
+            <% } %>
+
+
+            <!-- SEMESTER 6 -->
+            <div class="semester-card">
+                <div class="semester-title">Semester 6</div>
+                <div id="semester6-content">
+                    <!-- φορτώνεται με AJAX -->
+                </div>
+            </div>
+
+            <!-- SEMESTER 7 -->
+            <div class="semester-card">
+                <div class="semester-title">Semester 7</div>
+                <div id="semester7-content">
+                    <!-- φορτώνεται με AJAX -->
+                </div>
+            </div>
+
+        </div>
+
+</main>
+
+    <div id="course-modal" class="modal-backdrop">
+        <div class="modal-glass">
+
+            <% 
+                List<com.erasmus.web.model.CourseExternal> eq =
+                    (List<com.erasmus.web.model.CourseExternal>) request.getAttribute("equivalents");
+
+                Integer timesMatched = (Integer) request.getAttribute("timesMatched");
+                if (timesMatched == null) timesMatched = 0;
+            %>
+
+            <!-- HEADER -->
+            <div class="modal-header">
+                <div class="modal-icon">🎓</div>
+                <div class="modal-title">Equivalent Course Found</div>
+                <div class="modal-subtitle">
+                    This match is based on past Erasmus approvals and may not reflect current course rules.
+                </div>
+            </div>
+
+            <% if (eq != null && !eq.isEmpty()) { %>
+
+                <div class="modal-course-card">
+                    <div class="course-title"><%= eq.get(0).getCourseName() %></div>
+                    <div class="course-line"></div>
+
+                    <div class="course-info-row">
+                        <span class="label">Code:</span>
+                        <span class="value"><%= eq.get(0).getCourseCode() %></span>
+                    </div>
+
+                    <div class="course-info-row">
+                        <span class="label">ECTS:</span>
+                        <span class="value"><%= eq.get(0).getEcts() %></span>
+                    </div>
+
+                    <div class="course-info-row">
+                        <span class="label">Times Matched:</span>
+                        <span class="value">
+                            <%= timesMatched %> time(s)
+                            <span style="font-size:13px; color:#666;">
+                                in previous years
+                            </span>
+                        </span>
+                    </div>
+                </div>
+
+            <% } else { %>
+
+                <div class="modal-course-card">
+                    <div class="course-title">No Equivalent Courses Found</div>
+                    <div class="course-line"></div>
+                    <p class="no-data">
+                        There is no historical equivalence recorded for this course.
+                    </p>
+                </div>
+
+            <% } %>
+
+            <a href="#" class="modal-btn">Close</a>
+            <a href="#" class="modal-backdrop-close"></a>
+
+        </div>
+    </div>
+
+
+
+
+    <%@ include file="footer.jsp" %>
     <script>
         const UNIVERSITY_ID = <%= uni.getUniversityId() %>;
         let selectedOrientation = "<%= selected != null ? selected : "" %>";
@@ -1123,6 +975,6 @@
 
 
     </script>
-    <%@ include file="footer.jsp" %>
+
     </body>
 </html>

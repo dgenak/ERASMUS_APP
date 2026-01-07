@@ -28,157 +28,69 @@
       </div>
     </div>
 
-    <!-- AUTH SECTION WITHOUT JS -->
+    <!-- AUTH SECTION -->
     <div class="auth-section">
       <% if (loggedUser != null) { %>
         <div class="user-info-header">
           <span class="user-name" id="userProfileToggle">
             Hello,
             <strong>
-              <%= loggedUser.getFirstName() != null ? loggedUser.getFirstName() : "" %>
-              <%= loggedUser.getLastName()  != null ? loggedUser.getLastName()  : "" %>
+              <%= loggedUser.getFirstName() %> <%= loggedUser.getLastName() %>
             </strong>
           </span>
           <a class="logout-btn" href="LogoutServlet">Logout</a>
         </div>
-      <% } else { %>
-          <div class="auth-buttons-header">
-            <a class="auth-btn-header login-btn" href="login.jsp">Login</a>
-            <a class="auth-btn-header signup-btn" href="register.jsp">Register</a>
-          </div>
       <% } %>
     </div>
 
-    <!-- MENU -->
+    <!-- NAV -->
     <nav class="main-nav">
       <ul>
-        <li><a href="index.jsp"
-               class="<%= currentPath.contains("index.jsp") ? "active" : "" %>">
-               <i class="fas fa-home"></i> HOME</a></li>
+        <li><a href="index.jsp" class="<%= currentPath.contains("index.jsp") ? "active" : "" %>">
+          <i class="fas fa-home"></i> HOME</a></li>
 
-        <li><a href="/ismgroup29/universities"
-               class="<%= currentPath.contains("universities") ? "active" : "" %>">
-               <i class="fas fa-university"></i> UNIVERSITIES</a></li>
+        <li><a href="/ismgroup29/universities" class="<%= currentPath.contains("universities") ? "active" : "" %>">
+          <i class="fas fa-university"></i> UNIVERSITIES</a></li>
 
-        <li><a href="forum.jsp"
-               class="<%= currentPath.contains("forum.jsp") ? "active" : "" %>">
-               <i class="fas fa-comments"></i> FORUM</a></li>
+        <li><a href="forum.jsp" class="<%= currentPath.contains("forum.jsp") ? "active" : "" %>">
+          <i class="fas fa-comments"></i> FORUM</a></li>
 
-        <li><a href="applications.jsp"
-               class="<%= currentPath.contains("applications.jsp") ? "active" : "" %>">
-               <i class="fas fa-file-alt"></i> APPLICATIONS</a></li>
+        <li><a href="applications.jsp" class="<%= currentPath.contains("applications.jsp") ? "active" : "" %>">
+          <i class="fas fa-file-alt"></i> APPLICATIONS</a></li>
       </ul>
 
-      <!-- Menu button (no JS functionality) -->
+
+    </nav>
+      <!-- ☰ MENU BUTTON -->
       <label for="sidebarToggle" class="menu-button">
         <i class="fas fa-bars"></i> MENU
       </label>
-    </nav>
-
   </div>
 </header>
 
-<!-- OVERLAY -->
-<div class="modal-overlay" id="profileModalOverlay"></div>
+<!-- ✅ MUST BE OUTSIDE HEADER -->
 
-<!-- PROFILE MODAL -->
-<div class="profile-modal" id="profileModal">
-  <div class="modal-header">
-    <h3>User Profile</h3>
-    <span class="modal-close" id="closeProfileModal">&times;</span>
-  </div>
-
-  <form class="modal-body profile-form" action="UpdateProfileServlet" method="post">
-
-    <div class="form-group">
-      <label>First Name</label>
-      <input type="text" name="firstName"
-        value="<%= loggedUser.getFirstName() != null ? loggedUser.getFirstName() : "" %>">
-    </div>
-
-    <div class="form-group">
-      <label>Last Name</label>
-      <input type="text" name="lastName"
-        value="<%= loggedUser.getLastName() != null ? loggedUser.getLastName() : "" %>">
-    </div>
-
-    <div class="form-group">
-      <label>Date of Birth</label>
-      <input type="date" name="birthDate"
-        value="<%= loggedUser.getBirthDate() != null ? loggedUser.getBirthDate().toString() : "" %>">
-    </div>
-
-    <div class="form-group">
-      <label>Nationality</label>
-      <input type="text" name="nationality"
-        value="<%= loggedUser.getNationality() != null ? loggedUser.getNationality() : "" %>">
-    </div>
-
-    <div class="form-group">
-      <label>Gender</label>
-      <select name="gender">
-        <option value="">Select gender</option>
-        <option value="Male" <%= "Male".equals(loggedUser.getGender()) ? "selected" : "" %>>Male</option>
-        <option value="Female" <%= "Female".equals(loggedUser.getGender()) ? "selected" : "" %>>Female</option>
-        <option value="Other" <%= "Other".equals(loggedUser.getGender()) ? "selected" : "" %>>Other</option>
-      </select>
-    </div>
-
-    <div class="form-group">
-      <label>University</label>
-      <select disabled>
-        <option><%= loggedUser.getUniversityName() != null ? loggedUser.getUniversityName() : "—" %></option>
-      </select>
-      <input type="hidden" name="universityName"
-        value="<%= loggedUser.getUniversityName() != null ? loggedUser.getUniversityName() : "" %>">
-    </div>
-
-    <div class="form-group">
-      <label>Study Cycle</label>
-      <select name="studyCycle">
-        <option value="">Select cycle</option>
-        <option value="Bachelor" <%= "Bachelor".equals(loggedUser.getStudyCycle()) ? "selected" : "" %>>Bachelor</option>
-        <option value="Master" <%= "Master".equals(loggedUser.getStudyCycle()) ? "selected" : "" %>>Master</option>
-        <option value="PhD" <%= "PhD".equals(loggedUser.getStudyCycle()) ? "selected" : "" %>>PhD</option>
-      </select>
-    </div>
-
-    <div class="form-group">
-      <label>Department</label>
-      <select disabled>
-        <option><%= loggedUser.getDepartment() != null ? loggedUser.getDepartment() : "—" %></option>
-      </select>
-      <input type="hidden" name="department"
-        value="<%= loggedUser.getDepartment() != null ? loggedUser.getDepartment() : "" %>">
-    </div>
-
-    <div class="modal-actions">
-      <button type="button" class="btn-cancel" id="cancelProfile">Cancel</button>
-      <button type="submit" class="btn-save">Save Changes</button>
-    </div>
-
-  </form>
-
-
-</div>
-
-
-<!-- SIDEBAR WITHOUT JAVASCRIPT (CSS ONLY) -->
 <input type="checkbox" id="sidebarToggle" hidden>
 
-<div class="sidebar" id="sidebar">
+<div class="modal-overlay"></div>
+
+<div class="sidebar">
   <div class="sidebar-header">
     <h3>User Menu</h3>
     <label class="sidebar-close" for="sidebarToggle">&times;</label>
   </div>
 
   <div class="sidebar-content">
-    <a href="#"><i class="fas fa-user"></i> My profile</a>
-    <a href="#"><i class="fas fa-file-alt"></i> My applications</a>
-    <a href="#"><i class="fas fa-cog"></i> Settings</a>
+    <a href="index.jsp"><i class="fas fa-home"></i> Home</a>
+    <a href="/ismgroup29/universities"><i class="fas fa-university"></i> Universities</a>
+    <a href="forum.jsp"><i class="fas fa-comments"></i> Forum</a>
+    <a href="applications.jsp"><i class="fas fa-file-alt"></i> Applications</a>
     <a href="LogoutServlet"><i class="fas fa-sign-out-alt"></i> Logout</a>
   </div>
 </div>
+
+
+
 
 
 <style>
@@ -190,7 +102,7 @@
     font-family: 'Poppins', sans-serif;
     box-shadow: 0 5px 25px rgba(0, 0, 0, 0.25);
     position: relative;
-    z-index: 1000;
+    z-index: 5000;
     padding: 1.5rem 0 1.8rem;
   }
 
@@ -273,7 +185,6 @@
       font-weight: 500;
       font-size: 1rem;
       padding: 10px 18px;
-      border-radius: 25px;
       display: flex;
       align-items: center;
       gap: 8px;
@@ -291,7 +202,6 @@
       background: white;
       color: #003366;
       font-weight: 600;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
       padding: 10px 18px; /* ✅ ίδιο με .main-nav a */
       line-height: 1;     /* ✅ σταθεροποιεί το ύψος */
       box-sizing: border-box; /* ✅ αποτρέπει φούσκωμα */
@@ -335,14 +245,14 @@
   /* === SIDEBAR === */
   .sidebar {
     position: fixed;
-    top: 0;
+    top: 170px;
     right: -340px;
     width: 300px;
     height: 100%;
     background: #fff;
     box-shadow: -3px 0 15px rgba(0,0,0,0.2);
     transition: right 0.4s ease;
-    z-index: 2000;
+    z-index: 4000;
     display: flex;
     flex-direction: column;
     padding: 20px;
@@ -359,7 +269,7 @@
     background: #003366;
     color: white;
     padding: 10px 15px;
-    border-radius: 8px;
+    border-radius: 16px;
   }
 
   .sidebar-close {
@@ -384,7 +294,7 @@
     background: #f5f7fa;
     color: #333;
     padding: 10px 12px;
-    border-radius: 8px;
+    border-radius: 16px;
     text-decoration: none;
     transition: all 0.3s ease;
   }
@@ -401,18 +311,8 @@
   }
 
 
-  /* === RESPONSIVE === */
-  @media (max-width: 900px) {
-    .main-nav ul {
-      flex-direction: column;
-      gap: 10px;
-    }
 
-    .main-nav a {
-      justify-content: center;
-      width: 100%;
-    }
-  }
+
   /* === AUTH SECTION - HEADER === */
   .auth-section {
     position: absolute;
@@ -518,48 +418,7 @@
     font-size: 0.85rem;
   }
 
-  /* === RESPONSIVE === */
-  @media (max-width: 900px) {
-    .auth-section {
-      position: static;
-      align-items: center;
-      margin-bottom: 1rem;
-      order: 2;
-    }
-    
-    .header-wrapper {
-      flex-direction: column;
-    }
-    
-    .user-info-header {
-      flex-direction: column;
-      gap: 8px;
-      text-align: center;
-      padding: 8px 12px;
-    }
-    
-    .auth-buttons-header {
-      justify-content: center;
-    }
-  }
 
-  @media (max-width: 480px) {
-    .auth-buttons-header {
-      flex-direction: column;
-      gap: 8px;
-    }
-    
-    .auth-btn-header {
-      width: 140px;
-      text-align: center;
-      padding: 5px 12px;
-      font-size: 0.8rem;
-    }
-    
-    .auth-section {
-      right: 1rem;
-    }
-  }
 
 /* OVERLAY */
 .modal-overlay {
@@ -568,7 +427,7 @@
   background: rgba(0, 0, 0, 0.45);
   backdrop-filter: blur(4px);
   display: none;
-  z-index: 4000;
+  z-index: 3000;
 }
 
 /* MODAL */
@@ -777,25 +636,216 @@ select:disabled {
   font-size: 0.65rem;
   color: #0059b3;
 }
+/* ===============================
+   📱 MOBILE HEADER – CLEAN & PRO
+   =============================== */
+/* ===============================
+📱 MOBILE NAV GRID (INDEX STYLE)
+=============================== */
+@media (max-width: 480px) {
+  :root {
+    --header-height: 150px;
+  }
+  .sidebar {
+    transform: translateX(0) scale(0.98);
+    transition: right 0.35s ease, transform 0.35s ease;
+    width: 240px;              /* ⬅️ ΠΙΟ ΣΤΕΝΟ */
+    right: -260px;             /* ⬅️ ΚΡΥΒΕΤΑΙ ΣΩΣΤΑ */
+    top: 150px;                /* ⬅️ ΚΑΤΩ ΑΠΟ HEADER */
+    height: calc(100vh - 150px);
+    padding: 14px;
+    border-radius: 18px 0 0 18px;
+  }
+  
+  #sidebarToggle:checked ~ .sidebar {
+    transform: translateX(0) scale(1);
+  }
+  
+  .sidebar-header {
+    padding: 8px 12px;
+    border-radius: 12px;
+  }
+
+  .sidebar-header h3 {
+    font-size: 0.9rem;
+  }
+
+  .sidebar-close {
+    font-size: 1.2rem;
+  }
+
+  .sidebar-content {
+    margin-top: 14px;
+    gap: 8px;
+  }
+
+  .sidebar-content a {
+    padding: 10px 12px;
+    font-size: 0.85rem;
+    border-radius: 12px;
+  }
+
+  .sidebar-content a i {
+    font-size: 0.9rem;
+  }
+  /* ===== HEADER ===== */
+  .global-header {
+    padding: 0.35rem 0 0.45rem;
+  }
+
+  /* ===== LOGO AREA ===== */
+  .logo-area {
+    gap: 6px;
+    margin-bottom: 0.15rem;
+  }
+
+  /* ===== LOGO CIRCLE ===== */
+  .logo-circle {
+    width: 36px;
+    height: 36px;
+    font-size: 1rem;
+  }
+
+  /* ===== LOGO TEXT ===== */
+  .logo-text h1 {
+    font-size: 1.1rem;
+    line-height: 1.1;
+  }
+
+  .logo-text span {
+    display: none; /* ⬅️ ΚΡΥΒΟΥΜΕ ΤΟ SUBTITLE */
+  }
+
+  /* ===== AUTH SECTION ===== */
+  .auth-section {
+    margin: 6px 0;
+  }
+
+  .user-info-header {
+    padding: 3px 8px;
+    font-size: 0.68rem;
+    gap: 6px;
+  }
+
+  .logout-btn {
+    padding: 2px 8px;
+    font-size: 0.65rem;
+  }
+
+  /* ===== NAV ===== */
+  .main-nav {
+    margin-top: 0.2rem;
+  }
+
+  .main-nav ul {
+    gap: 16px;
+  }
+
+  .main-nav a {
+    -webkit-tap-highlight-color: transparent;
+    background: transparent;
+    box-shadow: none;
+    border-radius: 16;
+  
+    padding: 6px 10px;
+    font-size: 0.75rem;
+
+  }
+
+  /* ===== MENU BUTTON ===== */
+  .menu-button {
+    height: 30px;
+    width: 80px;
+    font-size: 0.7rem;
+    gap: 4px;
+  }
+
+  .menu-button i {
+    font-size: 0.75rem;
+  }
+}
+                                                                
+
+@media (max-width: 900px) {
+
+  /* Header layout */
+  .header-wrapper {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* AUTH */
+  .auth-section {
+    position: static;
+    margin: 12px 0;
+  }
+
+  .user-info-header {
+    width: 90%;
+    justify-content: space-between;
+  }
+
+  /* NAV CONTAINER */
+  .main-nav {
+    width: 100%;
+    margin-top: 16px;
+  }
+
+  /* GRID NAV BUTTONS */
+  .main-nav ul {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+    padding: 0 16px;
+  }
+
+  .main-nav li {
+    width: 100%;
+  }
+
+  /* BUTTON STYLE */
+  .main-nav a {
+    -webkit-tap-highlight-color: transparent;
+    background: transparent;
+    box-shadow: none;
+    border-radius: 16px;
+  
+    justify-content: center;
+    width: 100%;
+    padding: 14px 0;
+    font-size: 0.9rem;
+
+  }
+
+  .main-nav a.active {
+    background: white;
+    color: #003366;
+  }
+
+  /* MENU BUTTON (προαιρετικό αν θες sidebar) */
+  .menu-button {
+    margin-top: 16px;
+  }
+}
+
+/* ===============================
+   📱 SIDEBAR TOGGLE (NO JS)
+   =============================== */
+
+/* Όταν είναι τσεκαρισμένο το checkbox */
+#sidebarToggle:checked ~ .sidebar {
+  right: 0;
+}
+
+/* Overlay όταν ανοίγει το sidebar */
+#sidebarToggle:checked ~ .modal-overlay {
+  display: block;
+}
+
 
 
 </style>
 
-
-<!-- SIDEBAR -->
-<div class="sidebar" id="sidebar">
-  <div class="sidebar-header">
-    <h3>Μενού Χρήστη</h3>
-    <button class="sidebar-close" id="closeSidebar">&times;</button>
-  </div>
-
-  <div class="sidebar-content">
-    <a href="#"><i class="fas fa-user"></i> My profile</a>
-    <a href="#"><i class="fas fa-file-alt"></i> My applications</a>
-    <a href="#"><i class="fas fa-cog"></i> Settings</a>
-    <a href="LogoutServlet"><i class="fas fa-sign-out-alt"></i> Logout</a>
-  </div>
-</div>
 <script>
 document.addEventListener("DOMContentLoaded", function () {
 

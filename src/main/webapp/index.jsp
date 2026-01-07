@@ -12,6 +12,156 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
+    /* =====================================
+   📱 EXTRA SMALL DEVICES (≤ 480px)
+   ===================================== */
+@media (max-width: 480px) {
+
+  /* HERO */
+  .hero {
+    padding: 70px 16px 90px;
+  }
+
+  .hero h1 {
+    font-size: 28px;
+    line-height: 1.25;
+  }
+
+  .hero p {
+    font-size: 15px;
+    margin-bottom: 20px;
+  }
+
+  .hero .btn {
+    padding: 12px 28px;
+    font-size: 15px;
+  }
+
+  /* INFO SECTION */
+  .info {
+    padding: 50px 16px;
+    gap: 22px;
+  }
+
+  .card {
+    width: 100%;
+    padding: 26px 22px;
+    border-radius: 18px;
+  }
+
+  .card i {
+    font-size: 42px;
+    margin-bottom: 16px;
+  }
+
+  .card h3 {
+    font-size: 19px;
+  }
+
+  .card p {
+    font-size: 14px;
+  }
+
+  .card a {
+    width: 140px;
+    font-size: 14px;
+    padding: 9px 22px;
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 22px 14px;
+  }
+
+  footer p {
+    font-size: 13px;
+  }
+}
+
+/* =====================================
+   📱 SMALL DEVICES (481px – 768px)
+   ===================================== */
+@media (max-width: 768px) {
+
+  .hero {
+    padding: 85px 20px 100px;
+  }
+
+  .hero h1 {
+    font-size: 34px;
+  }
+
+  .hero p {
+    font-size: 16px;
+  }
+
+  .info {
+    padding: 70px 30px;
+    gap: 28px;
+  }
+
+  .card {
+    width: 100%;
+    max-width: 420px;
+    margin: 0 auto;
+  }
+}
+
+/* =====================================
+   💻 TABLETS / SMALL LAPTOPS (769px – 1024px)
+   ===================================== */
+@media (max-width: 1024px) {
+
+  .hero h1 {
+    font-size: 40px;
+  }
+
+  .info {
+    padding: 90px 40px;
+  }
+
+  .card {
+    width: 300px;
+  }
+}
+
+/* =====================================
+   🖥️ LARGE SCREENS (≥ 1400px)
+   ===================================== */
+@media (min-width: 1400px) {
+
+  .hero h1 {
+    font-size: 52px;
+  }
+
+  .hero p {
+    font-size: 19px;
+  }
+
+  .info {
+    padding: 110px 80px;
+  }
+}
+
+/* =====================================
+   📱 LANDSCAPE MOBILE
+   ===================================== */
+@media (max-height: 500px) and (orientation: landscape) {
+
+  .hero {
+    padding: 50px 20px 70px;
+  }
+
+  .hero h1 {
+    font-size: 26px;
+  }
+
+  .info {
+    padding: 40px 20px;
+  }
+}
+
+
     body {
         font-family: 'Poppins', sans-serif;
         color: #343a40;

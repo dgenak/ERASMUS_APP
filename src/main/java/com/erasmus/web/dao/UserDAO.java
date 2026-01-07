@@ -82,19 +82,32 @@ public class UserDAO {
     /* =========================
        LOGIN
        ========================= */
+<<<<<<< HEAD
     public User loginUser(String username, String password) {
 
         String sql = "SELECT * FROM users WHERE username = ? AND password = ?";
         User user = null;
+=======
+        public User loginUser(String username, String password) {
 
-        try (Connection conn = DatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement(sql)) {
+            String sql = "SELECT * FROM users WHERE username = ? AND password = ?";
+            User user = null;
+>>>>>>> 52d49cf (mobile change)
 
+            try (Connection conn = DatabaseConnection.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+<<<<<<< HEAD
             stmt.setString(1, username);
             stmt.setString(2, password);
+=======
+                stmt.setString(1, username);
+                stmt.setString(2, password);
+>>>>>>> 52d49cf (mobile change)
 
-            ResultSet rs = stmt.executeQuery();
+                ResultSet rs = stmt.executeQuery();
 
+<<<<<<< HEAD
             if (rs.next()) {
                 user = new User();
                 user.setUserId(rs.getInt("userId"));
@@ -107,21 +120,23 @@ public class UserDAO {
                 Date sqlDate = rs.getDate("birthDate");
                 if (sqlDate != null) {
                     user.setBirthDate(sqlDate.toLocalDate());
+=======
+                if (rs.next()) {
+                    user = new User();
+                    user.setUserId(rs.getInt("userId"));
+                    user.setUsername(rs.getString("username"));
+                    user.setEmail(rs.getString("email"));
+                    user.setFirstName(rs.getString("firstName"));
+                    user.setLastName(rs.getString("lastName"));
+>>>>>>> 52d49cf (mobile change)
                 }
 
-                user.setNationality(rs.getString("nationality"));
-                user.setGender(rs.getString("gender"));
-                user.setStudyCycle(rs.getString("studyCycle"));
-                user.setUniversityName(rs.getString("university"));
-                user.setDepartment(rs.getString("department"));
+            } catch (Exception e) {
+                e.printStackTrace();
             }
 
-        } catch (Exception e) {
-            e.printStackTrace();
+            return user;
         }
-
-        return user;
-    }
 
 
 

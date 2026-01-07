@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 D:\sxolh\5ο ΕΞΑΜΗΝΟ\ΑΡΧΙΤΕΚΤΟΝΙΚΕΣ ΠΣ\ERASMUS_APP\src\main\java\com\erasmus\web\dao\ReplyDAO.java
 D:\sxolh\5ο ΕΞΑΜΗΝΟ\ΑΡΧΙΤΕΚΤΟΝΙΚΕΣ ΠΣ\ERASMUS_APP\src\main\java\com\erasmus\web\dao\ForumDAO.java
 D:\sxolh\5ο ΕΞΑΜΗΝΟ\ΑΡΧΙΤΕΚΤΟΝΙΚΕΣ ΠΣ\ERASMUS_APP\src\main\java\com\erasmus\web\model\CourseExternal.java
@@ -27,3 +28,32 @@ D:\sxolh\5ο ΕΞΑΜΗΝΟ\ΑΡΧΙΤΕΚΤΟΝΙΚΕΣ ΠΣ\ERASMUS_APP\src\ma
 D:\sxolh\5ο ΕΞΑΜΗΝΟ\ΑΡΧΙΤΕΚΤΟΝΙΚΕΣ ΠΣ\ERASMUS_APP\src\main\java\com\erasmus\web\controller\ForumServlet.java
 D:\sxolh\5ο ΕΞΑΜΗΝΟ\ΑΡΧΙΤΕΚΤΟΝΙΚΕΣ ΠΣ\ERASMUS_APP\src\main\java\com\erasmus\web\model\Post.java
 D:\sxolh\5ο ΕΞΑΜΗΝΟ\ΑΡΧΙΤΕΚΤΟΝΙΚΕΣ ΠΣ\ERASMUS_APP\src\main\java\com\erasmus\web\model\University.java
+=======
+C:\ERASMUS_APP\ErasmusApp\src\main\java\com\erasmus\web\controller\ApplicationServlet.java
+C:\ERASMUS_APP\ErasmusApp\src\main\java\com\erasmus\web\controller\UniversityServlet.java
+C:\ERASMUS_APP\ErasmusApp\src\main\java\com\erasmus\web\controller\UniversityDetailsServlet.java
+C:\ERASMUS_APP\ErasmusApp\src\main\java\com\erasmus\web\util\DatabaseConnection.java
+C:\ERASMUS_APP\ErasmusApp\src\main\java\com\erasmus\web\controller\RegisterServlet.java
+C:\ERASMUS_APP\ErasmusApp\src\main\java\com\erasmus\web\dao\CourseDetDAO.java
+C:\ERASMUS_APP\ErasmusApp\src\main\java\com\erasmus\web\controller\UpdateProfileServlet.java
+C:\ERASMUS_APP\ErasmusApp\src\main\java\com\erasmus\web\controller\ForumServlet.java
+C:\ERASMUS_APP\ErasmusApp\src\main\java\com\erasmus\web\controller\LogoutServlet.java
+C:\ERASMUS_APP\ErasmusApp\src\main\java\com\erasmus\web\model\User.java
+C:\ERASMUS_APP\ErasmusApp\src\main\java\com\erasmus\web\dao\CountryDAO.java
+C:\ERASMUS_APP\ErasmusApp\src\main\java\com\erasmus\web\controller\CourseMatchSelectServlet.java
+C:\ERASMUS_APP\ErasmusApp\src\main\java\com\erasmus\web\model\ForumPost.java
+C:\ERASMUS_APP\ErasmusApp\src\main\java\com\erasmus\web\dao\UserDAO.java
+C:\ERASMUS_APP\ErasmusApp\src\main\java\com\erasmus\web\model\DMSTG.java
+C:\ERASMUS_APP\ErasmusApp\src\main\java\com\erasmus\web\model\CourseDet.java
+C:\ERASMUS_APP\ErasmusApp\src\main\java\com\erasmus\web\dao\ForumDAO.java
+C:\ERASMUS_APP\ErasmusApp\src\main\java\com\erasmus\web\model\ForumReply.java
+C:\ERASMUS_APP\ErasmusApp\src\main\java\com\erasmus\web\model\Country.java
+C:\ERASMUS_APP\ErasmusApp\src\main\java\com\erasmus\web\controller\LoginServlet.java
+C:\ERASMUS_APP\ErasmusApp\src\main\java\com\erasmus\web\controller\HomeServlet.java
+C:\ERASMUS_APP\ErasmusApp\src\main\java\com\erasmus\web\test\TestForumDAO.java
+C:\ERASMUS_APP\ErasmusApp\src\main\java\com\erasmus\web\dao\UniversityDAO.java
+C:\ERASMUS_APP\ErasmusApp\src\main\java\com\erasmus\web\model\Course.java
+C:\ERASMUS_APP\ErasmusApp\src\main\java\com\erasmus\web\controller\FindBestUniversitiesServlet.java
+C:\ERASMUS_APP\ErasmusApp\src\main\java\com\erasmus\web\model\CourseExternal.java
+C:\ERASMUS_APP\ErasmusApp\src\main\java\com\erasmus\web\model\University.java
+>>>>>>> 52d49cf (mobile change)
