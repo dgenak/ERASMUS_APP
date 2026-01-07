@@ -136,12 +136,8 @@
     <form action="LoginServlet" method="post">
 
         <label for="username">Username</label>
-<<<<<<< HEAD
-        <input type="username" id="username" name="username" required>
-=======
-        <input type="text" id="username" name="username" required>
->>>>>>> 52d49cf (mobile change)
 
+        <input type="text" id="username" name="username" required>
         <label for="password">Password</label>
         <input type="password" id="password" name="password" required>
 
