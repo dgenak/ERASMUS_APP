@@ -21,37 +21,46 @@
       padding: 0;
     }
 
-<<<<<<< HEAD
+
 /* === GENERAL === */
-  html, body {
-    height: 100%;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    font-family: 'Poppins', sans-serif;
-    background: #f4f7fb;
-    color: #1f2a44;
-  }
+html, body {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Poppins', sans-serif;
+  background: #f4f7fb;
+  color: #1f2a44;
+}
 
-  *, *::before, *::after {
+*, *::before, *::after {
   box-sizing: border-box;
-  }
+}
 
+/* === MAIN CONTENT === */
+main {
+  flex: 1;
+  width: 100%;
+  max-width: 1000px;
+  margin: 2.5rem auto;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  padding: 3rem;
+  animation: fadeIn 0.6s ease-in-out;
+}
 
+/* === MOBILE FIX === */
+@media (max-width: 768px) {
   main {
-    flex: 1;
-    width: 1000px;
-    max-width: 1000px;
-    min-width: 1000px;
-    margin: 2.5rem auto;
-    background: #ffffff;
-    border-radius: 16px;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-    padding: 3rem;
-    animation: fadeIn 0.6s ease-in-out;
+    max-width: 100%;
+    margin: 1.2rem;
+    padding: 1.5rem;
+    border-radius: 12px;
   }
-=======
->>>>>>> 52d49cf (mobile change)
+}
+
+
 
   @keyframes fadeIn {
     from { opacity: 0; transform: translateY(20px); }
