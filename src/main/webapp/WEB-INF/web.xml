@@ -15,6 +15,28 @@
         <url-pattern>/home</url-pattern>
     </servlet-mapping>
 
+    <!-- APPLICATION FORM -->
+    <servlet>
+        <servlet-name>SaveApplicationFormServlet</servlet-name>
+        <servlet-class>com.erasmus.web.controller.SaveApplicationFormServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>SaveApplicationFormServlet</servlet-name>
+        <url-pattern>/SaveApplicationFormServlet</url-pattern>
+    </servlet-mapping>
+
+    <!-- LEARNING AGREEMENT -->
+    <servlet>
+        <servlet-name>SaveLearningAgreementServlet</servlet-name>
+        <servlet-class>com.erasmus.web.controller.SaveLearningAgreementServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>SaveLearningAgreementServlet</servlet-name>
+        <url-pattern>/SaveLearningAgreementServlet</url-pattern>
+    </servlet-mapping>
+
     <!-- FORUM POST -->
     <servlet>
         <servlet-name>ForumServlet</servlet-name>
