@@ -8,7 +8,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Date;
 
-
 public class UserDAO {
 
     /* =========================
@@ -46,8 +45,7 @@ public class UserDAO {
 
             stmt.setString(1, email);
             ResultSet rs = stmt.executeQuery();
-
-            return rs.next(); // αν βρεθεί γραμμή → υπάρχει email
+            return rs.next();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -63,7 +61,7 @@ public class UserDAO {
         String sql = "SELECT 1 FROM users WHERE firstName = ? AND lastName = ? AND email = ?";
 
         try (Connection conn = DatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement(sql)) {
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, firstName);
             stmt.setString(2, lastName);
@@ -78,41 +76,27 @@ public class UserDAO {
         }
     }
 
-
     /* =========================
        LOGIN
        ========================= */
-<<<<<<< HEAD
     public User loginUser(String username, String password) {
 
         String sql = "SELECT * FROM users WHERE username = ? AND password = ?";
         User user = null;
-=======
-        public User loginUser(String username, String password) {
 
-            String sql = "SELECT * FROM users WHERE username = ? AND password = ?";
-            User user = null;
->>>>>>> 52d49cf (mobile change)
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            try (Connection conn = DatabaseConnection.getConnection();
-                PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-<<<<<<< HEAD
             stmt.setString(1, username);
             stmt.setString(2, password);
-=======
-                stmt.setString(1, username);
-                stmt.setString(2, password);
->>>>>>> 52d49cf (mobile change)
 
-                ResultSet rs = stmt.executeQuery();
+            ResultSet rs = stmt.executeQuery();
 
-<<<<<<< HEAD
             if (rs.next()) {
                 user = new User();
                 user.setUserId(rs.getInt("userId"));
-                user.setEmail(rs.getString("email"));
                 user.setUsername(rs.getString("username"));
+                user.setEmail(rs.getString("email"));
                 user.setPassword(rs.getString("password"));
                 user.setFirstName(rs.getString("firstName"));
                 user.setLastName(rs.getString("lastName"));
@@ -120,24 +104,13 @@ public class UserDAO {
                 Date sqlDate = rs.getDate("birthDate");
                 if (sqlDate != null) {
                     user.setBirthDate(sqlDate.toLocalDate());
-=======
-                if (rs.next()) {
-                    user = new User();
-                    user.setUserId(rs.getInt("userId"));
-                    user.setUsername(rs.getString("username"));
-                    user.setEmail(rs.getString("email"));
-                    user.setFirstName(rs.getString("firstName"));
-                    user.setLastName(rs.getString("lastName"));
->>>>>>> 52d49cf (mobile change)
                 }
-
-            } catch (Exception e) {
-                e.printStackTrace();
             }
 
-            return user;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
-
-
+        return user;
+    }
 }

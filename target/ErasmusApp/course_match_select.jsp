@@ -11,6 +11,162 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
+        /* =====================================
+   📱 EXTRA SMALL DEVICES (≤ 480px)
+   ===================================== */
+@media (max-width: 480px) {
+  body {
+    font-size: 15px;
+  }
+
+  .container {
+    margin: 20px auto;
+    padding: 0 14px;
+  }
+
+  .title-box h1 {
+    font-size: 28px;
+    line-height: 1.25;
+  }
+
+  .title-box p {
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+
+  .semester-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .semester-card {
+    padding: 20px;
+    border-radius: 16px;
+  }
+
+  .semester-title {
+    font-size: 20px;
+    margin-bottom: 14px;
+  }
+
+  .course-item {
+    padding: 14px;
+    border-radius: 12px;
+  }
+
+  .course-name {
+    font-size: 15px;
+  }
+
+  .dropdown-header {
+    padding: 12px;
+    font-size: 15px;
+  }
+
+  .orientation-btn {
+    padding: 12px;
+    font-size: 15px;
+  }
+
+  .submit-btn {
+    width: 100%;
+    padding: 16px;
+    font-size: 17px;
+    border-radius: 12px;
+  }
+}
+
+/* =====================================
+   📱 SMALL DEVICES (481px – 768px)
+   ===================================== */
+@media (max-width: 768px) {
+  .container {
+    margin: 30px auto;
+    padding: 0 18px;
+  }
+
+  .title-box h1 {
+    font-size: 34px;
+  }
+
+  .semester-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .semester-card {
+    padding: 24px;
+  }
+
+  .semester-title {
+    font-size: 23px;
+  }
+
+  .course-name {
+    font-size: 16px;
+  }
+
+  .submit-btn {
+    font-size: 18px;
+    padding: 17px 36px;
+  }
+}
+
+/* =====================================
+   💻 TABLETS / SMALL LAPTOPS (769px – 1024px)
+   ===================================== */
+@media (max-width: 1024px) {
+  .container {
+    max-width: 1100px;
+  }
+
+  .semester-grid {
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  }
+
+  .title-box h1 {
+    font-size: 38px;
+  }
+}
+
+/* =====================================
+   🖥️ LARGE SCREENS (≥ 1400px)
+   ===================================== */
+@media (min-width: 1400px) {
+  body {
+    font-size: 18px;
+  }
+
+  .container {
+    max-width: 1500px;
+  }
+
+  .semester-card {
+    padding: 34px;
+  }
+
+  .semester-title {
+    font-size: 29px;
+  }
+}
+
+/* =====================================
+   📱 LANDSCAPE MOBILE OPTIMIZATION
+   ===================================== */
+@media (max-height: 500px) and (orientation: landscape) {
+  .container {
+    margin: 15px auto;
+  }
+
+  .semester-card {
+    padding: 18px;
+  }
+
+  .submit-btn {
+    margin-top: 25px;
+  }
+}
+
 
         body {
             font-family: 'Poppins', sans-serif;

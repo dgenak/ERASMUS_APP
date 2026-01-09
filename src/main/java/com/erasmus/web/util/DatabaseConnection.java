@@ -14,7 +14,7 @@ public class DatabaseConnection {
 
     public static Connection getConnection() {
         try {
-            Class.forName("com.mysql.jdbc.Driver"); // ✅ σωστό για 5.1
+            Class.forName("com.mysql.jdbc.Driver");
             return DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (Exception e) {
             throw new RuntimeException("DB connection failed", e);

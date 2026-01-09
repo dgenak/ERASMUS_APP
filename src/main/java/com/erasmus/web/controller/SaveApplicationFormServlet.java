@@ -1,10 +1,12 @@
 package com.erasmus.web.controller;
 
-import com.erasmus.web.util.DatabaseConnection;
+import com.erasmus.web.dao.ApplicationDAO;
+import com.erasmus.web.model.Application;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import java.io.IOException;
-import java.sql.*;
+import java.time.LocalDate;
 
 public class SaveApplicationFormServlet extends HttpServlet {
 
@@ -12,42 +14,57 @@ public class SaveApplicationFormServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // 1. Get logged-in user
         HttpSession session = request.getSession(false);
         Integer userId = (Integer) session.getAttribute("userId");
 
         if (userId == null) {
-            response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+            response.sendRedirect("login.jsp");
             return;
         }
 
-        // 2. Read JSON body
-        String jsonData = request.getReader().lines()
-                .reduce("", (acc, line) -> acc + line);
+        Application app = new Application();
+        app.setOwnerUserId(userId);
 
-        // 3. Save to DB
-        String sql = "INSERT INTO applications (owner_user_id, application_form) VALUES (?, ?)";
-
-        try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-
-            stmt.setInt(1, userId);
-            stmt.setString(2, jsonData);
-            stmt.executeUpdate();
-
-            // 4. Get generated application_id
-            ResultSet rs = stmt.getGeneratedKeys();
-            if (rs.next()) {
-                long applicationId = rs.getLong(1);
-
-                response.setContentType("application/json");
-                response.getWriter().write(
-                    "Application Form saved!"
-                );
-            }
-
-        } catch (SQLException e) {
-            throw new ServletException(e);
+        // ⬇️ αν είναι edit
+        String idParam = request.getParameter("applicationId");
+        if (idParam != null && !idParam.isEmpty()) {
+            app.setApplicationId(Integer.parseInt(idParam));
         }
+
+        app.setFirstName(request.getParameter("firstName"));
+        app.setFamilyName(request.getParameter("familyName"));
+        String dobParam = request.getParameter("dob");
+
+        if (dobParam != null && !dobParam.isEmpty()) {
+            app.setDob(LocalDate.parse(dobParam));
+        } else {
+            app.setDob(null);
+        }
+
+        app.setSex(request.getParameter("sex"));
+        app.setNationality(request.getParameter("nationality"));
+        app.setPlaceOfBirth(request.getParameter("placeOfBirth"));
+        app.setEmail(request.getParameter("email"));
+        app.setCurrentAddress(request.getParameter("currentAddress"));
+        app.setPermanentAddress(request.getParameter("permanentAddress"));
+        app.setTel1(request.getParameter("tel1"));
+        app.setTel2(request.getParameter("tel2"));
+
+        // ✅ ΤΙΤΛΟΣ (από input ή auto)
+        String title = request.getParameter("title");
+        if (title == null || title.trim().isEmpty()) {
+            title = app.getFirstName() + " " + app.getFamilyName() + " – Application";
+        }
+        app.setTitle(title);
+
+        ApplicationDAO dao = new ApplicationDAO();
+
+        if (app.getApplicationId() > 0) {
+            dao.update(app);
+        } else {
+            dao.save(app);
+        }
+
+        response.sendRedirect(request.getContextPath() + "/my-applications");
     }
 }
