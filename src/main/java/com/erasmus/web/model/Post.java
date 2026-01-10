@@ -13,6 +13,7 @@ public class Post {
     private String postType;
     private int likes;
     private int dislikes;
+    private String userReaction;
     private List<Post> posts;
 
     public int getPostId() { return postId; }
@@ -41,6 +42,9 @@ public class Post {
 
     public int getDislikes() { return dislikes; }
     public void setDislikes(int dislikes) { this.dislikes = dislikes; }
+
+    public String getUserReaction() { return userReaction; }
+    public void setUserReaction(String userReaction) { this.userReaction = userReaction; }
 
     public List<Post> getPosts() { return posts;}
     public void setPosts(List<Post> posts) { this.posts = posts; }

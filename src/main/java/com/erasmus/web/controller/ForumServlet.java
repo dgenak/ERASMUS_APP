@@ -1,7 +1,10 @@
 package com.erasmus.web.controller;
 
 import com.erasmus.web.dao.ForumDAO;
+import com.erasmus.web.dao.ReactionDAO;
+import com.erasmus.web.dao.ReplyDAO;
 import com.erasmus.web.model.Post;
+import com.erasmus.web.model.Reply;
 import com.erasmus.web.model.User;
 
 import javax.servlet.ServletException;
@@ -12,23 +15,44 @@ import javax.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class ForumServlet extends HttpServlet {
 
     private ForumDAO forumDAO = new ForumDAO();
+    private ReplyDAO replyDAO = new ReplyDAO();
+    private ReactionDAO reactionDAO = new ReactionDAO();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
 
-        List<Post> posts = forumDAO.getAllPosts();
         String action = request.getParameter("action");
+        Map<Integer, List<Reply>> repliesMap = new HashMap<>();
+
+        HttpSession session = request.getSession(false);
+        User user = (session!= null) ? (User) session.getAttribute("authUser") : null;
+        int userId = user.getUserId();
 
         if ("load".equals(action)) {
-            posts = forumDAO.getAllPosts();
+            List<Post> posts = forumDAO.getAllPosts();
+
+            for (Post p : posts) {
+                List<Reply> replies = replyDAO.getReplies(p.getPostId());
+                repliesMap.put(p.getPostId(), replies);
+
+                p.setDislikes(reactionDAO.countReaction(p.getPostId(), "dislike"));
+                p.setLikes(reactionDAO.countReaction(p.getPostId(), "like"));
+
+                if (user != null) {
+                    p.setUserReaction(reactionDAO.getReaction(p.getPostId(), user.getUserId()));
+                }
+            }
             request.setAttribute("posts", posts);
+            request.setAttribute("repliesMap", repliesMap);
         }
 
         request.getRequestDispatcher("forum.jsp").forward(request, response);

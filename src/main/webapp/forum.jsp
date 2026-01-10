@@ -3,64 +3,47 @@
 <%@ page import="com.erasmus.web.model.Post" %>
 <%@ page import="com.erasmus.web.dao.ReplyDAO" %>
 <%@ page import="com.erasmus.web.model.Reply" %>
+<%@ page import="java.util.Map" %>
+<%@ page import="java.util.List" %>
 
 <!DOCTYPE html>
 <html lang="el">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>UniEra+ | Erasmus Forum</title>
-  <link rel="stylesheet" href="css/style.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
-    html, body {
-      width: 100%;
-      margin: 0;
-      padding: 0;
-    }
-
 
 /* === GENERAL === */
-html, body {
-  height: 100%;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  font-family: 'Poppins', sans-serif;
-  background: #f4f7fb;
-  color: #1f2a44;
-}
-
-*, *::before, *::after {
-  box-sizing: border-box;
-}
-
-/* === MAIN CONTENT === */
-main {
-  flex: 1;
-  width: 100%;
-  max-width: 1000px;
-  margin: 2.5rem auto;
-  background: #ffffff;
-  border-radius: 16px;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-  padding: 3rem;
-  animation: fadeIn 0.6s ease-in-out;
-}
-
-/* === MOBILE FIX === */
-@media (max-width: 768px) {
-  main {
-    max-width: 100%;
-    margin: 1.2rem;
-    padding: 1.5rem;
-    border-radius: 12px;
+  html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Poppins', sans-serif;
+    background: #f4f7fb;
+    color: #1f2a44;
   }
-}
+
+  *, *::before, *::after {
+  box-sizing: border-box;
+  }
 
 
+  main {
+    flex: 1;
+    width: 1000px;
+    max-width: 1000px;
+    min-width: 1000px;
+    margin: 2.5rem auto;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    padding: 3rem;
+    animation: fadeIn 0.6s ease-in-out;
+  }
 
   @keyframes fadeIn {
     from { opacity: 0; transform: translateY(20px); }
@@ -248,13 +231,48 @@ main {
   }
 
   .reply-actions {
-  margin-top: 20px; 
-}
+    margin-top: 20px; 
+    gap: 20px;
+  }
+
+  .reply-actions .reply-btn {
+    margin-left: 12px;
+  }
+
 
 
   .reply-form button {
     margin-top: 8px;
   }
+
+  .reaction-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0 6px;
+    cursor: pointer;
+    font-size: 1rem;
+    color: inherit;
+  }
+
+  .reaction-btn[value="like"]:hover {
+    color: #0a84ff;
+  }
+
+  .reaction-btn[value="dislike"]:hover {
+    color: #ff3b30; 
+  }
+
+  .active-like {
+    color: #0a84ff;
+    font-weight: bold;
+  }
+
+  .active-dislike {
+    color: #ff3b30;
+    font-weight: bold;
+  }
+
 
   /* === NEW POST === */
   #newPostForm {
@@ -383,6 +401,7 @@ main {
     <%
       List<Post> posts = (List<Post>) request.getAttribute("posts");
       String actionPosts = request.getParameter("action");
+      Map<Integer, List<Reply>> repliesMap =  (Map<Integer, List<Reply>>) request.getAttribute("repliesMap");
     %>
 
     <div class="posts">
@@ -392,8 +411,7 @@ main {
           for (Post post : posts) {
 
             String type = post.getPostType();
-            ReplyDAO replyDAO = new ReplyDAO();
-            List<Reply> replies = replyDAO.getReplies(post.getPostId());
+            List<Reply> replies = repliesMap.get(post.getPostId());
     %>
 
       <div class="post">
@@ -408,8 +426,20 @@ main {
         <p><%= post.getBody() %></p>
 
         <div class="post-footer">
-          <span><i class="fa-regular fa-thumbs-up"></i> <%= post.getLikes() %></span>
-          <span><i class="fa-regular fa-thumbs-down"></i> <%= post.getDislikes() %></span>
+          <form action="ReactionServlet" method="post" style="display:inline;">
+            <input type="hidden" name="postId" value="<%= post.getPostId() %>">
+            <button type="submit" name="reaction" value="like" class="reaction-btn <%= "like".equals(post.getUserReaction()) ? "active-like" : "" %>">
+              <i class="fa-regular fa-thumbs-up"></i> <%= post.getLikes() %>
+            </button>
+          </form>
+
+          <form action="ReactionServlet" method="post" style="display:inline">
+            <input type="hidden" name="postId" value="<%= post.getPostId() %>">
+            <button type="sumbit" name="reaction" value="dislike" class="reaction-btn <%= "dislike".equals(post.getUserReaction()) ? "active-like" : "" %>">
+              <i class="fa-regular fa-thumbs-down"></i> <%= post.getDislikes() %>
+            </button>
+
+          </form>
         </div>
 
         <% if ("QUESTION".equalsIgnoreCase(type.trim())) { %>
@@ -434,7 +464,7 @@ main {
               </a>
             <% } %>
 
-            <button class="btn secondary reply-btn"
+            <button class="btn secondary reply-btn" 
                     data-post-id="<%= post.getPostId() %>">
               <i class="fa-solid fa-reply"></i> Reply
             </button>
