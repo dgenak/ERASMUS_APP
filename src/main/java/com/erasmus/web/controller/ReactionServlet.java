@@ -23,6 +23,7 @@ public class ReactionServlet extends HttpServlet {
         
         if (user == null) {
             response.sendRedirect("login.jsp");
+            return;
         }
 
         int userId = user.getUserId();
@@ -31,6 +32,7 @@ public class ReactionServlet extends HttpServlet {
 
         if (!"like".equals(reaction) && !"dislike".equals(reaction)) {
             response.sendRedirect("forum.jsp?status=error&reason=INVALID_REACTION");
+            return;
         }
 
         reactionDAO.setReaction(postId, userId, reaction);

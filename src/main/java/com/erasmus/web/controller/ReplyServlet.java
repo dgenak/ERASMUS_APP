@@ -49,6 +49,10 @@ public class ReplyServlet extends HttpServlet {
                 response.sendRedirect("login.jsp");
                 return;
             }
+
+            request.setCharacterEncoding("UTF-8");
+            response.setCharacterEncoding("UTF-8");
+
             
             int userId = user.getUserId();  
             String username = user.getUsername();

@@ -70,6 +70,9 @@ public class ForumServlet extends HttpServlet {
                     return;
                 }
 
+                request.setCharacterEncoding("UTF-8");
+                response.setCharacterEncoding("UTF-8");
+
 
                 int userId = user.getUserId();  
                 String username = user.getUsername();
