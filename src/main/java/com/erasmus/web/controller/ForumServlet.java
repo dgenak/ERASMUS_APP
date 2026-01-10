@@ -35,7 +35,6 @@ public class ForumServlet extends HttpServlet {
 
         HttpSession session = request.getSession(false);
         User user = (session!= null) ? (User) session.getAttribute("authUser") : null;
-        int userId = user.getUserId();
 
         if ("load".equals(action)) {
             List<Post> posts = forumDAO.getAllPosts();
