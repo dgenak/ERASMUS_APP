@@ -1,5 +1,5 @@
 package com.erasmus.web.model;
-import java.util.Date;
+import java.sql.Timestamp;
 import java.util.List;
 
     public class Reply {
@@ -10,7 +10,7 @@ import java.util.List;
         private String username;
 
         private String body;
-        private Date timestamp;
+        private Timestamp timestamp;
         private List<Reply> replies;
 
         public int getReplyId() { return replyId; }
@@ -28,8 +28,8 @@ import java.util.List;
         public String getBody() { return body; }
         public void setBody(String body) { this.body = body; }
 
-        public Date getTimestamp() { return timestamp; }
-        public void setTimestamp(Date timestamp) { this.timestamp = timestamp; }
+        public Timestamp getTimestamp() { return timestamp; }
+        public void setTimestamp(Timestamp timestamp) { this.timestamp = timestamp; }
 
         public List<Reply> getReplies() { return replies; }
         public void setReplies (List<Reply> replies) { this.replies = replies; }
