@@ -1,4 +1,4 @@
-package com.erasmus.web.controller;
+package main.java.com.erasmus.web.controller;
 
 import java.io.IOException;
 
