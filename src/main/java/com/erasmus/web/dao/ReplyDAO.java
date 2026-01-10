@@ -60,7 +60,7 @@ public class ReplyDAO {
     }
 
     public boolean addReply (Reply reply) {
-        String sql = "INSERT INTO replies (postId, userId, username, body, timestamp) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO replies (postId, userId, username, body,) VALUES (?, ?, ?, ?,)";
 
         try{
             Connection conn = getConnection();
@@ -70,7 +70,6 @@ public class ReplyDAO {
             stmt.setInt(2,reply.getUserId());
             stmt.setString(3,reply.getUsername());
             stmt.setString(4,reply.getBody());
-            stmt.setTimestamp(5, reply.getTimestamp());
 
             return stmt.executeUpdate() == 1;
 

@@ -109,7 +109,7 @@ public class ForumServlet extends HttpServlet {
                 } catch (RuntimeException e) {
 
                     String reason = e.getMessage();
-                    response.sendRedirect("forum.jsp?status=error&reason" + reason);
+                    response.sendRedirect("forum.jsp?status=error&reason+" + reason);
                 }
                 
 
