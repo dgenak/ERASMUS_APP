@@ -30,29 +30,27 @@ public class ForumServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
 
-        String action = request.getParameter("action");
         Map<Integer, List<Reply>> repliesMap = new HashMap<>();
 
         HttpSession session = request.getSession(false);
         User user = (session!= null) ? (User) session.getAttribute("authUser") : null;
 
-        if ("load".equals(action)) {
-            List<Post> posts = forumDAO.getAllPosts();
+        List<Post> posts = forumDAO.getAllPosts();
 
-            for (Post p : posts) {
-                List<Reply> replies = replyDAO.getReplies(p.getPostId());
-                repliesMap.put(p.getPostId(), replies);
+        for (Post p : posts) {
+            List<Reply> replies = replyDAO.getReplies(p.getPostId());
+            repliesMap.put(p.getPostId(), replies);
 
-                p.setDislikes(reactionDAO.countReaction(p.getPostId(), "dislike"));
-                p.setLikes(reactionDAO.countReaction(p.getPostId(), "like"));
+            p.setDislikes(reactionDAO.countReaction(p.getPostId(), "dislike"));
+            p.setLikes(reactionDAO.countReaction(p.getPostId(), "like"));
 
-                if (user != null) {
-                    p.setUserReaction(reactionDAO.getReaction(p.getPostId(), user.getUserId()));
-                }
+            if (user != null) {
+                p.setUserReaction(reactionDAO.getReaction(p.getPostId(), user.getUserId()));
             }
+        }
             request.setAttribute("posts", posts);
             request.setAttribute("repliesMap", repliesMap);
-        }
+
 
         request.getRequestDispatcher("forum.jsp").forward(request, response);
     }

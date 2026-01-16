@@ -407,7 +407,7 @@
         <i class="fa-solid fa-comments"></i>
         <h3>Discussion Forum</h3>
         <p>Exchange experiences and advice with other students...</p>
-        <a href="forum.jsp">Open Forum</a>
+        <a href="ForumServlet">Open Forum</a>
       </div>
 
       <div class="card">

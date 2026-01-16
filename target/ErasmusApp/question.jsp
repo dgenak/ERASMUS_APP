@@ -190,8 +190,17 @@
 
 <main>
 <div class="container"> 
-    <h1> <i class="fa-solid fa-circle-question"></i>Question</h1>
+    <h1> <i class="fa-solid fa-circle-question"></i> Question</h1>
     <div class="section-divider"></div>
+
+<%
+  if (post == null) {
+%>
+    <p>Post not found.</p>
+<%
+    return;
+  }
+%>
 
   <!-- QUESTION -->
   <div class="post">

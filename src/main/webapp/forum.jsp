@@ -35,14 +35,12 @@
 
   main {
     flex: 1;
-    width: 1000px;
-    max-width: 1000px;
-    min-width: 1000px;
-    margin: 2.5rem auto;
+    width: min(1000px, calc(100% - 2rem));
+    margin: 1.5rem auto;
     background: #ffffff;
     border-radius: 16px;
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-    padding: 3rem;
+    padding: 2rem;
     animation: fadeIn 0.6s ease-in-out;
   }
 
@@ -71,6 +69,7 @@
     justify-content: center;
     gap: 15px;
     margin-bottom: 2rem;
+    flex-wrap: wrap;
   }
 
   .btn {
@@ -81,6 +80,11 @@
     padding: 12px 22px;
     font-size: 15px;
     transition: all 0.3s ease;
+    text-decoration: none;
+    display: incline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
   }
 
   .btn.primary {
@@ -339,11 +343,13 @@
   /* === RESPONSIVE === */
   @media (max-width: 768px) {
     main {
-      max-width: 100%;
-      margin: 0;
+      flex: 1;
+      width: min(1000px, calc(100% - 2rem));
+      margin: 2.5rem auto;
+      background: #ffffff;
       border-radius: 0;
       box-shadow: none;
-      padding: 1.5rem 1rem;
+      padding: 3rem;
     }
 
     h1 {
@@ -364,8 +370,13 @@
     }
 
     #newPostForm {
-      padding: 30px 40px;
+      padding: 16px;
     }
+
+    .reply,
+      .reply-form {
+        margin-left: 0;
+      }
   }
 
 </style>
@@ -407,7 +418,6 @@
 
     <div class="posts">
     <%
-      if ("load".equals(actionPosts)) {
         if (posts != null && !posts.isEmpty()) {
           for (Post post : posts) {
 
@@ -495,7 +505,6 @@
 
     <%
         }
-      } 
     %>
     </div>
 
