@@ -1,4 +1,4 @@
-<img width="406" height="117" alt="image" src="https://github.com/user-attachments/assets/831b2861-b07a-4709-849a-c205a98dd3d6" />
+<img width="4060" height="1170" alt="image" src="https://github.com/user-attachments/assets/831b2861-b07a-4709-849a-c205a98dd3d6" />
 
 
 <a id="readme-top"></a>
@@ -81,35 +81,6 @@
 * Apache Tomcat (servlet container, συμβατό με Servlet API 2.5)
 * MySQL
 
-### Installation
-
-1. Δημιούργησε τη βάση δεδομένων MySQL για το project
-2. Κάνε clone το repo
-   ```sh
-   git clone https://github.com/dgenak/ERASMUS_APP.git
-   ```
-3. Ρύθμισε τα στοιχεία σύνδεσης στη βάση στο `src/main/resources/application.properties`
-   ```
-   db.url=jdbc:mysql://localhost:3306/erasmus_app
-   db.username=your_username
-   db.password=your_password
-   ```
-4. Χτίσε το project με Maven
-   ```sh
-   mvn clean package
-   ```
-5. Ανέβασε το παραγόμενο `target/ErasmusApp.war` στον φάκελο `webapps` του Tomcat
-   ```sh
-   cp target/ErasmusApp.war $CATALINA_HOME/webapps/
-   ```
-6. Άλλαξε το git remote url ώστε να αποφύγεις τυχαία push στο αρχικό repo (αν κάνεις fork)
-   ```sh
-   git remote set-url origin github_username/repo_name
-   git remote -v # confirm the changes
-   ```
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 <!-- USAGE EXAMPLES -->
 ## Usage
 
@@ -158,8 +129,6 @@ Project Link: [https://github.com/dgenak/ERASMUS_APP](https://github.com/dgenak/
 ## Acknowledgments
 
 * [Οικονομικό Πανεπιστήμιο Αθηνών (AUEB)](https://www.aueb.gr/) — για τη συνεργασία στο σχεδιασμό του project
-* [Choose an Open Source License](https://choosealicense.com/)
-* [Img Shields](https://shields.io/)
-* README structure βασισμένο στο [Best-README-Template](https://github.com/othneildrew/Best-README-Template) του Othneil Drew
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
