@@ -1,15 +1,14 @@
-<img width="4060" height="1170" alt="image" src="https://github.com/user-attachments/assets/831b2861-b07a-4709-849a-c205a98dd3d6" />
-
-
 <a id="readme-top"></a>
-
+<p align="center">
+  <img width="900" alt="UniEra screenshot" src="https://github.com/user-attachments/assets/831b2861-b07a-4709-849a-c205a98dd3d6" />
+</p>
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
   <h3 align="center">UniEra — Erasmus Web App</h3>
 
   <p align="center">
-    Web πλατφόρμα για φοιτητές Erasmus, σε συνεργασία με το Οικονομικό Πανεπιστήμιο Αθηνών (AUEB)
+    A web platform for Erasmus students, developed in collaboration with the Athens University of Economics and Business (AUEB)
     <br />
     <a href="https://github.com/dgenak/ERASMUS_APP"><strong>Explore the repo »</strong></a>
     <br />
@@ -19,6 +18,9 @@
     <a href="https://github.com/dgenak/ERASMUS_APP/issues">Request Feature</a>
   </p>
 </div>
+
+> **🚧 Work in progress.** This project is still under active development. A temporary live version is deployed at:
+> **[http://ism.dmst.aueb.gr/ismgroup29/index.jsp](http://ism.dmst.aueb.gr/ismgroup29/index.jsp)**
 
 <!-- TABLE OF CONTENTS -->
 <details>
@@ -49,9 +51,10 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-Η **UniEra** είναι μια web εφαρμογή που δημιουργήθηκε σε συνεργασία με το Οικονομικό Πανεπιστήμιο Αθηνών (AUEB), με στόχο να διευκολύνει τους φοιτητές που συμμετέχουν στο πρόγραμμα Erasmus. Η εφαρμογή επιτρέπει την αναζήτηση συνεργαζόμενων πανεπιστημίων, την αντιστοίχιση μαθημάτων εξωτερικού με μαθήματα του τμήματος, τη διαχείριση αιτήσεων και Learning Agreements, καθώς και τη συμμετοχή σε ένα forum όπου οι φοιτητές μπορούν να θέτουν ερωτήσεις και να μοιράζονται εμπειρίες.
 
-Η ιδέα προέκυψε από την ανάγκη να υπάρχει ένα κεντρικό σημείο πληροφόρησης για τους φοιτητές που ετοιμάζονται για Erasmus, αντί να ψάχνουν αντιστοιχίες και έγγραφα σκόρπια σε διαφορετικές πηγές.
+**UniEra** is a web application built in collaboration with the Athens University of Economics and Business (AUEB), designed to make life easier for students participating in the Erasmus exchange program. The platform lets students browse partner universities, match courses taken abroad with courses from their home department, manage their applications and Learning Agreements, and take part in a forum where they can ask questions and share experiences with other students.
+
+The idea came from the need for a single, centralized place for Erasmus-bound students, instead of having to search for course equivalencies and official documents scattered across different sources.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -70,44 +73,42 @@
 <!-- GETTING STARTED -->
 ## Getting Started
 
-Ακολουθούν οδηγίες για να στήσεις τοπικά ένα αντίγραφο του project για development και testing.
+Follow these instructions to get a local copy of the project up and running for development and testing purposes.
 
 ### Prerequisites
 
-Χρειάζεσαι τα παρακάτω εγκατεστημένα στο μηχάνημά σου:
+Make sure you have the following installed:
 
 * JDK 8
 * Apache Maven
-* Apache Tomcat (servlet container, συμβατό με Servlet API 2.5)
+* Apache Tomcat (servlet container, compatible with Servlet API 2.5)
 * MySQL
+
 
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Μετά το deployment, άνοιξε τον browser στο `http://localhost:8080/ErasmusApp/`. Θα εμφανιστεί η σελίδα σύνδεσης, όπου μπορείς να εγγραφείς ως νέος χρήστης.
-
-Μόλις συνδεθείς, μπορείς να:
-- Περιηγηθείς στη λίστα συνεργαζόμενων πανεπιστημίων και να δεις λεπτομέρειες για το καθένα
-- Αντιστοιχίσεις μαθήματα εξωτερικού με μαθήματα του τμήματος (6ο/7ο εξάμηνο)
-- Υποβάλεις αίτηση συμμετοχής και να συμπληρώσεις το Learning Agreement
-- Συμμετάσχεις στο forum, ρωτώντας ή απαντώντας σε άλλους φοιτητές
-- Κατεβάσεις χρήσιμα έγγραφα (Erasmus Policy Statement, Student Charter κ.ά.)
+Once logged in, you can:
+- Browse the list of partner universities and view details for each one
+- Match courses taken abroad with courses from your department (6th/7th semester)
+- Submit an application and fill out your Learning Agreement
+- Join the forum, asking or answering questions from other students
+- Download useful documents (Erasmus Policy Statement, Student Charter, etc.)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- ROADMAP -->
 ## Roadmap
 
-- [ ] Migration σε Spring Boot για καλύτερη συντηρησιμότητα
-- [ ] Αναβάθμιση frontend με JavaScript framework
-- [ ] Ενοποίηση παλιών εκδόσεων σελίδων (`applications_old.jsp`, `forumOld.jsp`)
-- [ ] Προσθήκη automated tests
-- [ ] Responsive design για κινητά
+- [ ] Migrate to Spring Boot for better maintainability
+- [ ] Upgrade the frontend with a JavaScript framework
+- [ ] Consolidate legacy page versions (`applications_old.jsp`, `forumOld.jsp`)
+- [ ] Add automated tests
+- [ ] Responsive design for mobile
 
 See the [open issues](https://github.com/dgenak/ERASMUS_APP/issues) for a full list of proposed features (and known issues).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-ref="#readme-top">back to top</a>)</p>
 
 <!-- LICENSE -->
 ## License
@@ -119,8 +120,6 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 <!-- CONTACT -->
 ## Contact
 
-[Το όνομά σου] - [email@example.com](mailto:email@example.com)
-
 Project Link: [https://github.com/dgenak/ERASMUS_APP](https://github.com/dgenak/ERASMUS_APP)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -128,7 +127,6 @@ Project Link: [https://github.com/dgenak/ERASMUS_APP](https://github.com/dgenak/
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
 
-* [Οικονομικό Πανεπιστήμιο Αθηνών (AUEB)](https://www.aueb.gr/) — για τη συνεργασία στο σχεδιασμό του project
-
+* [Athens University of Economics and Business (AUEB)](https://www.aueb.gr/) — for the collaboration on the project's design
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
