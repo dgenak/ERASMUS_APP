@@ -119,6 +119,24 @@ Project Link: [https://github.com/dgenak/ERASMUS_APP](https://github.com/dgenak/
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+
+https://github.com/user-attachments/assets/7febea19-a3f9-4eb9-a775-a798d07ac61c
+
+
+
+
+https://github.com/user-attachments/assets/e5c16db1-fdb7-4ee9-b84b-aada3251cc03
+
+
+
+
+https://github.com/user-attachments/assets/bf4f6273-b1c5-4790-a32b-b989e0d3e9c1
+
+
+
+
+https://github.com/user-attachments/assets/12a5b822-3b6d-401a-a4e3-5174e9417e71
+
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
 
