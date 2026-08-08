@@ -70,11 +70,6 @@ The idea came from the need for a single, centralized place for Erasmus-bound st
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-<!-- GETTING STARTED -->
-## Getting Started
-
-Follow these instructions to get a local copy of the project up and running for development and testing purposes.
-
 ### Prerequisites
 
 Make sure you have the following installed:
